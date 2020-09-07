@@ -1,0 +1,37 @@
+#training .Panel__in {
+  //height: 1px;
+
+  //overflow: hidden;
+  height: 100%;
+}
+
+.training-block {
+  position: absolute;
+  top: 0;
+
+  height: 100%;
+  width: 100%;
+
+  .training-slider {
+    height: 95% !important;
+
+    .Gallery__slide div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .Banner {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .Div--android {
+    padding: 0px 16px;
+  }
+
+  .Div--ios {
+    padding: 0px 12px;
+  }
+}
