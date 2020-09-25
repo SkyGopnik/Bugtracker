@@ -3,7 +3,7 @@ import React from 'react';
 /*
   Панели
 */
-import MainPanel from '../panels/Main';
+import MainPanel from '../panels/Main/Main';
 import TestPanel from '../panels/Test';
 
 // Компоненты
@@ -17,13 +17,31 @@ interface IProps {
   }
 }
 
-export default class extends React.Component<IProps> {
+interface IState {
+  activeMenu: string
+}
+
+
+export default class extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+
+    this.state = {
+      activeMenu: 'reports'
+    }
+
+    this.changeActiveMenu = this.changeActiveMenu.bind(this);
+  }
+
+  changeActiveMenu(name: string) {
+    this.setState({
+      activeMenu: name
+    })
   }
 
   render() {
-    const { id, active } = this.props
+    const { id, active } = this.props;
+    const { activeMenu } = this.state;
 
     return (
       <ViewLight
@@ -32,7 +50,11 @@ export default class extends React.Component<IProps> {
         panelList={[
           {
             id: 'main',
-            component: MainPanel
+            component: MainPanel,
+            props: {
+              activeMenu,
+              changeActiveMenu: this.changeActiveMenu
+            }
           },
           {
             id: 'test',

@@ -3,30 +3,6 @@ body::-webkit-scrollbar {
   width: 0px;
 }
 
-.Footer {
-  div {
-    user-select: none;
-  }
-}
-
-.Group {
-  .Header__content {
-    user-select: none;
-  }
-}
-
-// Скелетон
-.react-skeleton-load {
-  background-color: #e6e9f0 !important;
-}
-
-.Placeholder {
-  background: transparent !important;
-}
-
-body[scheme="space_gray"] {
-  // Скелетон
-  .react-skeleton-load {
-    background-color: #2b2b2b !important;
-  }
+#main .Panel__in {
+  background-color: gray !important;
 }
