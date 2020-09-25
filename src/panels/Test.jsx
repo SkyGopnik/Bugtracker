@@ -4,8 +4,6 @@ import {
   PanelHeader
 } from '@vkontakte/vkui';
 
-import TestContainer from '../components/Test/TestContainer';
-
 export default class extends React.Component {
   constructor() {
     super();

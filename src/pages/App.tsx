@@ -23,7 +23,7 @@ import queryGet from '../functions/query_get';
 import isset from '../functions/isset';
 import unixTime from '../functions/unixtime';
 
-import './App.scss';
+import '../styles/all.scss';
 
 let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
@@ -35,7 +35,6 @@ interface IState {
     story: string,
     panel: string
   },
-  activeView: string,
   scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light'
 }
 
@@ -58,7 +57,6 @@ export default class extends React.Component<IProps, IState> {
         story: 'main',
         panel: 'main'
       },
-      activeView: 'app',
       scheme: 'bright_light'
     };
 
@@ -82,51 +80,17 @@ export default class extends React.Component<IProps, IState> {
     // Обновляем историю переходов (Ставим начальную страницу)
     this.updateHistory(active.story, active.panel);
 
-    if (queryGet('platform') === 'vk') {
-      bridge.subscribe(({ detail: { type, data } }) => {
-        if (type === 'VKWebAppUpdateConfig') {
-          const d: any = data;
+    const vars = [
+      '--button_secondary_foreground',
+      '--accent',
+      '--tabbar_active_icon',
+      '--header_tint',
+      '--button_primary_background',
+      '--action_sheet_action_foreground'
+    ];
+    const color = '#EE8208';
 
-          let scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light' = 'bright_light';
-
-          if (d.scheme === 'bright_light' || d.scheme === 'client_light') {
-            scheme = 'bright_light';
-          } else if (d.scheme === 'client_dark' || d.scheme === 'space_gray') {
-            scheme = 'space_gray';
-          }
-
-          const schemeArray: SchemeArray = {
-            'bright_light': {
-              status: 'dark',
-              color: '#ffffff'
-            },
-            'space_gray': {
-              status: 'light',
-              color: '#19191a'
-            }
-          };
-
-          bridge.sendPromise(
-            'VKWebAppSetViewSettings',
-            {
-              'status_bar_style': schemeArray[scheme].status,
-              'action_bar_color': schemeArray[scheme].color
-            }
-          );
-
-          this.setState({
-            scheme: scheme
-          });
-        }
-
-        if (type === 'VKWebAppViewRestore') {
-          isExit = false;
-        }
-      });
-    }
-
-    // Init VK Mini App
-    bridge.send('VKWebAppInit');
+    vars.forEach((name) => document.documentElement.style.setProperty(name, color));
   }
 
   onStoryChange(e) {
@@ -258,28 +222,16 @@ export default class extends React.Component<IProps, IState> {
   render() {
     const {
       active,
-      activeView,
       scheme
     } = this.state;
 
     return (
       <ConfigProvider scheme={scheme}>
-        <Root activeView={activeView}>
-          <Epic
-            id="app"
-            activeStory={active.story}
-            tabbar={
-              <TabbarLight
-                activeStory={active.story}
-                changeStory={this.onStoryChange}
-              />
-            }
-          >
-            <MainView
-              id="main"
-              active={active}
-            />
-          </Epic>
+        <Root activeView={active.story}>
+          <MainView
+            id="main"
+            active={active}
+          />
         </Root>
       </ConfigProvider>
     );
