@@ -5,7 +5,7 @@ import {
 
 import Icon28ArticleOutline from '@vkontakte/icons/dist/28/article_outline';
 
-import TabbarItemLight from './TabbarItemLight.jsx';
+import TabbarItemLight from './TabbarItemLight';
 
 export default class extends React.Component {
   constructor() {

@@ -63,6 +63,7 @@
         "no-param-reassign": "off",
         "jsx-a11y/media-has-caption": "off",
         "no-useless-escape": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "react/jsx-props-no-spreading": "off"
     }
 }

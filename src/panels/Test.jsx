@@ -4,6 +4,8 @@ import {
   PanelHeader
 } from '@vkontakte/vkui';
 
+import TestContainer from '../components/Test/TestContainer';
+
 export default class extends React.Component {
   constructor() {
     super();
@@ -21,8 +23,7 @@ export default class extends React.Component {
         <PanelHeader>
           Главная
         </PanelHeader>
-
-        1
+        <TestContainer />
       </Panel>
     );
   }

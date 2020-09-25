@@ -9,28 +9,49 @@ import {
 /*
   View
 */
-import MainView from '../views/Main.jsx';
+import MainView from '../views/Main';
 
 /*
   Компоненты
 */
-import TabbarLight from '../components/TabbarLight.jsx';
+import TabbarLight from '../components/TabbarLight';
 
 /*
   Функции
 */
-import queryGet from '../functions/query_get.jsx';
-import isset from '../functions/isset.jsx';
-import unixTime from '../functions/unixtime.jsx';
+import queryGet from '../functions/query_get';
+import isset from '../functions/isset';
+import unixTime from '../functions/unixtime';
 
 import './App.scss';
 
 let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
 
-export default class extends React.Component {
-  constructor() {
-    super();
+interface IProps {}
+
+interface IState {
+  active: {
+    story: string,
+    panel: string
+  },
+  activeView: string,
+  scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light'
+}
+
+interface Scheme {
+  status: 'light' | 'dark',
+  color: string
+}
+
+interface SchemeArray {
+  bright_light: Scheme,
+  space_gray: Scheme
+}
+
+export default class extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
     this.state = {
       active: {
@@ -64,15 +85,17 @@ export default class extends React.Component {
     if (queryGet('platform') === 'vk') {
       bridge.subscribe(({ detail: { type, data } }) => {
         if (type === 'VKWebAppUpdateConfig') {
-          let scheme = 'bright_light';
+          const d: any = data;
 
-          if (data.scheme === 'bright_light' || data.scheme === 'client_light') {
+          let scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light' = 'bright_light';
+
+          if (d.scheme === 'bright_light' || d.scheme === 'client_light') {
             scheme = 'bright_light';
-          } else if (data.scheme === 'client_dark' || data.scheme === 'space_gray') {
+          } else if (d.scheme === 'client_dark' || d.scheme === 'space_gray') {
             scheme = 'space_gray';
           }
 
-          const schemeArray = {
+          const schemeArray: SchemeArray = {
             'bright_light': {
               status: 'dark',
               color: '#ffffff'
@@ -181,9 +204,9 @@ export default class extends React.Component {
     });
   }
 
-  updateHistory(s, p, panelData) {
+  updateHistory(s, p, panelData = null) {
     // Записываем новое значение истории переходов
-    window.history.pushState({ story: s, panel: p, data: panelData && panelData }, `${s}/${p}`);
+    window.history.pushState({ story: s, panel: p, data: panelData }, `${s}/${p}`);
   }
 
   menu(e) {
@@ -225,7 +248,8 @@ export default class extends React.Component {
       if (!isExit) {
         isExit = true;
         bridge.sendPromise('VKWebAppClose', {
-          'status': 'success', 'text': 'Ждём Вас снова! :3'
+          'status': 'success',
+          'payload': 'Ждём Вас снова! :3'
         });
       }
     }
@@ -244,12 +268,12 @@ export default class extends React.Component {
           <Epic
             id="app"
             activeStory={active.story}
-            // tabbar={
-            //   <TabbarLight
-            //     activeStory={active.story}
-            //     changeStory={this.onStoryChange}
-            //   />
-            // }
+            tabbar={
+              <TabbarLight
+                activeStory={active.story}
+                changeStory={this.onStoryChange}
+              />
+            }
           >
             <MainView
               id="main"
