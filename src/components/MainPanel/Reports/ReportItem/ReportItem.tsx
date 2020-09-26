@@ -6,7 +6,7 @@ import styles from './ReportItem.scss';
 
 interface IProps {
   name: string,
-  tags: string,
+  tags: Array<string>,
   author: string,
   date: string,
   status: string
@@ -33,7 +33,9 @@ export default class extends React.Component<IProps> {
             {name}
           </div>
           <div className={styles.tags}>
-            <span className={styles.buttonTags}>{tags}</span>
+            {tags.map((tag) => (
+              <span className={styles.buttonTags}>{tag}</span>
+            ))}
           </div>
           <div className={styles.footer}>
             <div className={styles.nameAndDate}>

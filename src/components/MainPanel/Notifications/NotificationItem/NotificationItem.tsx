@@ -17,8 +17,8 @@ interface IProps {
   src: string,
   date: string,
   title: string,
-  status: string,
-  priority: string
+  status?: string,
+  priority?: string
 }
 
 export default class extends React.Component<IProps> {
@@ -48,10 +48,12 @@ export default class extends React.Component<IProps> {
           <div className={styles.name}>
             {name}
           </div>
-          <div className={styles.status}>
-            <div>Новый статус отчета — <b>{status}</b></div>
-            <div>Приоритет отчета — <b>{priority}</b></div>
-          </div>
+          {(status || priority) && (
+            <div className={styles.status}>
+            {status && (<div>Новый статус отчета — <b>{status}</b></div>)}
+            {priority && (<div>Приоритет отчета — <b>{priority}</b></div>)}
+            </div>
+          )}
           <div className={styles.comment}>
             {comment}
           </div>

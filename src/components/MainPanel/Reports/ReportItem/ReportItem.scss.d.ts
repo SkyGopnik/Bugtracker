@@ -6,7 +6,7 @@ interface CssExports {
   'nameAndDate': string;
   'reportItem': string;
   'status': string;
-  'tags': string;
+  'tags': Array<string>;
   'title': string;
 }
 export const cssExports: CssExports;
