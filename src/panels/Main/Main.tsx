@@ -1,21 +1,17 @@
 import React from 'react';
 import {
   Panel,
-  PanelHeader,
-  Group,
-  List,
-  Cell,
   Button
 } from '@vkontakte/vkui';
 
 import MenuList from "../../components/MainPanel/Menu/MenuList";
-import ReportList from "../../components/MainPanel/Report/ReportList";
-import ServicesList from "../../components/MainPanel/Services/ServicesList";
-import UserList from "../../components/MainPanel/User/UserList";
-import NotificationList from "../../components/MainPanel/Notification/NotificationList";
-import PanelList from "../../components/MainPanel/Panel/PanelList";
+import DesktopContent from "../../components/MainPanel/DesktopContent/DesktopContent";
 
-// @ts-ignore
+import Reports from "../../components/MainPanel/Reports/ReportsList";
+import Products from "../../components/MainPanel/Products/ProductsList";
+import Users from "../../components/MainPanel/Users/UsersList";
+import Notifications from "../../components/MainPanel/Notifications/NotificationsList";
+
 import styles from './Main.scss';
 
 interface IProps {
@@ -58,31 +54,42 @@ export default class extends React.Component<IProps, IState> {
     const { width } = this.state;
 
     return (
-      <Panel id={id} className={styles.test}>
+      <Panel id={id}>
         <div ref={this.mainBlock} className={styles.desktop}>
           {width && width > 700 ? (
             <div className={styles.contentWrapper}>
               <div className={styles.menu}>
                 <Button
                   className={styles.addReportBtn}
-                  // onClick={go}
-                  data-to="addReviews"
-                  onClick={() => console.log(this.mainBlock.current.clientWidth)}
                 >
                   Добавить отчёт
                 </Button>
-                <MenuList className={styles.menuGroup} />
+                <MenuList
+                  className={styles.menuGroup}
+                  activeItem={activeMenu}
+                  changeActive={changeActiveMenu}
+                />
               </div>
               <div className={styles.content}>
-                <PanelList />
-                <UserList />
-                <NotificationList />
-                <ServicesList />
                 {activeMenu === 'reports' && (
-                  <ReportList />
+                  <DesktopContent title="Все отчёты">
+                    <Reports />
+                  </DesktopContent>
                 )}
                 {activeMenu === 'products' && (
-                  <ServicesList />
+                  <DesktopContent title="Продукты">
+                    <Products />
+                  </DesktopContent>
+                )}
+                {activeMenu === 'users' && (
+                  <DesktopContent title="Участники">
+                    <Users />
+                  </DesktopContent>
+                )}
+                {activeMenu === 'notifications' && (
+                  <DesktopContent title="Обновления">
+                    <Notifications />
+                  </DesktopContent>
                 )}
               </div>
             </div>
@@ -90,59 +97,6 @@ export default class extends React.Component<IProps, IState> {
             <div>Mobile</div>
           )}
         </div>
-        {/*<Group>*/}
-        {/*  <List>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28ArticleOutline />}*/}
-        {/*      // onClick={go}*/}
-        {/*      data-to="reviews"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Отчёты*/}
-        {/*    </Cell>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28ServicesOutline />}*/}
-        {/*      // onClick={go}*/}
-        {/*      data-to="services"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Продукты*/}
-        {/*    </Cell>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28UsersOutline />}*/}
-        {/*      // onClick={go}*/}
-        {/*      data-to="users"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Участники*/}
-        {/*    </Cell>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28Notifications />}*/}
-        {/*      // onClick={go}*/}
-        {/*      data-to="notifications"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Обновления*/}
-        {/*    </Cell>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28MarketOutline />}*/}
-        {/*      //onClick={go}*/}
-        {/*      //data-to="market"*/}
-        {/*      indicator="100 баллов"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Магазин*/}
-        {/*    </Cell>*/}
-        {/*    <Cell*/}
-        {/*      // before={<Icon28SettingsOutline />}*/}
-        {/*      // onClick={go}*/}
-        {/*      data-to="settings"*/}
-        {/*      multiline*/}
-        {/*    >*/}
-        {/*      Настройки*/}
-        {/*    </Cell>*/}
-        {/*  </List>*/}
-        {/*</Group>*/}
       </Panel>
     );
   }

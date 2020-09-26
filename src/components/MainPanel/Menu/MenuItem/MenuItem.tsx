@@ -8,7 +8,8 @@ interface IProps {
   name: string,
   indicator?: string,
   icon: ReactNode,
-  active?: boolean
+  active?: boolean,
+  onClick?: Function
 }
 
 export default class extends React.Component<IProps> {
@@ -21,7 +22,8 @@ export default class extends React.Component<IProps> {
       name,
       indicator,
       icon,
-      active
+      active,
+      onClick
     } = this.props;
 
     return (
@@ -35,6 +37,7 @@ export default class extends React.Component<IProps> {
             </div>
           )
         }
+        onClick={() => onClick && onClick()}
         multiline
       >
         <div className={styles.item}>

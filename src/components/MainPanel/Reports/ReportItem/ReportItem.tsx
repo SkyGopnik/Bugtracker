@@ -35,7 +35,7 @@ export default class extends React.Component<IProps> {
           <div className={styles.tags}>
             <span className={styles.buttonTags}>{tags}</span>
           </div>
-          <div className={styles.footor}>
+          <div className={styles.footer}>
             <div className={styles.nameAndDate}>
               {author} · {date}
             </div>

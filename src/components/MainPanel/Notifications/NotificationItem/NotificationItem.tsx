@@ -18,7 +18,7 @@ interface IProps {
   date: string,
   title: string,
   status: string,
-  prioritet: string
+  priority: string
 }
 
 export default class extends React.Component<IProps> {
@@ -34,28 +34,29 @@ export default class extends React.Component<IProps> {
       date,
       title,
       status,
-      prioritet,
+      priority,
       icon //скрыть на телефоне
     } = this.props;
 
     return (
       <Group>
         <Cell
-          before={<Avatar className={styles.avatar} size={48} src={src} />}
+          before={<Avatar size={48} src={src} />}
           asideContent={<Icon28ChevronRightOutline />}
           multiline
         >
           <div className={styles.name}>
-              {name}
+            {name}
           </div>
           <div className={styles.status}>
-              <span className={styles.button}>Новый статус отчета — <b>{status}</b><br></br>Приоритет отчета — <b>{prioritet}</b></span>
+            <div>Новый статус отчета — <b>{status}</b></div>
+            <div>Приоритет отчета — <b>{priority}</b></div>
           </div>
           <div className={styles.comment}>
-              {comment}
+            {comment}
           </div>
           <div className={styles.data}>
-              {date}, <Link>{title}</Link>
+            {date}, <Link>{title}</Link>
           </div>
         </Cell>
       </Group>
