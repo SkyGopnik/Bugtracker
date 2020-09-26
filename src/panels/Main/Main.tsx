@@ -8,17 +8,12 @@ import {
   Button
 } from '@vkontakte/vkui';
 
-import Icon28UserCircleOutline from '@vkontakte/icons/dist/28/user_circle_outline';
-import Icon28ArticleOutline from '@vkontakte/icons/dist/28/article_outline';
-import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
-import Icon28ServicesOutline from '@vkontakte/icons/dist/28/services_outline';
-import Icon28UsersOutline from '@vkontakte/icons/dist/28/users_outline';
-import Icon28MarketOutline from '@vkontakte/icons/dist/28/market_outline';
-import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
-import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
-import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
-
-import MenuItem from "../../components/Menu/MenuItem/MenuItem";
+import MenuList from "../../components/MainPanel/Menu/MenuList";
+import ReportList from "../../components/MainPanel/Report/ReportList";
+import ServicesList from "../../components/MainPanel/Services/ServicesList";
+import UserList from "../../components/MainPanel/User/UserList";
+import NotificationList from "../../components/MainPanel/Notification/NotificationList";
+import PanelList from "../../components/MainPanel/Panel/PanelList";
 
 // @ts-ignore
 import styles from './Main.scss';
@@ -76,69 +71,18 @@ export default class extends React.Component<IProps, IState> {
                 >
                   Добавить отчёт
                 </Button>
-                <List className={styles.menuGroup}>
-                  <MenuItem
-                    name="Отчёты"
-                    icon={<Icon28ArticleOutline />}
-                    active
-                  />
-                  <Cell
-                    before={<Icon28ArticleOutline />}
-                    // onClick={go}
-                    onClick={() => changeActiveMenu('reports')}
-                    multiline
-                  >
-                    <div className={styles.menuItem}>
-                      <b>Отчёты</b>
-                    </div>
-                  </Cell>
-                  <Cell
-                    before={<Icon28ServicesOutline />}
-                    // onClick={go}
-                    onClick={() => changeActiveMenu('products')}
-                    multiline
-                  >
-                    <div className={styles.menuItem}>Продукты</div>
-                  </Cell>
-                  <Cell
-                    className="cell-menu-left-block"
-                    before={<Icon28UsersOutline />}
-                    // onClick={go}
-                    data-to="users"
-                    multiline
-                  >
-                    <div className={styles.menuItem}>Участники</div>
-                  </Cell>
-                  <Cell
-                    className="cell-menu-left-block"
-                    before={<Icon28Notifications />}
-                    // onClick={go}
-                    data-to="notifications"
-                    multiline
-                  >
-                    <div className={styles.menuItem}>Обновления</div>
-                  </Cell>
-                  <Cell
-                    before={<Icon28MarketOutline />}
-                    //onClick={go}
-                    //data-to="market"
-                    indicator={
-                      <div>
-                        100 баллов
-                      </div>
-                    }
-                    multiline
-                  >
-                    <div className={styles.menuItem}>Магазин</div>
-                  </Cell>
-                </List>
+                <MenuList className={styles.menuGroup} />
               </div>
               <div className={styles.content}>
+                <PanelList />
+                <UserList />
+                <NotificationList />
+                <ServicesList />
                 {activeMenu === 'reports' && (
-                  <div>Reports</div>
+                  <ReportList />
                 )}
                 {activeMenu === 'products' && (
-                  <div>products</div>
+                  <ServicesList />
                 )}
               </div>
             </div>

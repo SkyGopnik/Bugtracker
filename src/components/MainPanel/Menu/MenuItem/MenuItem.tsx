@@ -30,7 +30,7 @@ export default class extends React.Component<IProps> {
         // onClick={go}
         indicator={
           indicator && (
-            <div>
+            <div className={styles.indicator}>
               {indicator}
             </div>
           )

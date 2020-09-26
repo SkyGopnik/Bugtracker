@@ -1,0 +1,32 @@
+.name {
+    color: #EE8208;
+    font-weight: 600;
+}
+
+.status {
+    padding: 2px 5px 2px 5px;
+    background-color: #fcc88e;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+    width: 275px;
+}
+
+.comment {
+    white-space: pre-wrap;
+}
+
+.data {
+    font-size: 14px;
+    color: #818C99;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    box-orient: vertical;
+}
