@@ -8,7 +8,7 @@ interface IProps {
   name: string,
   indicator?: string,
   icon: ReactNode,
-  active: boolean
+  active?: boolean
 }
 
 export default class extends React.Component<IProps> {
