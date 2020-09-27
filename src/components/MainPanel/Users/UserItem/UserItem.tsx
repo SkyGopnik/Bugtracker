@@ -3,7 +3,8 @@ import {
   Div,
   SimpleCell,
   Avatar,
-  Separator, Group
+  Separator,
+  Group
 } from "@vkontakte/vkui";
 
 import styles from './UserItem.scss';
