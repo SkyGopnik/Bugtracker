@@ -9,7 +9,9 @@ interface IProps {
   indicator?: string,
   icon: ReactNode,
   active?: boolean,
-  onClick?: Function
+  onClick?: Function,
+  expandable?: boolean,
+  changePanel?(panel: string)
 }
 
 export default class extends React.Component<IProps> {
@@ -23,13 +25,13 @@ export default class extends React.Component<IProps> {
       indicator,
       icon,
       active,
-      onClick
+      onClick,
+      expandable
     } = this.props;
 
     return (
       <Cell
         before={icon}
-        // onClick={go}
         indicator={
           indicator && (
             <div className={styles.indicator}>
@@ -38,6 +40,7 @@ export default class extends React.Component<IProps> {
           )
         }
         onClick={() => onClick && onClick()}
+        expandable={expandable && expandable}
         multiline
       >
         <div className={styles.item}>

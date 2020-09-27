@@ -101,6 +101,10 @@ module.exports = {
     hints: false
   },
   resolve: {
+    modules: ['node_modules', path.resolve('./src')],
+    alias: {
+      src: path.resolve(__dirname, './src')
+    },
     extensions: ['.tsx', '.ts', '.js', '.jsx']
   }
 };

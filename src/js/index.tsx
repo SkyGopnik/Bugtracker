@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import mVKMiniAppsScrollHelper from '@vkontakte/mvk-mini-apps-scroll-helper';
 
 // Главный файл
-import App from '../pages/App';
+import AppContainer from '../pages/AppContainer';
 
 // Главный reducer
 import rootReducer from '../store/reducers';
@@ -29,7 +29,7 @@ if (document.location.href) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <AppContainer />
   </Provider>,
   root
 );

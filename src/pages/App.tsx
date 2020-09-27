@@ -12,15 +12,8 @@ import {
 import MainView from '../views/Main';
 
 /*
-  Компоненты
-*/
-import TabbarLight from '../components/TabbarLight';
-
-/*
   Функции
 */
-import queryGet from '../functions/query_get';
-import isset from '../functions/isset';
 import unixTime from '../functions/unixtime';
 
 import '../styles/all.scss';
@@ -28,46 +21,33 @@ import '../styles/all.scss';
 let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
 
-interface IProps {}
+interface IProps {
+  view: string,
+  panel: string,
+  changeView(view: string),
+  changePanel(panel: string),
+  changeViewAndPanel(view: string, panel: string)
+}
 
 interface IState {
-  active: {
-    story: string,
-    panel: string
-  },
   scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light'
-}
-
-interface Scheme {
-  status: 'light' | 'dark',
-  color: string
-}
-
-interface SchemeArray {
-  bright_light: Scheme,
-  space_gray: Scheme
 }
 
 export default class extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
+    console.log(props);
+
     this.state = {
-      active: {
-        story: 'main',
-        panel: 'main'
-      },
       scheme: 'bright_light'
     };
 
-    this.onStoryChange = this.onStoryChange.bind(this);
-    this.onPanelChange = this.onPanelChange.bind(this);
-    this.onStoryAndPanelChange = this.onStoryAndPanelChange.bind(this);
     this.menu = this.menu.bind(this);
   }
 
   componentDidMount() {
-    const { active } = this.state;
+    const { view, panel } = this.props;
 
     // Навешиваем обработчик кнопку вперёд/назад
     window.addEventListener('popstate', (e) => {
@@ -78,7 +58,7 @@ export default class extends React.Component<IProps, IState> {
     });
 
     // Обновляем историю переходов (Ставим начальную страницу)
-    this.updateHistory(active.story, active.panel);
+    this.updateHistory(view, panel);
 
     const vars = [
       '--button_secondary_foreground',
@@ -93,121 +73,31 @@ export default class extends React.Component<IProps, IState> {
     vars.forEach((name) => document.documentElement.style.setProperty(name, color));
   }
 
-  onStoryChange(e) {
-    const { active } = this.state;
-
-    // Id нужного View
-    const id = e.currentTarget.dataset.story;
-
-    if (
-      id !== active.panel
-      && (
-        id === 'main'
-      )
-    ) {
-      // Поднимаем контент вверх
-      window.scroll({ top: 0 });
-    }
-
-    // Проверяем на Tap to top
-    if (id !== active.panel) {
-      // Обновляем историю переходов
-      this.updateHistory(id, id);
-
-      // Устанавливаем новый View
-      this.setState({
-        active: {
-          story: id,
-          panel: id
-        }
-      });
-    } else {
-      // Поднимаем контент вверх
-      window.scroll({ top: 0, behavior: 'smooth' });
-    }
-  }
-
-  onPanelChange(e, panel, data) {
-    const { active } = this.state;
-    const panelName = e ? e.currentTarget.dataset.to : panel;
-    const panelData = e ? (
-      isset(e.currentTarget.dataset.params) && e.currentTarget.dataset.params
-    ) : data;
-
-    if (active.panel !== panelName) {
-      // Обновляем историю переходов
-      this.updateHistory(active.story, panelName, JSON.parse(panelData));
-
-      // Устанавливаем новую панель
-      this.setState({
-        active: {
-          story: active.story,
-          panel: panelName
-        }
-      });
-    }
-  }
-
-  onStoryAndPanelChange(story, panel, data) {
-    // Обновляем историю переходов
-    this.updateHistory(story, panel, data);
-
-    if (
-      story === 'main'
-    ) {
-      // Поднимаем контент вверх
-      window.scroll({ top: 0 });
-    }
-
-    // Устанавливаем новую панель
-    this.setState({
-      active: {
-        story: story,
-        panel: panel
-      }
-    });
-  }
-
-  updateHistory(s, p, panelData = null) {
+  updateHistory(view: string, panel: string) {
     // Записываем новое значение истории переходов
-    window.history.pushState({ story: s, panel: p, data: panelData }, `${s}/${p}`);
+    window.history.pushState({ view: view, panel: panel }, `${view}/${panel}`);
   }
 
   menu(e) {
+    const { changeViewAndPanel } = this.props;
     // Если история переходов существует
     if (e.state) {
-      const { story, panel, data } = e.state;
+      // Отменяем стандартное событие
+      e.preventDefault();
+
+      const { view, panel } = e.state;
 
       if (historyDelay < unixTime()) {
         // Обновляем блокировку
         historyDelay = unixTime() + 1;
 
-        // Снимаем блокировку скрола у body
-        const body = document.getElementsByTagName('body')[0];
-        body.style.overflowY = 'scroll';
-
-        const newData = { ...data };
-        newData.isBack = true;
-
         // Устанавливаем новые значения для View и Panel
-        this.setState({
-          active: {
-            story: story,
-            panel: panel
-          }
-        });
+        changeViewAndPanel(view, panel);
       } else {
-        this.updateHistory(story, panel, data);
+        changeViewAndPanel(view, panel);
       }
     } else {
-      this.updateHistory('main', 'main');
-
-      this.setState({
-        active: {
-          story: 'main',
-          panel: 'main'
-        }
-      });
+      changeViewAndPanel('main', 'main');
 
       if (!isExit) {
         isExit = true;
@@ -220,17 +110,15 @@ export default class extends React.Component<IProps, IState> {
   }
 
   render() {
-    const {
-      active,
-      scheme
-    } = this.state;
+    const { view, panel } = this.props;
+    const { scheme } = this.state;
 
     return (
       <ConfigProvider scheme={scheme}>
-        <Root activeView={active.story}>
+        <Root activeView={view}>
           <MainView
             id="main"
-            active={active}
+            activePanel={panel}
           />
         </Root>
       </ConfigProvider>

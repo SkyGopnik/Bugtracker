@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   Panel,
-  Button
+  Button, PanelHeader
 } from '@vkontakte/vkui';
 
-import MenuList from "../../components/MainPanel/Menu/MenuList";
+import MenuList from "../../components/MainPanel/Menu/MenuListContainer";
 import DesktopContent from "../../components/MainPanel/DesktopContent/DesktopContent";
 
 import AddReport from "../../components/MainPanel/Reports/AddReport";
@@ -15,7 +15,6 @@ import Notifications from "../../components/MainPanel/Notifications/Notification
 import User from "../../components/UserPanel/UserPanel";
 
 import styles from './Main.scss';
-import ReportItem from "../../components/MainPanel/Reports/ReportItem/ReportItem";
 
 interface IProps {
   id: string,
@@ -24,7 +23,8 @@ interface IProps {
 }
 
 interface IState {
-  width: null | number
+  width: null | number,
+  isDesktop: boolean
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -34,7 +34,8 @@ export default class extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      width: null
+      width: null,
+      isDesktop: true
     };
 
     this.mainBlock = React.createRef();
@@ -44,7 +45,8 @@ export default class extends React.Component<IProps, IState> {
     const { clientWidth } = this.mainBlock.current;
 
     this.setState({
-      width: clientWidth
+      width: clientWidth,
+      isDesktop: clientWidth > 700
     });
   }
 
@@ -54,11 +56,16 @@ export default class extends React.Component<IProps, IState> {
       activeContent,
       changeActiveContent
     } = this.props;
-    const { width } = this.state;
+    const { width, isDesktop } = this.state;
 
     return (
-      <Panel id={id}>
-        <div ref={this.mainBlock} className={styles.desktop}>
+      <Panel id={id} className={isDesktop ? 'desktop-panel' : 'mobile-panel'}>
+        {!isDesktop && (
+          <PanelHeader>
+            Баг-трекер
+          </PanelHeader>
+        )}
+        <div ref={this.mainBlock} className={isDesktop ? styles.desktop : ''}>
           {width && width > 700 ? (
             <div className={styles.contentWrapper}>
               <div className={styles.menu}>
@@ -74,107 +81,109 @@ export default class extends React.Component<IProps, IState> {
                   changeActive={changeActiveContent}
                 />
               </div>
-              <div>
-                {activeContent === 'add-report' && (
-                  <DesktopContent className={styles.content} title="Добавить отчёт">
-                    <AddReport />
-                  </DesktopContent>
-                )}
-                {activeContent === 'reports' && (
-                  <DesktopContent className={styles.content} title="Все отчёты">
-                    <Reports />
-                  </DesktopContent>
-                )}
-                {activeContent === 'products' && (
-                  <DesktopContent className={styles.content} title="Продукты">
-                    <Products />
-                  </DesktopContent>
-                )}
-                {activeContent === 'users' && (
-                  <DesktopContent className={styles.content} title="Участники">
-                    <Users changeUser={() => changeActiveContent('user')} />
-                  </DesktopContent>
-                )}
-                {activeContent === 'notifications' && (
-                  <DesktopContent className={styles.content} title="Обновления">
-                    <Notifications />
-                  </DesktopContent>
-                )}
-                {activeContent === 'user' && (
-                  <>
-                    <DesktopContent className={styles.content} title="Участник">
-                      <User
-                        name="Test"
-                        rating="1"
-                        src="3"
-                        activity="4"
-                        date="7"
-                        products={[]}
+              {activeContent === 'add-report' && (
+                <DesktopContent className={styles.content} title="Добавить отчёт">
+                  <AddReport />
+                </DesktopContent>
+              )}
+              {activeContent === 'reports' && (
+                <DesktopContent className={styles.content} title="Все отчёты">
+                  <Reports />
+                </DesktopContent>
+              )}
+              {activeContent === 'products' && (
+                <DesktopContent className={styles.content} title="Продукты">
+                  <Products />
+                </DesktopContent>
+              )}
+              {activeContent === 'users' && (
+                <DesktopContent className={styles.content} title="Участники">
+                  <Users changeUser={() => changeActiveContent('user')} />
+                </DesktopContent>
+              )}
+              {activeContent === 'notifications' && (
+                <DesktopContent className={styles.content} title="Обновления">
+                  <Notifications />
+                </DesktopContent>
+              )}
+              {activeContent === 'user' && (
+                <div>
+                  <DesktopContent className={styles.content} title="Участник">
+                    <User
+                      name="Test"
+                      rating="1"
+                      src="3"
+                      activity="4"
+                      date="7"
+                      products={[]}
 
-                        reports={[
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          },
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          },
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          }
-                        ]}
-                      />
-                    </DesktopContent>
-                    <DesktopContent className={styles.content}>
-                      <User
-                        name="Test"
-                        rating="1"
-                        src="3"
-                        activity="4"
-                        date="7"
-                        products={[]}
-                        reports={[
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          },
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          },
-                          {
-                            name: 'Обычное название',
-                            tags: ['Лента'],
-                            author: 'Артём Петрунин',
-                            date: '24 сентября 2020',
-                            status: 'В работе'
-                          }
-                        ]}
-                      />
-                    </DesktopContent>
-                  </>
-                )}
-              </div>
+                      reports={[
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        },
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        },
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        }
+                      ]}
+                    />
+                  </DesktopContent>
+                  <DesktopContent className={styles.content}>
+                    <User
+                      name="Test"
+                      rating="1"
+                      src="3"
+                      activity="4"
+                      date="7"
+                      products={[]}
+                      reports={[
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        },
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        },
+                        {
+                          name: 'Обычное название',
+                          tags: ['Лента'],
+                          author: 'Артём Петрунин',
+                          date: '24 сентября 2020',
+                          status: 'В работе'
+                        }
+                      ]}
+                    />
+                  </DesktopContent>
+                </div>
+              )}
             </div>
           ) : (
-            <div>Mobile</div>
+            <MenuList
+              activeItem={activeContent}
+              changeActive={changeActiveContent}
+              isMobile
+            />
           )}
         </div>
       </Panel>
