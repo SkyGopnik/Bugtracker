@@ -8,7 +8,7 @@ import {
 
 import styles from './ProductItem.scss';
 
-interface IProps {
+export interface IProps {
   name: string,
   statistic: string,
   version: string,

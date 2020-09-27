@@ -7,7 +7,8 @@ import {
 import styles from './DesktopContent.scss';
 
 interface IProps {
-  title: string,
+  className?: string,
+  title?: string,
   children: ReactChild
 }
 
@@ -18,14 +19,19 @@ export default class extends React.Component<IProps> {
 
   render() {
     const {
+      className,
       title,
       children
     } = this.props;
 
     return (
-      <div>
-        <Header className={styles.header}>{title}</Header>
-        <Separator />
+      <div className={className && className}>
+        {title && (
+          <>
+            <Header className={styles.header}>{title}</Header>
+            <Separator />
+          </>
+        )}
         {children}
       </div>
     );

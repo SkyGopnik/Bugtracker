@@ -4,7 +4,7 @@ import { Cell, Group } from "@vkontakte/vkui";
 // @ts-ignore
 import styles from './ReportItem.scss';
 
-interface IProps {
+export interface IProps {
   name: string,
   tags: Array<string>,
   author: string,
@@ -27,14 +27,14 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <Group className={styles.reportItem}>
+      <div className={styles.reportItem}>
         <Cell>
           <div className={styles.title}>
             {name}
           </div>
           <div className={styles.tags}>
-            {tags.map((tag) => (
-              <span className={styles.buttonTags}>{tag}</span>
+            {tags.map((tag, index) => (
+              <span key={`report-item-tag-${index}`} className={styles.buttonTags}>{tag}</span>
             ))}
           </div>
           <div className={styles.footer}>
@@ -46,7 +46,7 @@ export default class extends React.Component<IProps> {
             </div>
           </div>
         </Cell>
-      </Group>
+      </div>
     );
   }
 }

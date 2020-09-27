@@ -14,7 +14,8 @@ interface IProps {
   rating: string,
   report: string,
   src: string,
-  number: string
+  number: string,
+  onClick?: Function
 }
 
 export default class extends React.Component<IProps> {
@@ -28,7 +29,8 @@ export default class extends React.Component<IProps> {
       rating,
       report,
       src,
-      number
+      number,
+      onClick
     } = this.props;
 
     return (
@@ -37,6 +39,7 @@ export default class extends React.Component<IProps> {
         <SimpleCell
           className={styles.name}
           before={<Avatar size={40} className={styles.avatar} src={src} />}
+          onClick={() => onClick && onClick()}
         >
           {name}
         </SimpleCell>

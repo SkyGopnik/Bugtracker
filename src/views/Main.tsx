@@ -4,7 +4,6 @@ import React from 'react';
   Панели
 */
 import MainPanel from '../panels/Main/Main';
-import TestPanel from '../panels/Test';
 
 // Компоненты
 import ViewLight from '../components/ViewLight';
@@ -18,7 +17,7 @@ interface IProps {
 }
 
 interface IState {
-  activeMenu: string
+  activeContent: string
 }
 
 
@@ -27,21 +26,21 @@ export default class extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      activeMenu: 'reports'
+      activeContent: 'reports'
     }
 
-    this.changeActiveMenu = this.changeActiveMenu.bind(this);
+    this.changeActiveContent = this.changeActiveContent.bind(this);
   }
 
-  changeActiveMenu(name: string) {
+  changeActiveContent(name: string) {
     this.setState({
-      activeMenu: name
+      activeContent: name
     })
   }
 
   render() {
     const { id, active } = this.props;
-    const { activeMenu } = this.state;
+    const { activeContent } = this.state;
 
     return (
       <ViewLight
@@ -52,13 +51,9 @@ export default class extends React.Component<IProps, IState> {
             id: 'main',
             component: MainPanel,
             props: {
-              activeMenu,
-              changeActiveMenu: this.changeActiveMenu
+              activeContent,
+              changeActiveContent: this.changeActiveContent
             }
-          },
-          {
-            id: 'test',
-            component: TestPanel
           }
         ]}
       />
