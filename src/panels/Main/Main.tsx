@@ -4,18 +4,15 @@ import {
   Button, PanelHeader
 } from '@vkontakte/vkui';
 
-import MenuList from "../../components/MainPanel/Menu/MenuListContainer";
-import DesktopContent from "../../components/MainPanel/DesktopContent/DesktopContent";
+import MenuList from "src/components/MainPanel/Menu/MenuListContainer";
+import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopContent";
 
-import AddReport from "../../components/MainPanel/Reports/AddReport";
-import Reports from "../../components/MainPanel/Reports/ReportsList";
-import Products from "../../components/MainPanel/Products/ProductsList";
-import Users from "../../components/MainPanel/Users/UsersList";
-import Notifications from "../../components/MainPanel/Notifications/NotificationsList";
-import User from "../../components/UserPanel/UserPanel";
-import UserActivity from "../../components/UserPanel/UserPanel/Activity";
-import UserProducts from "../../components/UserPanel/UserPanel/Products";
-import UserReports from "../../components/UserPanel/UserPanel/Reports";
+import AddReport from "src/components/MainPanel/Reports/AddReport";
+import Reports from "src/components/MainPanel/Reports/ReportsList";
+import Products from "src/components/MainPanel/Products/ProductsList";
+import Users from "src/components/MainPanel/Users/UsersList";
+import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
+import User from "src/components/UserPanel/UserPanel";
 
 import styles from './Main.scss';
 
@@ -112,54 +109,49 @@ export default class extends React.Component<IProps, IState> {
                 </DesktopContent>
               )}
               {activeContent === 'user' && (
-                <div>
-                  <DesktopContent className={styles.content} title="Участник">
-                    <User
-                      name="Test"
-                      rating="1"
-                      src="2"
-                      reports="3"
-                    />
-                  </DesktopContent>
-                  <DesktopContent className={styles.content}>
-                    <UserActivity
-                      // activity="4"
-                      date="7"
-                    />
-                  </DesktopContent>
-                  <DesktopContent className={styles.content}>
-                    <UserReports
-                      reports={[
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        },
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        },
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        }
-                      ]}
-                    />
-                  </DesktopContent>
-                  <DesktopContent className={styles.content}>
-                    <UserProducts
-                      products={[]}
-                    />
-                  </DesktopContent>
-                </div>
+                <User
+                  groupClassName={styles.content}
+                  title="Участник"
+                  avatar={{
+                    name: 'test',
+                    ratingNumber: 5,
+                    src: '',
+                    reportsCount: 10
+                  }}
+                  activity={{
+                    date: 'test'
+                  }}
+                  reports={{
+                    list: [
+                      {
+                        name: 'Обычное название',
+                        tags: ['Лента'],
+                        author: 'Артём Петрунин',
+                        date: '24 сентября 2020',
+                        status: 'В работе'
+                      },
+                      {
+                        name: 'Обычное название',
+                        tags: ['Лента'],
+                        author: 'Артём Петрунин',
+                        date: '24 сентября 2020',
+                        status: 'В работе'
+                      },
+                      {
+                        name: 'Обычное название',
+                        tags: ['Лента'],
+                        author: 'Артём Петрунин',
+                        date: '24 сентября 2020',
+                        status: 'В работе'
+                      }
+                    ]
+                  }}
+                  products={{
+                    list: [
+
+                    ]
+                  }}
+                />
               )}
             </div>
           ) : (

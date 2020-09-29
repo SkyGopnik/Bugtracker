@@ -8,11 +8,12 @@ import {
 
 import styles from '../UserPanel.scss';
 
-interface IProps {
+export interface IProps {
+  className?: string,
   name: string,
-  rating: string,
+  ratingNumber: number,
   src: string,
-  reports: string
+  reportsCount: number
 }
 
 export default class extends React.Component<IProps> {
@@ -22,17 +23,18 @@ export default class extends React.Component<IProps> {
 
   render() {
     const {
+      className,
       name,
-      rating,
-      reports,
+      ratingNumber,
       src,
+      reportsCount
     } = this.props;
 
     return (
-      <Group>
+      <Group className={className ? className : ''}>
         <Cell before={<Avatar size={80} src={src} />}>
           <div className={styles.name}>{name}</div>
-          <div className={styles.rating}>#{rating} в общем рейтинге, <Link>{reports.length} отчётов</Link></div>
+          <div className={styles.rating}>#{ratingNumber} в общем рейтинге, <Link>{reportsCount} отчётов</Link></div>
         </Cell>
       </Group>
     );

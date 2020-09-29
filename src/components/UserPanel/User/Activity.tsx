@@ -4,7 +4,8 @@ import {
   Group
 } from "@vkontakte/vkui";
 
-interface IProps {
+export interface IProps {
+  className?: string,
   date: string
 }
 
@@ -15,11 +16,12 @@ export default class extends React.Component<IProps> {
 
   render() {
     const {
+      className,
       date
     } = this.props;
 
     return (
-      <Group header={<Header indicator={date}>Активность</Header>}>
+      <Group className={className ? className : ''} header={<Header indicator={date}>Активность</Header>}>
 
       </Group>
     );

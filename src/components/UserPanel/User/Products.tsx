@@ -6,8 +6,9 @@ import {
 
 import ProductItem, { IProps as ProductItemProps } from '../../MainPanel/Products/ProductItem/ProductItem';
 
-interface IProps {
-  products: Array<ProductItemProps>
+export interface IProps {
+  className?: string,
+  list: Array<ProductItemProps>
 }
 
 export default class extends React.Component<IProps> {
@@ -17,12 +18,13 @@ export default class extends React.Component<IProps> {
 
   render() {
     const {
-      products
+      className,
+      list
     } = this.props;
 
     return (
-      <Group header={<Header indicator="test">Продукты</Header>}>
-        {products.map((product, index) => (
+      <Group className={className ? className : ''} header={<Header indicator="test">Продукты</Header>}>
+        {list.map((product, index) => (
           'test'
         ))}
       </Group>

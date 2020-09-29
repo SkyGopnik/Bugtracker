@@ -25,7 +25,7 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div className={className && className}>
+      <div className={className ? className : ''}>
         {title && (
           <>
             <Header className={styles.header}>{title}</Header>
