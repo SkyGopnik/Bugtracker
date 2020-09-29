@@ -1,5 +1,8 @@
 import React from 'react';
-import { Cell, Group } from "@vkontakte/vkui";
+import { 
+  Cell, 
+  Group 
+} from "@vkontakte/vkui";
 
 // @ts-ignore
 import styles from './ReportItem.scss';

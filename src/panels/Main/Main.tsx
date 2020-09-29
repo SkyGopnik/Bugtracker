@@ -13,6 +13,9 @@ import Products from "../../components/MainPanel/Products/ProductsList";
 import Users from "../../components/MainPanel/Users/UsersList";
 import Notifications from "../../components/MainPanel/Notifications/NotificationsList";
 import User from "../../components/UserPanel/UserPanel";
+import UserActivity from "../../components/UserPanel/UserPanel/Activity";
+import UserProducts from "../../components/UserPanel/UserPanel/Products";
+import UserReports from "../../components/UserPanel/UserPanel/Reports";
 
 import styles from './Main.scss';
 
@@ -112,11 +115,18 @@ export default class extends React.Component<IProps, IState> {
                     <User
                       name="Test"
                       rating="1"
-                      src="3"
+                      src="2"
+                      reports="3"
+                    />
+                  </DesktopContent>
+                  <DesktopContent className={styles.content}>
+                    <UserActivity
                       activity="4"
                       date="7"
-                      products={[]}
-
+                    />
+                  </DesktopContent>
+                  <DesktopContent className={styles.content}>
+                    <UserReports
                       reports={[
                         {
                           name: 'Обычное название',
@@ -143,36 +153,8 @@ export default class extends React.Component<IProps, IState> {
                     />
                   </DesktopContent>
                   <DesktopContent className={styles.content}>
-                    <User
-                      name="Test"
-                      rating="1"
-                      src="3"
-                      activity="4"
-                      date="7"
+                    <UserProducts
                       products={[]}
-                      reports={[
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        },
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        },
-                        {
-                          name: 'Обычное название',
-                          tags: ['Лента'],
-                          author: 'Артём Петрунин',
-                          date: '24 сентября 2020',
-                          status: 'В работе'
-                        }
-                      ]}
                     />
                   </DesktopContent>
                 </div>
