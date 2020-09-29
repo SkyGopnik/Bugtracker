@@ -4,7 +4,7 @@ import {
   Group
 } from "@vkontakte/vkui";
 
-import ProductItem, { IProps as ProductItemProps } from "../MainPanel/Products/ProductItem/ProductItem";
+import ProductItem, { IProps as ProductItemProps } from '../../MainPanel/Products/ProductItem/ProductItem';
 
 interface IProps {
   products: Array<ProductItemProps>

@@ -6,6 +6,8 @@ import {
   Group
 } from "@vkontakte/vkui";
 
+import Activity from './UserPanel/Activity';
+
 import styles from './UserPanel.scss';
 
 interface IProps {

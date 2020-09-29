@@ -41,6 +41,8 @@ export default class extends React.Component<IProps, IState> {
       isDesktop: true
     };
 
+    console.log('test');
+
     this.mainBlock = React.createRef();
   }
 
@@ -121,7 +123,7 @@ export default class extends React.Component<IProps, IState> {
                   </DesktopContent>
                   <DesktopContent className={styles.content}>
                     <UserActivity
-                      activity="4"
+                      // activity="4"
                       date="7"
                     />
                   </DesktopContent>
