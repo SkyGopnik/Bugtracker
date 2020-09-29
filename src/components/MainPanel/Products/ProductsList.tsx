@@ -2,10 +2,14 @@ import React from 'react';
 import {
   Separator,
   Tabs,
-  TabsItem
+  TabsItem,
+  Placeholder,
+  Button
 } from "@vkontakte/vkui";
 
 import ProductItem from "./ProductItem/ProductItem";
+
+import Icon28ServicesOutline from '@vkontakte/icons/dist/28/services_outline';
 
 interface IProps {}
 
@@ -51,7 +55,7 @@ export default class extends React.Component<IProps, IState> {
 
         <Separator />
 
-        {activeTab === 'own' && (
+        {activeTab === 'all' && (
           <>
             <ProductItem
               name={"CooK"}
@@ -66,6 +70,26 @@ export default class extends React.Component<IProps, IState> {
               src="https://sun2.velcom-by-minsk.userapi.com/c853528/v853528146/149624/K8N6X2dCoOA.jpg"
               button={"Запустить"}
             />
+          </>
+        )}
+        {activeTab === 'own' && (
+          <>
+          <Placeholder
+            icon={<Icon28ServicesOutline width={56} height={56} />}
+            action={<Button size="l">Выбрать продукт</Button>} //кидаем на все
+          >
+            Вы не учавствуете в тестировании никаких продуктов.
+          </Placeholder>
+          </>
+        )}
+        {activeTab === 'moderated' && (
+          <>
+          <Placeholder
+            icon={<Icon28ServicesOutline width={56} height={56} />}
+            action={<Button size="l">Предложить свой продукт</Button>} //кидаем на форму/лс
+          >
+            Вы не модерируете никакие продукты.
+          </Placeholder>
           </>
         )}
       </div>

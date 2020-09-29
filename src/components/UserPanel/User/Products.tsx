@@ -1,10 +1,12 @@
 import React from 'react';
 import {
   Header,
-  Group
+  Group,
+  Link,
+  Separator
 } from "@vkontakte/vkui";
 
-import ProductItem, { IProps as ProductItemProps } from '../../MainPanel/Products/ProductItem/ProductItem';
+import SimpleProductItem, { IProps as ProductItemProps } from '../../MainPanel/Products/ProductItem/SimpleProductItem';
 
 export interface IProps {
   className?: string,
@@ -23,9 +25,14 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <Group className={className ? className : ''} header={<Header indicator="test">Продукты</Header>}>
+      <Group className={className ? className : ''} header={<Header indicator="test" aside={<Link>Показать все</Link>}>Продукты</Header>}>
+        <Separator />
         {list.map((product, index) => (
-          'test'
+          <SimpleProductItem
+            name="test"
+            report="0 отчётов"
+            src="0"
+          />
         ))}
       </Group>
     );

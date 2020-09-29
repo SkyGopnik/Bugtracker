@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Header,
-  Group
+  Group,
+  Separator
 } from "@vkontakte/vkui";
 
 export interface IProps {
@@ -22,7 +23,12 @@ export default class extends React.Component<IProps> {
 
     return (
       <Group className={className ? className : ''} header={<Header indicator={date}>Активность</Header>}>
-
+        <Separator />
+        <div>content</div>
+        <div>content</div>
+        <div>content</div>
+        <div>content</div>
+        <div>content</div>
       </Group>
     );
   }

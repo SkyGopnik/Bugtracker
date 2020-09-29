@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   Header,
-  Group
+  Group,
+  Link,
+  Separator
 } from "@vkontakte/vkui";
 
 import ReportItem, { IProps as ReportItemProps } from '../../MainPanel/Reports/ReportItem/ReportItem';
@@ -23,7 +25,8 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <Group className={className ? className : ''} header={<Header indicator={list.length}>Отчеты</Header>} separator="hide">
+      <Group className={className ? className : ''} header={<Header indicator={list.length} aside={<Link>Показать все</Link>}>Отчеты</Header>} separator="hide">
+        <Separator />
         {list.map((report, index) => (
           <ReportItem
             key={`user-panel-report-item-${index}`}

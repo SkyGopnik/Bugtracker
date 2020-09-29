@@ -11,7 +11,7 @@ export interface IProps {
   name: string,
   tags: Array<string>,
   author: string,
-  date: string,
+  date: string, 
   status: string
 }
 
