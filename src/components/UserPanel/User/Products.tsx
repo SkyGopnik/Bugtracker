@@ -21,13 +21,11 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
-        <Group header={<Header indicator="test">Продукты</Header>}>
-          {products.map((product, index) => (
-            'test'
-          ))}
-        </Group>
-      </div>
+      <Group header={<Header indicator="test">Продукты</Header>}>
+        {products.map((product, index) => (
+          'test'
+        ))}
+      </Group>
     );
   }
 }

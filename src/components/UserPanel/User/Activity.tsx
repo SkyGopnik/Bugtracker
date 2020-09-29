@@ -19,11 +19,9 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
-        <Group header={<Header indicator={date}>Активность</Header>}>
+      <Group header={<Header indicator={date}>Активность</Header>}>
 
-        </Group>
-      </div>
+      </Group>
     );
   }
 }

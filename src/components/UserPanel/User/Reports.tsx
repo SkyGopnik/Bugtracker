@@ -21,20 +21,18 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
-        <Group header={<Header indicator={reports.length}>Отчеты</Header>} separator="hide">
-          {reports.map((report, index) => (
-            <ReportItem
-              key={`user-panel-report-item-${index}`}
-              name={report.name}
-              tags={report.tags}
-              author={report.author}
-              date={report.date}
-              status={report.status}
-            />
-          ))}
-        </Group>
-      </div>
+      <Group header={<Header indicator={reports.length}>Отчеты</Header>} separator="hide">
+        {reports.map((report, index) => (
+          <ReportItem
+            key={`user-panel-report-item-${index}`}
+            name={report.name}
+            tags={report.tags}
+            author={report.author}
+            date={report.date}
+            status={report.status}
+          />
+        ))}
+      </Group>
     );
   }
 }

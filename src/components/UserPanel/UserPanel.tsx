@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  Link,
-  Cell,
-  Avatar,
-  Group
-} from "@vkontakte/vkui";
 
-import Activity from './UserPanel/Activity';
-
-import styles from './UserPanel.scss';
+import Avatar from "./User/Avatar";
+import Activity from "./User/Activity";
+import Products from "./User/Products";
+import Reports from "./User/Reports";
 
 interface IProps {
   name: string,
@@ -32,12 +27,7 @@ export default class extends React.Component<IProps> {
 
     return (
       <div>
-        <Group>
-          <Cell before={<Avatar size={80} src={src} />}>
-            <div className={styles.name}>{name}</div>
-            <div className={styles.rating}>#{rating} в общем рейтинге, <Link>{reports.length} отчётов</Link></div>
-          </Cell>
-        </Group>
+        
       </div>
     );
   }
