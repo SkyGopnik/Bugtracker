@@ -4,7 +4,7 @@ import {
   Group
 } from "@vkontakte/vkui";
 
-import ReportItem, { IProps as ReportItemProps } from '../MainPanel/Reports/ReportItem/ReportItem';
+import ReportItem, { IProps as ReportItemProps } from '../../MainPanel/Reports/ReportItem/ReportItem';
 
 interface IProps {
   reports: Array<ReportItemProps>,
