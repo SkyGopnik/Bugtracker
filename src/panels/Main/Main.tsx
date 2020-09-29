@@ -38,6 +38,8 @@ export default class extends React.Component<IProps, IState> {
       isDesktop: true
     };
 
+    console.log('test');
+
     this.mainBlock = React.createRef();
   }
 
