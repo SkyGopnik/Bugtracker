@@ -3,7 +3,8 @@ import {
   Avatar,
   Cell,
   Group,
-  Link
+  Link,
+  SimpleCell
 } from "@vkontakte/vkui";
 
 import styles from './NotificationItem.scss';
@@ -40,9 +41,9 @@ export default class extends React.Component<IProps> {
 
     return (
       <Group>
-        <Cell
+        <SimpleCell
           before={<Avatar size={48} src={src} />}
-          asideContent={<Icon28ChevronRightOutline />}
+          after={<Icon28ChevronRightOutline />}
           multiline
         >
           <div className={styles.name}>
@@ -60,7 +61,7 @@ export default class extends React.Component<IProps> {
           <div className={styles.data}>
             {date}, <Link>{title}</Link>
           </div>
-        </Cell>
+        </SimpleCell>
       </Group>
     );
   }

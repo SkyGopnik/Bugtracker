@@ -148,7 +148,26 @@ export default class extends React.Component<IProps, IState> {
                   }}
                   products={{
                     list: [
-
+                      {
+                        name: 'Отзывы',
+                        report: '600 отчётов',
+                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                      },
+                      {
+                        name: 'Отзывы',
+                        report: '600 отчётов',
+                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                      },
+                      {
+                        name: 'Отзывы',
+                        report: '600 отчётов',
+                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                      },
+                      {
+                        name: 'Отзывы',
+                        report: '600 отчётов',
+                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                      }
                     ]
                   }}
                 />

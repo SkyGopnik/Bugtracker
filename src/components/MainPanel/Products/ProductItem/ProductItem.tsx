@@ -3,7 +3,8 @@ import {
   Cell,
   Button,
   Avatar,
-  Group
+  Group,
+  SimpleCell
 } from "@vkontakte/vkui";
 
 import styles from './ProductItem.scss';
@@ -32,22 +33,22 @@ export default class extends React.Component<IProps> {
 
     return (
       <Group>
-        <Cell
-          asideContent={
+        <SimpleCell
+          before={<Avatar className={styles.avatar} size={80} src={src} />}
+          after={
             button && (
               <Button>
                 {button}
               </Button>
             )
           }
-          before={<Avatar className={styles.avatar} size={80} src={src} />}
           description={version}
           //onClick={go}
           multiline
         >
           {name}
           <div className={styles.statistic}>{statistic}</div>
-        </Cell>
+        </SimpleCell>
       </Group>
     );
   }

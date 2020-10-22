@@ -1,13 +1,15 @@
 import React from 'react';
 import {
   FormLayout,
+  FormLayoutGroup,
   Select,
   Input,
   List,
   Cell,
   Textarea,
   Button,
-  Checkbox
+  Checkbox,
+  Chip
 } from "@vkontakte/vkui";
 
 import Icon28Camera from '@vkontakte/icons/dist/28/camera';
@@ -23,7 +25,6 @@ export default class extends React.Component {
     return (
       <FormLayout>
         <Select
-            top="Продукт"
             placeholder="Выберите продукт"
         >
             <option value="0">Одноклассники для Android</option>
@@ -33,22 +34,28 @@ export default class extends React.Component {
             <option value="4">Мечты</option>
             <option value="5">Отзывы</option>
         </Select>
-        <Select
-            top="Платформы"
-            placeholder="Выберите платформы"
-            bottom="Укажите платформы, на которых воспроизводится баг"
-        >
+        <FormLayoutGroup>
+          <Select placeholder="Выберите платформы">
             <option value="0">Android</option>
             <option value="1">IOS</option>
             <option value="2">Windows</option>
             <option value="3">MacOS</option>
             <option value="4">Linux</option>
             <option value="5">Windows Phone</option>
-        </Select>
+          </Select>
+          <div>
+            <Chip
+              value="1"
+              removable={false}
+            />
+            <Chip
+              value="2"
+              removable
+            />
+          </div>
+        </FormLayoutGroup>
         <Select
-            top="Версия ОС"
             placeholder="Выберите версию ОС"
-            bottom="Укажите версии, на которых воспроизводится баг"
         >
             <option value="0">4.4</option>
             <option value="1">5</option>
@@ -59,7 +66,6 @@ export default class extends React.Component {
         </Select>
         <Input
             type="email"
-            top="Заголовок"
             placeholder="Коротко опишите суть бага"
         />
         <List>
@@ -85,32 +91,29 @@ export default class extends React.Component {
                 <div className="model-device">6s</div>
             </Cell>
         </List>
-        <Textarea 
-            top="Шаги воспроизведения"
-            placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3." 
+        <Textarea
+            placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
         />
-        <Textarea 
-            top="Фактический результат"
-            placeholder="Когда я совершаю действие А, происходит Б" 
+        <Textarea
+            placeholder="Когда я совершаю действие А, происходит Б"
         />
-        <Textarea 
-            top="Ожидаемый результат"
-            placeholder="Когда я совершаю действие А, должно происходить В" 
+        <Textarea
+            placeholder="Когда я совершаю действие А, должно происходить В"
         />
         <div style={{display: 'flex'}}>
-            <Button 
+            <Button
                 before={<Icon28Camera />}
-                size="l" 
-                stretched 
-                mode="secondary" 
+                size="l"
+                stretched
+                mode="secondary"
                 style={{ marginRight: 8 }}
             >
                 Скриншот
             </Button>
-            <Button 
-                before={<Icon28Document />} 
-                size="l" 
-                stretched 
+            <Button
+                before={<Icon28Document />}
+                size="l"
+                stretched
                 mode="secondary"
             >
                 Документ
@@ -118,9 +121,7 @@ export default class extends React.Component {
         </div>
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
         <Select
-            top="Теги"
             placeholder="Выберите теги"
-            bottom="Выберете темы, к которым имеет отношение баг"
         >
             <option value="0">Дизайн</option>
             <option value="1">Лента</option>
@@ -130,7 +131,6 @@ export default class extends React.Component {
             <option value="5">Видеозаписи</option>
         </Select>
         <Select
-            top="Тип проблемы"
             placeholder="Выберите тип проблемы"
         >
             <option value="0">Падение приложения</option>
@@ -143,7 +143,6 @@ export default class extends React.Component {
             <option value="7">Пожелание</option>
         </Select>
         <Select
-            top="Приоритет"
             placeholder="Выберите приоритет"
         >
             <option value="0">Низкий</option>
@@ -152,7 +151,7 @@ export default class extends React.Component {
             <option value="3">Критический</option>
             <option value="4">Уязвимост</option>
         </Select>
-        <Button size="xl">Создать отчёт</Button>
+        <Button size="l">Создать отчёт</Button>
       </FormLayout>
     );
   }

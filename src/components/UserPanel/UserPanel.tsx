@@ -4,7 +4,7 @@ import { Icon28ChevronRightOutline } from "@vkontakte/icons";
 
 import Avatar, { IProps as AvatarProps } from "./User/Avatar";
 import Activity, { IProps as ActivityProps } from "./User/Activity";
-import Products, { IProps as ProductsProps } from "./User/Products";
+import Products, { IProps as ProductsProps } from "./User/Products/Products";
 import Reports, { IProps as ReportsProps } from "./User/Reports";
 import { Header, Separator } from "@vkontakte/vkui";
 
@@ -64,10 +64,12 @@ export default class extends React.Component<IProps> {
           className={groupClassName}
           date={activity.date}
         />
-        <Products
-          className={groupClassName}
-          list={products.list}
-        />
+        {products.list.length && (
+          <Products
+            className={groupClassName}
+            list={products.list}
+          />
+        )}
         <Reports
           className={groupClassName}
           list={reports.list}

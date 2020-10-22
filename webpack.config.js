@@ -1,12 +1,10 @@
-// require('babel-polyfill');
-
 const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, './src/js/index.jsx'),
+  entry: path.resolve(__dirname, './src/js/index.tsx'),
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin(),
@@ -16,8 +14,8 @@ module.exports = {
     })
   ],
   output: {
-    path: path.join(__dirname, '/www'),
-    filename: '[name].[contenthash].js'
+    path: path.resolve(__dirname, '/www'),
+    filename: '[name].[hash].js'
   },
   optimization: {
     runtimeChunk: 'single',
@@ -44,6 +42,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx)$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
@@ -53,6 +56,9 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           'style-loader',
+          {
+            loader: require.resolve('css-modules-typescript-loader')
+          },
           {
             loader: require.resolve('css-loader'),
             options: {
@@ -95,6 +101,10 @@ module.exports = {
     hints: false
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    modules: ['node_modules', path.resolve('./src')],
+    alias: {
+      src: path.resolve(__dirname, './src')
+    },
+    extensions: ['.tsx', '.ts', '.js', '.jsx']
   }
 };

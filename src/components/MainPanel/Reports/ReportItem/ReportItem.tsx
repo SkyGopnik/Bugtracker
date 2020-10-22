@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  Cell, 
-  Group 
+import {
+  Cell,
+  Group
 } from "@vkontakte/vkui";
 
 // @ts-ignore
@@ -11,7 +11,7 @@ export interface IProps {
   name: string,
   tags: Array<string>,
   author: string,
-  date: string, 
+  date: string,
   status: string
 }
 

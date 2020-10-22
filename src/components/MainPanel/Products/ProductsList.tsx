@@ -59,13 +59,13 @@ export default class extends React.Component<IProps, IState> {
           <>
             <ProductItem
               name={"CooK"}
-              statistic={"152 отчёта, 70 открытых, 10 пожеланий"}
+              statistic={"152 отчёта, 10 пожеланий"}
               version={`Версия: {1.0.1}`}
               src="https://sun2.velcom-by-minsk.userapi.com/c853528/v853528146/149624/K8N6X2dCoOA.jpg"
             />
             <ProductItem
               name={"Мечты"}
-              statistic={"152 отчёта, 70 открытых, 10 пожеланий"}
+              statistic={"152 отчёта, 10 пожеланий"}
               version={`Версия: {1.0.1}`}
               src="https://sun2.velcom-by-minsk.userapi.com/c853528/v853528146/149624/K8N6X2dCoOA.jpg"
               button={"Запустить"}

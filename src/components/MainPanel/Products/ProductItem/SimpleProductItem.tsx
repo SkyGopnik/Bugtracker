@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  Cell,
-  Avatar,
-  Group
+  SimpleCell,
+  Avatar
 } from "@vkontakte/vkui";
 
 import styles from './ProductItem.scss';
@@ -10,7 +9,7 @@ import styles from './ProductItem.scss';
 export interface IProps {
   name: string,
   report: string,
-  src: string,
+  src: string
 }
 
 export default class extends React.Component<IProps> {
@@ -22,20 +21,21 @@ export default class extends React.Component<IProps> {
     const {
       name,
       report,
-      src,
+      src
     } = this.props;
 
     return (
-      <Group>
-        <Cell
-          asideContent={report}
+      <div className={styles.productItem}>
+        <SimpleCell
           before={<Avatar className={styles.avatar} size={48} src={src} />}
+          after={report}
           //onClick={go}
           multiline
         >
           {name}
-        </Cell>
-      </Group>
+        </SimpleCell>
+      </div>
     );
   }
 }
+
