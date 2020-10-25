@@ -12,9 +12,6 @@ import {
   Chip
 } from "@vkontakte/vkui";
 
-import Icon28Camera from '@vkontakte/icons/dist/28/camera';
-import Icon28Document from '@vkontakte/icons/dist/28/document';
-
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -100,25 +97,25 @@ export default class extends React.Component {
         <Textarea
             placeholder="Когда я совершаю действие А, должно происходить В"
         />
-        <div style={{display: 'flex'}}>
-            <Button
-                before={<Icon28Camera />}
-                size="l"
-                stretched
-                mode="secondary"
-                style={{ marginRight: 8 }}
-            >
-                Скриншот
-            </Button>
-            <Button
-                before={<Icon28Document />}
-                size="l"
-                stretched
-                mode="secondary"
-            >
-                Документ
-            </Button>
-        </div>
+        {/*<div style={{display: 'flex'}}>*/}
+        {/*    <Button*/}
+        {/*        before={<Icon28Camera />}*/}
+        {/*        size="l"*/}
+        {/*        stretched*/}
+        {/*        mode="secondary"*/}
+        {/*        style={{ marginRight: 8 }}*/}
+        {/*    >*/}
+        {/*        Скриншот*/}
+        {/*    </Button>*/}
+        {/*    <Button*/}
+        {/*        before={<Icon28Document />}*/}
+        {/*        size="l"*/}
+        {/*        stretched*/}
+        {/*        mode="secondary"*/}
+        {/*    >*/}
+        {/*        Документ*/}
+        {/*    </Button>*/}
+        {/*</div>*/}
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
         <Select
             placeholder="Выберите теги"

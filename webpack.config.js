@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/js/index.tsx'),
+  entry: path.join(__dirname, './src/js/index.tsx'),
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin(),
@@ -13,9 +13,16 @@ module.exports = {
       title: 'Caching'
     })
   ],
+  resolve: {
+    modules: ['node_modules', path.resolve('./src')],
+    alias: {
+      src: path.resolve(__dirname, './src')
+    },
+    extensions: ['.tsx', '.ts', '.js', '.jsx']
+  },
   output: {
-    path: path.resolve(__dirname, '/www'),
-    filename: '[name].[hash].js'
+    path: path.join(__dirname, '/www'),
+    filename: '[name].[contenthash].js'
   },
   optimization: {
     runtimeChunk: 'single',
@@ -85,7 +92,7 @@ module.exports = {
       {
         test: /\.(css|scss)$/,
         include: /node_modules/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -99,12 +106,5 @@ module.exports = {
   },
   performance: {
     hints: false
-  },
-  resolve: {
-    modules: ['node_modules', path.resolve('./src')],
-    alias: {
-      src: path.resolve(__dirname, './src')
-    },
-    extensions: ['.tsx', '.ts', '.js', '.jsx']
   }
 };
