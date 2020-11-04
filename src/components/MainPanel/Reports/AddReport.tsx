@@ -40,16 +40,6 @@ export default class extends React.Component {
             <option value="4">Linux</option>
             <option value="5">Windows Phone</option>
           </Select>
-          <div>
-            <Chip
-              value="1"
-              removable={false}
-            />
-            <Chip
-              value="2"
-              removable
-            />
-          </div>
         </FormLayoutGroup>
         <Select
             placeholder="Выберите версию ОС"
