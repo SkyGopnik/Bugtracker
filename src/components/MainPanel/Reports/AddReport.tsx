@@ -13,17 +13,117 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
+interface FormItem { 
+  value: string,
+  error?: string
+}
+
+interface IState {
+  form: {
+    product: FormItem,
+    platform: FormItem,
+    osname: FormItem,
+    title: FormItem,
+    device: FormItem,
+    steps: FormItem,
+    result: FormItem,
+    oresult: FormItem,
+    tags: FormItem,
+    type: FormItem,
+    priority: FormItem
+  }
+}
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      form: {
+        product: {
+          value: ''
+        },
+        platform: {
+          value: ''
+        },
+        osname: {
+          value: ''
+        },
+        title: {
+          value: ''
+        },
+        device: {
+          value: ''
+        },
+        steps: {
+          value: ''
+        },
+        result: {
+          value: ''
+        },
+        oresult: {
+          value: ''
+        },
+        tags: {
+          value: ''
+        },
+        type: {
+          value: ''
+        },
+        priority: {
+          value: ''
+        }
+      }
+    }
+
+  }
+
+  handleInputChange = (e) => {
+    const { form } = this.state
+    const { value, name } = e.currentTarget;
+    const newForm = { ...form };
+
+    newForm[name].value = value;
+
+    this.setState({
+      form: newForm
+    });
+  }
+  handleSelectChange = ({ name, value }) => {
+    const { form } = this.state
+    const newForm = { ...form };
+
+    newForm[name].value = value;
+    console.log(name);
+    console.log(value);
+    this.setState({
+      form: newForm
+    });
   }
 
   render() {
+    const { form } = this.state;
+    const { 
+      product,
+      platform,
+      osname,
+      title,
+      device,
+      steps,
+      result,
+      oresult,
+      tags,
+      type,
+      priority
+    } = form;
 
     return (
       <FormLayout>
         <FormItem top="Выберите продукт">
         <Select
+            name="product" 
+            value="product.value"
+            onChange={this.handleSelectChange}
             placeholder="Выберите продукт"
         >
             <option value="0">Одноклассники для Android</option>
@@ -36,7 +136,12 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Выберите платформы">
         <FormLayoutGroup>
-          <Select placeholder="Выберите платформы">
+          <Select
+            placeholder="Выберите платформы"
+            name="platform" 
+            value="platform.value"
+            onChange={this.handleSelectChange}
+            >
             <option value="0">Android</option>
             <option value="1">IOS</option>
             <option value="2">Windows</option>
@@ -48,6 +153,9 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Выберте версию ОС">
         <Select
+            name="osname" 
+            value="osname.value"
+            onChange={this.handleSelectChange}
             placeholder="Выберите версию ОС"
         >
             <option value="0">4.4</option>
@@ -60,7 +168,10 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Название">
         <Input
-            type="email"
+            name="title"
+            value={title.value}
+            onChange={this.handleInputChange}
+            type="text"
             placeholder="Коротко опишите суть бага"
         />
         </FormItem>
@@ -89,16 +200,25 @@ export default class extends React.Component {
         </List>
         <FormItem top="Шаги воспроизведения">
         <Textarea
+            name="steps"
+            value={steps.value}
+            onChange={this.handleInputChange}
             placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
         />
         </FormItem>
         <FormItem top="Фактический результат">
         <Textarea
+            name="result"
+            value={result.value}
+            onChange={this.handleInputChange}
             placeholder="Когда я совершаю действие А, происходит Б"
         />
         </FormItem>
         <FormItem top="Ожидаемый результат">
         <Textarea
+            name="oresult"
+            value={oresult.value}
+            onChange={this.handleInputChange}
             placeholder="Когда я совершаю действие А, должно происходить В"
         />
         </FormItem>
@@ -124,6 +244,9 @@ export default class extends React.Component {
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
         <FormItem top="Теги, к которым имеет отношение баг">
         <Select
+            name="platform" 
+            value="platform.value"
+            onChange={this.handleSelectChange}
             placeholder="Выберите теги"
         >
             <option value="0">Дизайн</option>
@@ -136,6 +259,9 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Тип, к которому относится баг">
         <Select
+            name="platform" 
+            value="platform.value"
+            onChange={this.handleSelectChange}
             placeholder="Выберите тип проблемы"
         >
             <option value="0">Падение приложения</option>
@@ -150,6 +276,9 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Приоритет проблемы">
         <Select
+            name="platform" 
+            value="platform.value"
+            onChange={this.handleSelectChange}
             placeholder="Выберите приоритет"
         >
             <option value="0">Низкий</option>
