@@ -13,10 +13,12 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
-interface FormItem { 
+interface FormItem {
   value: string,
   error?: string
 }
+
+interface IProps {}
 
 interface IState {
   form: {
@@ -34,7 +36,7 @@ interface IState {
   }
 }
 
-export default class extends React.Component {
+export default class extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -103,7 +105,7 @@ export default class extends React.Component {
 
   render() {
     const { form } = this.state;
-    const { 
+    const {
       product,
       platform,
       osname,
@@ -120,25 +122,25 @@ export default class extends React.Component {
     return (
       <FormLayout>
         <FormItem top="Выберите продукт">
-        <Select
-            name="product" 
-            value="product.value"
+          <Select
+            name="product"
+            value={product.value}
             onChange={this.handleSelectChange}
             placeholder="Выберите продукт"
-        >
+          >
             <option value="0">Одноклассники для Android</option>
             <option value="1">Одноклассники для IOS</option>
             <option value="2">Одноклассники для Web</option>
             <option value="3">CooK</option>
             <option value="4">Мечты</option>
             <option value="5">Отзывы</option>
-        </Select>
+          </Select>
         </FormItem>
         <FormItem top="Выберите платформы">
         <FormLayoutGroup>
           <Select
             placeholder="Выберите платформы"
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             >
@@ -153,7 +155,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Выберте версию ОС">
         <Select
-            name="osname" 
+            name="osname"
             value="osname.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите версию ОС"
@@ -244,7 +246,7 @@ export default class extends React.Component {
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
         <FormItem top="Теги, к которым имеет отношение баг">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите теги"
@@ -259,7 +261,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Тип, к которому относится баг">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите тип проблемы"
@@ -276,7 +278,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Приоритет проблемы">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите приоритет"
