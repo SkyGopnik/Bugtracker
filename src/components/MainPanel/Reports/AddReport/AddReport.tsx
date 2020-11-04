@@ -13,12 +13,11 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
-import isset from 'src/functions/isset';
 import ProductItem from './ProductItem';
 
-export interface;
+import isset from 'src/functions/isset';
 
-interface FormItem { 
+export interface FormItem {
   value: string,
   error?: string,
   rules?: {
@@ -27,6 +26,8 @@ interface FormItem {
     required?: boolean
   }
 }
+
+interface IProps {}
 
 interface IState {
   form: {
@@ -44,7 +45,7 @@ interface IState {
   }
 }
 
-export default class extends React.Component {
+export default class extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -121,7 +122,7 @@ export default class extends React.Component {
           rules: {
             required: true,
             minLength: 5,
-            maxLength: 10 
+            maxLength: 10
           }
         },
         priority: {
@@ -134,7 +135,6 @@ export default class extends React.Component {
         }
       }
     }
-
   }
 
   handleInputChange = (e) => {
@@ -151,12 +151,12 @@ export default class extends React.Component {
         if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
           newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
       }
+    }
 
     this.setState({
       form: newForm
     });
   }
-}
 
   handleSelectChange = ({ name, value }) => {
     const { form } = this.state
@@ -170,9 +170,20 @@ export default class extends React.Component {
     });
   }
 
+  handleFormChange = (name: string, value: string) => {
+    const { form } = this.state
+    const newForm = { ...form };
+
+    newForm[name].value = value;
+
+    this.setState({
+      form: newForm
+    });
+  }
+
   render() {
     const { form } = this.state;
-    const { 
+    const {
       product,
       platform,
       osname,
@@ -188,12 +199,15 @@ export default class extends React.Component {
 
     return (
       <FormLayout>
-        <ProductItem/>
+        <ProductItem
+          item={product}
+          onValueChange={(value) => this.handleFormChange('product', value)}
+        />
         <FormItem top="Выберите платформы">
           <FormLayoutGroup>
             <Select
             placeholder="Выберите платформы"
-            name="platform" 
+            name="platform"
             value={platform.value}
             onChange={this.handleSelectChange}
             >
@@ -205,7 +219,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Выберте версию ОС">
           <Select
-            name="osname" 
+            name="osname"
             value={osname.value}
             onChange={this.handleSelectChange}
             placeholder="Выберите версию ОС"
@@ -215,7 +229,7 @@ export default class extends React.Component {
             ))}
           </Select>
         </FormItem>
-        <FormItem 
+        <FormItem
           top="Название"
           status={isset(title.error) ? (title.error ? 'error' : 'valid') : 'default'}
           bottom={title.error ? title.error : ''}
@@ -251,7 +265,7 @@ export default class extends React.Component {
                 <div className="model-device">6s</div>
             </Cell>
           </List>
-        <FormItem 
+        <FormItem
           top="Шаги воспроизведения"
           status={isset(steps.error) ? (steps.error ? 'error' : 'valid') : 'default'}
           bottom={steps.error ? steps.error : ''}
@@ -263,7 +277,7 @@ export default class extends React.Component {
             placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
         />
         </FormItem>
-        <FormItem 
+        <FormItem
           top="Фактический результат"
           status={isset(result.error) ? (result.error ? 'error' : 'valid') : 'default'}
           bottom={result.error ? result.error : ''}
@@ -275,7 +289,7 @@ export default class extends React.Component {
             placeholder="Когда я совершаю действие А, происходит Б"
         />
         </FormItem>
-        <FormItem 
+        <FormItem
           top="Ожидаемый результат"
           status={isset(oresult.error) ? (oresult.error ? 'error' : 'valid') : 'default'}
           bottom={oresult.error ? oresult.error : ''}
@@ -309,7 +323,7 @@ export default class extends React.Component {
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
         <FormItem top="Теги, к которым имеет отношение баг">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите теги"
@@ -321,7 +335,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Тип, к которому относится баг">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите тип проблемы"
@@ -333,7 +347,7 @@ export default class extends React.Component {
         </FormItem>
         <FormItem top="Приоритет проблемы">
         <Select
-            name="platform" 
+            name="platform"
             value="platform.value"
             onChange={this.handleSelectChange}
             placeholder="Выберите приоритет"

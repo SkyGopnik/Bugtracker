@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   Panel,
-  Button, PanelHeader
+  Button,
+  PanelHeader
 } from '@vkontakte/vkui';
 
 import MenuList from "src/components/MainPanel/Menu/MenuListContainer";
 import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopContent";
 
-import AddReport from "src/components/MainPanel/Reports/AddReport";
+import AddReport from "src/components/MainPanel/Reports/AddReport/AddReport";
 import Reports from "src/components/MainPanel/Reports/ReportsList";
 import Products from "src/components/MainPanel/Products/ProductsList";
 import Users from "src/components/MainPanel/Users/UsersList";

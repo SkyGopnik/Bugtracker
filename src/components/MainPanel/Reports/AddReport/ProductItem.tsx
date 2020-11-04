@@ -13,15 +13,16 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
+import { FormItem as FormItemInterface } from './AddReport';
+
 import isset from 'src/functions/isset';
-import { FormItem } from './AddReport';
 
 interface IProps {
-  onValueChange(value: string),
-  item: FormItem
+  item: FormItemInterface,
+  onValueChange(value: string)
 }
 
-export default class extends React.Component {
+export default class extends React.Component<IProps> {
   constructor(props) {
     super(props);
 
@@ -33,62 +34,30 @@ export default class extends React.Component {
             required: true
           }
         }
+      }
     }
-  }
-}
-
-  handleInputChange = (e) => {
-    const { form } = this.state
-    const { value, name } = e.currentTarget;
-    const newForm = { ...form };
-
-    newForm[name].value = value;
-
-    if(newForm[name].rules) {
-      if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
-        newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
-      }
-        if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
-          newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
-      }
-
-    this.setState({
-      form: newForm
-    });
-  }
-}
-
-  handleSelectChange = ({ name, value }) => {
-    const { form } = this.state
-    const newForm = { ...form };
-
-    newForm[name].value = value;
-    console.log(name);
-    console.log(value);
-    this.setState({
-      form: newForm
-    });
   }
 
   render() {
-    const { form } = this.state;
-    const { 
-      product
-    } = form;
+    const { item, onValueChange } = this.props;
 
     return (
-        <FormItem top="Выберите продукт">
-          <Select
-            name="product" 
-            value={product.value}
-            onChange={this.handleSelectChange}
-            placeholder="Выберите продукт"
-          >
-            {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
+      <FormItem
+        top="Выберите продукт"
+        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+        bottom={item.error ? item.error : ''}
+      >
+        <Select
+          name="product"
+          value={item.value}
+          onChange={(result) => onValueChange(String(result.value))}
+          placeholder="Выберите продукт"
+        >
+          {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
+          <option key={index} value={text}>{text}</option>
+          ))}
         </Select>
-        </FormItem>
+      </FormItem>
     );
   }
 }
