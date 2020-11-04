@@ -9,7 +9,8 @@ import {
   Textarea,
   Button,
   Checkbox,
-  Chip
+  Chip,
+  FormItem
 } from "@vkontakte/vkui";
 
 export default class extends React.Component {
@@ -21,6 +22,7 @@ export default class extends React.Component {
 
     return (
       <FormLayout>
+        <FormItem top="Выберите продукт">
         <Select
             placeholder="Выберите продукт"
         >
@@ -31,6 +33,8 @@ export default class extends React.Component {
             <option value="4">Мечты</option>
             <option value="5">Отзывы</option>
         </Select>
+        </FormItem>
+        <FormItem top="Выберите платформы">
         <FormLayoutGroup>
           <Select placeholder="Выберите платформы">
             <option value="0">Android</option>
@@ -40,17 +44,9 @@ export default class extends React.Component {
             <option value="4">Linux</option>
             <option value="5">Windows Phone</option>
           </Select>
-          <div>
-            <Chip
-              value="1"
-              removable={false}
-            />
-            <Chip
-              value="2"
-              removable
-            />
-          </div>
         </FormLayoutGroup>
+        </FormItem>
+        <FormItem top="Выберте версию ОС">
         <Select
             placeholder="Выберите версию ОС"
         >
@@ -61,10 +57,13 @@ export default class extends React.Component {
             <option value="4">9</option>
             <option value="5">10</option>
         </Select>
+        </FormItem>
+        <FormItem top="Название">
         <Input
             type="email"
             placeholder="Коротко опишите суть бага"
         />
+        </FormItem>
         <List>
             <Cell
                 description="Android 10.0 Q"
@@ -88,15 +87,21 @@ export default class extends React.Component {
                 <div className="model-device">6s</div>
             </Cell>
         </List>
+        <FormItem top="Шаги воспроизведения">
         <Textarea
             placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
         />
+        </FormItem>
+        <FormItem top="Фактический результат">
         <Textarea
             placeholder="Когда я совершаю действие А, происходит Б"
         />
+        </FormItem>
+        <FormItem top="Ожидаемый результат">
         <Textarea
             placeholder="Когда я совершаю действие А, должно происходить В"
         />
+        </FormItem>
         {/*<div style={{display: 'flex'}}>*/}
         {/*    <Button*/}
         {/*        before={<Icon28Camera />}*/}
@@ -117,6 +122,7 @@ export default class extends React.Component {
         {/*    </Button>*/}
         {/*</div>*/}
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
+        <FormItem top="Теги, к которым имеет отношение баг">
         <Select
             placeholder="Выберите теги"
         >
@@ -127,6 +133,8 @@ export default class extends React.Component {
             <option value="4">Фотографи</option>
             <option value="5">Видеозаписи</option>
         </Select>
+        </FormItem>
+        <FormItem top="Тип, к которому относится баг">
         <Select
             placeholder="Выберите тип проблемы"
         >
@@ -139,6 +147,8 @@ export default class extends React.Component {
             <option value="6">Ошибки в тексте</option>
             <option value="7">Пожелание</option>
         </Select>
+        </FormItem>
+        <FormItem top="Приоритет проблемы">
         <Select
             placeholder="Выберите приоритет"
         >
@@ -146,9 +156,12 @@ export default class extends React.Component {
             <option value="1">Средний</option>
             <option value="2">Высокий</option>
             <option value="3">Критический</option>
-            <option value="4">Уязвимост</option>
+            <option value="4">Уязвимость</option>
         </Select>
-        <Button size="l">Создать отчёт</Button>
+        </FormItem>
+        <FormItem>
+        <Button size="m">Создать отчёт</Button>
+        </FormItem>
       </FormLayout>
     );
   }
