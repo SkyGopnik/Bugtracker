@@ -120,51 +120,42 @@ export default class extends React.Component {
     return (
       <FormLayout>
         <FormItem top="Выберите продукт">
-        <Select
+          <Select
             name="product" 
-            value="product.value"
+            value={product.value}
             onChange={this.handleSelectChange}
             placeholder="Выберите продукт"
-        >
-            <option value="0">Одноклассники для Android</option>
-            <option value="1">Одноклассники для IOS</option>
-            <option value="2">Одноклассники для Web</option>
-            <option value="3">CooK</option>
-            <option value="4">Мечты</option>
-            <option value="5">Отзывы</option>
+          >
+            {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
         </Select>
         </FormItem>
         <FormItem top="Выберите платформы">
-        <FormLayoutGroup>
-          <Select
+          <FormLayoutGroup>
+            <Select
             placeholder="Выберите платформы"
             name="platform" 
-            value="platform.value"
+            value={platform.value}
             onChange={this.handleSelectChange}
             >
-            <option value="0">Android</option>
-            <option value="1">IOS</option>
-            <option value="2">Windows</option>
-            <option value="3">MacOS</option>
-            <option value="4">Linux</option>
-            <option value="5">Windows Phone</option>
-          </Select>
+                          {['Android', 'iOS','Windows','MacOS','Linux','Windows Phone'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
+            </Select>
         </FormLayoutGroup>
         </FormItem>
         <FormItem top="Выберте версию ОС">
-        <Select
+          <Select
             name="osname" 
-            value="osname.value"
+            value={osname.value}
             onChange={this.handleSelectChange}
             placeholder="Выберите версию ОС"
-        >
-            <option value="0">4.4</option>
-            <option value="1">5</option>
-            <option value="2">6</option>
-            <option value="3">7</option>
-            <option value="4">9</option>
-            <option value="5">10</option>
-        </Select>
+          >
+            {['4.4', '5','6','7','8','9','10'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
+          </Select>
         </FormItem>
         <FormItem top="Название">
         <Input
@@ -249,12 +240,9 @@ export default class extends React.Component {
             onChange={this.handleSelectChange}
             placeholder="Выберите теги"
         >
-            <option value="0">Дизайн</option>
-            <option value="1">Лента</option>
-            <option value="2">Стена</option>
-            <option value="3">Профиль</option>
-            <option value="4">Фотографи</option>
-            <option value="5">Видеозаписи</option>
+            {['Дизайн', 'Лента','Стена','Профиль','Фотографии','Видеозаписи'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
         </Select>
         </FormItem>
         <FormItem top="Тип, к которому относится баг">
@@ -264,14 +252,9 @@ export default class extends React.Component {
             onChange={this.handleSelectChange}
             placeholder="Выберите тип проблемы"
         >
-            <option value="0">Падение приложения</option>
-            <option value="1">Зависание приложения</option>
-            <option value="2">Неработающая функциональность</option>
-            <option value="3">Потеря данных</option>
-            <option value="4">Производительность</option>
-            <option value="5">Косметическое несоответствие</option>
-            <option value="6">Ошибки в тексте</option>
-            <option value="7">Пожелание</option>
+            {['Падение приложения', 'Зависание приложения','Неработающая функциональность','Потеря данных','Производительность','Косметическое несоответствие','Ошибки в тексте','Пожелание'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
         </Select>
         </FormItem>
         <FormItem top="Приоритет проблемы">
@@ -281,11 +264,9 @@ export default class extends React.Component {
             onChange={this.handleSelectChange}
             placeholder="Выберите приоритет"
         >
-            <option value="0">Низкий</option>
-            <option value="1">Средний</option>
-            <option value="2">Высокий</option>
-            <option value="3">Критический</option>
-            <option value="4">Уязвимость</option>
+                      {['Низкий', 'Средний','Высокий','Критический','Уязвимость'].map((text, index) => (
+            <option key={index} value={text}>{text}</option>
+            ))}
         </Select>
         </FormItem>
         <FormItem>
