@@ -13,9 +13,16 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
+import isset from 'src/functions/isset';
+
 interface FormItem { 
   value: string,
-  error?: string
+  error?: string,
+  rules?: {
+    minLength?: number,
+    maxLength?: number,
+    required?: boolean
+  }
 }
 
 interface IState {
@@ -41,37 +48,86 @@ export default class extends React.Component {
     this.state = {
       form: {
         product: {
-          value: ''
+          value: '',
+          rules: {
+            required: true
+          }
         },
         platform: {
-          value: ''
+          value: '',
+          rules: {
+            required: true
+          }
         },
         osname: {
-          value: ''
+          value: '',
+          rules: {
+            required: true
+          }
         },
         title: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         device: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         steps: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         result: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         oresult: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         tags: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         },
         type: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10 
+          }
         },
         priority: {
-          value: ''
+          value: '',
+          rules: {
+            required: true,
+            minLength: 5,
+            maxLength: 10
+          }
         }
       }
     }
@@ -85,10 +141,20 @@ export default class extends React.Component {
 
     newForm[name].value = value;
 
+    if(newForm[name].rules) {
+      if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
+        newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
+      }
+        if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
+          newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
+      }
+
     this.setState({
       form: newForm
     });
   }
+}
+
   handleSelectChange = ({ name, value }) => {
     const { form } = this.state
     const newForm = { ...form };
@@ -157,16 +223,20 @@ export default class extends React.Component {
             ))}
           </Select>
         </FormItem>
-        <FormItem top="Название">
-        <Input
+        <FormItem 
+          top="Название"
+          status={isset(title.error) ? (title.error ? 'error' : 'valid') : 'default'}
+          bottom={title.error ? title.error : ''}
+          >
+          <Input
             name="title"
             value={title.value}
             onChange={this.handleInputChange}
             type="text"
             placeholder="Коротко опишите суть бага"
-        />
+          />
         </FormItem>
-        <List>
+          <List>
             <Cell
                 description="Android 10.0 Q"
                 selectable
@@ -175,7 +245,7 @@ export default class extends React.Component {
                 <div className="model-device">SM-N960FZKD</div>
             </Cell>
             <Cell
-                description="Windovs 10"
+                description="Windows 10"
                 selectable
             >
                 <div>Lenovo</div>
@@ -188,8 +258,12 @@ export default class extends React.Component {
                 <div>Apple IPhone 6s</div>
                 <div className="model-device">6s</div>
             </Cell>
-        </List>
-        <FormItem top="Шаги воспроизведения">
+          </List>
+        <FormItem 
+          top="Шаги воспроизведения"
+          status={isset(steps.error) ? (steps.error ? 'error' : 'valid') : 'default'}
+          bottom={steps.error ? steps.error : ''}
+        >
         <Textarea
             name="steps"
             value={steps.value}
@@ -197,7 +271,11 @@ export default class extends React.Component {
             placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
         />
         </FormItem>
-        <FormItem top="Фактический результат">
+        <FormItem 
+          top="Фактический результат"
+          status={isset(result.error) ? (result.error ? 'error' : 'valid') : 'default'}
+          bottom={result.error ? result.error : ''}
+          >
         <Textarea
             name="result"
             value={result.value}
@@ -205,7 +283,11 @@ export default class extends React.Component {
             placeholder="Когда я совершаю действие А, происходит Б"
         />
         </FormItem>
-        <FormItem top="Ожидаемый результат">
+        <FormItem 
+          top="Ожидаемый результат"
+          status={isset(oresult.error) ? (oresult.error ? 'error' : 'valid') : 'default'}
+          bottom={oresult.error ? oresult.error : ''}
+          >
         <Textarea
             name="oresult"
             value={oresult.value}
