@@ -22,7 +22,9 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem top="Выберите платформы">
+      <FormItem 
+        top="Выберите платформы"
+      >
         <Select
           placeholder="Выберите платформы"
           name="platform"
@@ -30,10 +32,10 @@ export default class extends React.Component<IProps> {
           onChange={(result) => onValueChange(String(result.value))}
         >
         {['Android', 'iOS','Windows','MacOS','Linux','Windows Phone'].map((text, index) => (
-        <option key={index} value={text}>{text}</option>
+          <option key={index} value={text}>{text}</option>
         ))}
         </Select>
-    </FormItem>
+      </FormItem>
     );
   }
 }
