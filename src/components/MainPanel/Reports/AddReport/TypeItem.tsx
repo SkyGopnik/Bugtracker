@@ -22,21 +22,16 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem
-        top="Выберите продукт"
-        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
-        bottom={item.error ? item.error : ''}
-      >
-        <Select
-          name="product"
-          value={item.value}
+      <FormItem top="Теги, к которым имеет отношение баг">
+      <Select
+          value="item.value"
           onChange={(result) => onValueChange(String(result.value))}
-          placeholder="Выберите продукт"
-        >
-          {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
+          placeholder="Выберите теги"
+      >
+          {['Дизайн', 'Лента','Стена','Профиль','Фотографии','Видеозаписи'].map((text, index) => (
+          <option key={index} value={text}>{text}</option>
           ))}
-        </Select>
+      </Select>
       </FormItem>
     );
   }

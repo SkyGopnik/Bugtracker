@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Select,
-  FormItem
+  FormItem,
+  Textarea
 } from "@vkontakte/vkui";
 
 import { FormItem as FormItemInterface } from './AddReport';
@@ -22,22 +23,18 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem
-        top="Выберите продукт"
-        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
-        bottom={item.error ? item.error : ''}
-      >
-        <Select
-          name="product"
-          value={item.value}
-          onChange={(result) => onValueChange(String(result.value))}
-          placeholder="Выберите продукт"
-        >
-          {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-          ))}
-        </Select>
-      </FormItem>
+    <FormItem
+      top="Фактический результат"
+      status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+      bottom={item.error ? item.error : ''}
+    >
+    <Textarea
+        name="item"
+        value={item.value}
+        onChange={(e) => onValueChange(String(e.currentTarget.value))}
+        placeholder="Когда я совершаю действие А, происходит Б"
+    />
+    </FormItem>
     );
   }
 }

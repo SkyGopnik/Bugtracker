@@ -24,10 +24,11 @@ export default class extends React.Component<IProps> {
     return (
       <FormItem 
         top="Выберите платформы"
+        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+        bottom={item.error ? item.error : ''}
       >
         <Select
           placeholder="Выберите платформы"
-          name="platform"
           value={item.value}
           onChange={(result) => onValueChange(String(result.value))}
         >
