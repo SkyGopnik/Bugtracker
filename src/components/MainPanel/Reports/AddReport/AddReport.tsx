@@ -21,6 +21,7 @@ import DeviceItem from './DeviceItem';
 import StepsItem from './StepsItem';
 import ResultItem from './ResultItem';
 import OresultItem from './OResultItem';
+import TagsItem from './TagsItem';
 import TypeItem from './TypeItem';
 import PriorityItem from './PriorityItem';
 
@@ -214,34 +215,17 @@ export default class extends React.Component<IProps, IState> {
           onValueChange={(value) => this.handleFormChange('product', value)}
         />
         <PlatformItem
-          item={product}
+          item={platform}
           onValueChange={(value) => this.handleFormChange('platform', value)}
         />
-        <FormItem top="Выберте версию ОС">
-          <Select
-            name="osname"
-            value={osname.value}
-            onChange={this.handleSelectChange}
-            placeholder="Выберите версию ОС"
-          >
-            {['4.4', '5','6','7','8','9','10'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
-          </Select>
-        </FormItem>
-        <FormItem
-          top="Название"
-          status={isset(title.error) ? (title.error ? 'error' : 'valid') : 'default'}
-          bottom={title.error ? title.error : ''}
-          >
-          <Input
-            name="title"
-            value={title.value}
-            onChange={this.handleInputChange}
-            type="text"
-            placeholder="Коротко опишите суть бага"
-          />
-        </FormItem>
+        <OsItem
+          item={osname}
+          onValueChange={(value) => this.handleFormChange('osname', value)}
+        />
+        <TitleItem
+        item={title}
+        onValueChange={(value) => this.handleFormChange('title', value)}
+        />
           <List>
             <Cell
                 description="Android 10.0 Q"
@@ -265,42 +249,18 @@ export default class extends React.Component<IProps, IState> {
                 <div className="model-device">6s</div>
             </Cell>
           </List>
-        <FormItem
-          top="Шаги воспроизведения"
-          status={isset(steps.error) ? (steps.error ? 'error' : 'valid') : 'default'}
-          bottom={steps.error ? steps.error : ''}
-        >
-        <Textarea
-            name="steps"
-            value={steps.value}
-            onChange={this.handleInputChange}
-            placeholder="1. Откройте раздел &#10;2. Активируйте поле ввода &#10;3."
+        <StepsItem
+          item={steps}
+          onValueChange={(value) => this.handleFormChange('steps', value)}
         />
-        </FormItem>
-        <FormItem
-          top="Фактический результат"
-          status={isset(result.error) ? (result.error ? 'error' : 'valid') : 'default'}
-          bottom={result.error ? result.error : ''}
-          >
-        <Textarea
-            name="result"
-            value={result.value}
-            onChange={this.handleInputChange}
-            placeholder="Когда я совершаю действие А, происходит Б"
+        <ResultItem
+          item={result}
+          onValueChange={(value) => this.handleFormChange('result', value)}
         />
-        </FormItem>
-        <FormItem
-          top="Ожидаемый результат"
-          status={isset(oresult.error) ? (oresult.error ? 'error' : 'valid') : 'default'}
-          bottom={oresult.error ? oresult.error : ''}
-          >
-        <Textarea
-            name="oresult"
-            value={oresult.value}
-            onChange={this.handleInputChange}
-            placeholder="Когда я совершаю действие А, должно происходить В"
+        <OresultItem
+          item={oresult}
+          onValueChange={(value) => this.handleFormChange('oresult', value)}
         />
-        </FormItem>
         {/*<div style={{display: 'flex'}}>*/}
         {/*    <Button*/}
         {/*        before={<Icon28Camera />}*/}
@@ -321,42 +281,18 @@ export default class extends React.Component<IProps, IState> {
         {/*    </Button>*/}
         {/*</div>*/}
         <Checkbox>Скрыть документы из публичного доступа</Checkbox>
-        <FormItem top="Теги, к которым имеет отношение баг">
-        <Select
-            name="platform"
-            value="platform.value"
-            onChange={this.handleSelectChange}
-            placeholder="Выберите теги"
-        >
-            {['Дизайн', 'Лента','Стена','Профиль','Фотографии','Видеозаписи'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
-        </Select>
-        </FormItem>
-        <FormItem top="Тип, к которому относится баг">
-        <Select
-            name="platform"
-            value="platform.value"
-            onChange={this.handleSelectChange}
-            placeholder="Выберите тип проблемы"
-        >
-            {['Падение приложения', 'Зависание приложения','Неработающая функциональность','Потеря данных','Производительность','Косметическое несоответствие','Ошибки в тексте','Пожелание'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
-        </Select>
-        </FormItem>
-        <FormItem top="Приоритет проблемы">
-        <Select
-            name="platform"
-            value="platform.value"
-            onChange={this.handleSelectChange}
-            placeholder="Выберите приоритет"
-        >
-                      {['Низкий', 'Средний','Высокий','Критический','Уязвимость'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
-        </Select>
-        </FormItem>
+        <TagsItem
+          item={tags}
+          onValueChange={(value) => this.handleFormChange('tags', value)}
+        />
+        <TypeItem
+          item={type}
+          onValueChange={(value) => this.handleFormChange('type', value)}
+        />
+        <PriorityItem
+          item={priority}
+          onValueChange={(value) => this.handleFormChange('priority', value)}
+        />
         <FormItem>
         <Button size="m">Создать отчёт</Button>
         </FormItem>

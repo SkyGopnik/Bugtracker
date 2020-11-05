@@ -28,7 +28,6 @@ export default class extends React.Component<IProps> {
         bottom={item.error ? item.error : ''}
       >
         <Select
-          name="product"
           value={item.value}
           onChange={(result) => onValueChange(String(result.value))}
           placeholder="Выберите продукт"

@@ -22,22 +22,17 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem
-        top="Выберите продукт"
-        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
-        bottom={item.error ? item.error : ''}
-      >
-        <Select
-          name="product"
-          value={item.value}
+    <FormItem top="Приоритет проблемы">
+      <Select
+          value="item.value"
           onChange={(result) => onValueChange(String(result.value))}
-          placeholder="Выберите продукт"
-        >
-          {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
+          placeholder="Выберите приоритет"
+      >
+          {['Низкий', 'Средний','Высокий','Критический','Уязвимость'].map((text, index) => (
             <option key={index} value={text}>{text}</option>
           ))}
-        </Select>
-      </FormItem>
+      </Select>
+    </FormItem>
     );
   }
 }
