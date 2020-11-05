@@ -1,8 +1,7 @@
 import React from 'react';
 import {
   Select,
-  FormItem,
-  FormLayoutGroup
+  FormItem
 } from "@vkontakte/vkui";
 
 import { FormItem as FormItemInterface } from './AddReport';

@@ -217,20 +217,6 @@ export default class extends React.Component<IProps, IState> {
           item={product}
           onValueChange={(value) => this.handleFormChange('platform', value)}
         />
-        <FormItem top="Выберите платформы">
-          <FormLayoutGroup>
-            <Select
-            placeholder="Выберите платформы"
-            name="platform"
-            value={platform.value}
-            onChange={this.handleSelectChange}
-            >
-                          {['Android', 'iOS','Windows','MacOS','Linux','Windows Phone'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-            ))}
-            </Select>
-        </FormLayoutGroup>
-        </FormItem>
         <FormItem top="Выберте версию ОС">
           <Select
             name="osname"
