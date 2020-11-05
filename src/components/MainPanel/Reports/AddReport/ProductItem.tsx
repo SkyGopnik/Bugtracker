@@ -1,15 +1,6 @@
 import React from 'react';
 import {
-  FormLayout,
-  FormLayoutGroup,
   Select,
-  Input,
-  List,
-  Cell,
-  Textarea,
-  Button,
-  Checkbox,
-  Chip,
   FormItem
 } from "@vkontakte/vkui";
 
@@ -25,17 +16,6 @@ interface IProps {
 export default class extends React.Component<IProps> {
   constructor(props) {
     super(props);
-
-    this.state = {
-      form: {
-        product: {
-          value: '',
-          rules: {
-            required: true
-          }
-        }
-      }
-    }
   }
 
   render() {
@@ -54,7 +34,7 @@ export default class extends React.Component<IProps> {
           placeholder="Выберите продукт"
         >
           {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
-          <option key={index} value={text}>{text}</option>
+            <option key={index} value={text}>{text}</option>
           ))}
         </Select>
       </FormItem>

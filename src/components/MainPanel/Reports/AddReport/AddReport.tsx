@@ -148,8 +148,9 @@ export default class extends React.Component<IProps, IState> {
       if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
         newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
       }
-        if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
-          newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
+
+      if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
+        newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
       }
     }
 
