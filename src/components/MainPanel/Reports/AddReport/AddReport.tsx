@@ -14,6 +14,15 @@ import {
 } from "@vkontakte/vkui";
 
 import ProductItem from './ProductItem';
+import PlatformItem from './PlatformItem';
+import OsItem from './OsItem';
+import TitleItem from './TitleItem';
+import DeviceItem from './DeviceItem';
+import StepsItem from './StepsItem';
+import ResultItem from './ResultItem';
+import OresultItem from './OResultItem';
+import TypeItem from './TypeItem';
+import PriorityItem from './PriorityItem';
 
 import isset from 'src/functions/isset';
 
@@ -203,6 +212,10 @@ export default class extends React.Component<IProps, IState> {
         <ProductItem
           item={product}
           onValueChange={(value) => this.handleFormChange('product', value)}
+        />
+        <PlatformItem
+          item={product}
+          onValueChange={(value) => this.handleFormChange('platform', value)}
         />
         <FormItem top="Выберите платформы">
           <FormLayoutGroup>
