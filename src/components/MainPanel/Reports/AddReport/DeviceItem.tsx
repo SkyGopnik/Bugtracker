@@ -1,15 +1,15 @@
 import React from 'react';
 import {
   Select,
-  FormItem
+  FormItem, Div, Cell, Checkbox
 } from "@vkontakte/vkui";
 
-import { FormItem as FormItemInterface } from './AddReport';
+import { FormItemText } from './AddReport';
 
 import isset from 'src/functions/isset';
 
 interface IProps {
-  item: FormItemInterface,
+  item: FormItemText,
   onValueChange(value: string)
 }
 
@@ -23,20 +23,32 @@ export default class extends React.Component<IProps> {
 
     return (
       <FormItem
-        top="Выберите продукт"
+        top="Устройства"
         status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
         bottom={item.error ? item.error : ''}
       >
-        <Select
-          name="product"
-          value={item.value}
-          onChange={(result) => onValueChange(String(result.value))}
-          placeholder="Выберите продукт"
-        >
-          {['Одноклассники для Android', 'Одноклассники для IOS','Одноклассники для Web','CooK','Мечты','Отзывы'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-          ))}
-        </Select>
+        <Div>
+          <Cell
+            name="test"
+            description="Android 10.0 Q"
+            selectable
+            // onChange={(e) => console.log(e.target)}
+          >
+            Samsung Galaxy Note 9
+          </Cell>
+          <Cell
+            description="Windows 10"
+            selectable
+          >
+            Lenovo
+          </Cell>
+          <Cell
+            description="IOS 14"
+            selectable
+          >
+            Apple IPhone 6s
+          </Cell>
+        </Div>
       </FormItem>
     );
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactText} from 'react';
 import {
   FormLayout,
   FormLayoutGroup,
@@ -10,8 +10,12 @@ import {
   Button,
   Checkbox,
   Chip,
-  FormItem
+  FormItem,
+  Div
 } from "@vkontakte/vkui";
+
+import {ChipsInputOption} from "@vkontakte/vkui/dist/components/ChipsInput/ChipsInput";
+import ChipsSelect from "@vkontakte/vkui/dist/es6/components/ChipsSelect/ChipsSelect";
 
 import ProductItem from './ProductItem';
 import PlatformItem from './PlatformItem';
@@ -22,13 +26,12 @@ import StepsItem from './StepsItem';
 import ResultItem from './ResultItem';
 import OresultItem from './OResultItem';
 import TagsItem from './TagsItem';
-import TypeItem from './TypeItem';
 import PriorityItem from './PriorityItem';
 
 import isset from 'src/functions/isset';
+import FilesItem from "src/components/MainPanel/Reports/AddReport/FilesItem";
 
-export interface FormItem {
-  value: string,
+interface FormItem {
   error?: string,
   rules?: {
     minLength?: number,
@@ -37,21 +40,35 @@ export interface FormItem {
   }
 }
 
+export interface FormItemText extends FormItem {
+  value: string
+}
+
+export interface FormItemArray extends FormItem {
+  value: Array<string>
+}
+
+export interface FormItemBoolean extends FormItem {
+  value?: boolean
+}
+
 interface IProps {}
 
 interface IState {
   form: {
-    product: FormItem,
-    platform: FormItem,
-    osname: FormItem,
-    title: FormItem,
-    device: FormItem,
-    steps: FormItem,
-    result: FormItem,
-    oresult: FormItem,
-    tags: FormItem,
-    type: FormItem,
-    priority: FormItem
+    product: FormItemText,
+    platform: FormItemArray,
+    osnameAndroid: FormItemArray,
+    osnameIOS: FormItemArray,
+    title: FormItemText,
+    device: FormItemText,
+    steps: FormItemText,
+    result: FormItemText,
+    oresult: FormItemText,
+    tags: FormItemArray,
+    priority: FormItemText,
+    files: FormItemArray,
+    hideFiles: FormItemBoolean
   }
 }
 
@@ -68,13 +85,19 @@ export default class extends React.Component<IProps, IState> {
           }
         },
         platform: {
-          value: '',
+          value: [],
           rules: {
             required: true
           }
         },
-        osname: {
-          value: '',
+        osnameAndroid: {
+          value: [],
+          rules: {
+            required: true
+          }
+        },
+        osnameIOS: {
+          value: [],
           rules: {
             required: true
           }
@@ -120,41 +143,41 @@ export default class extends React.Component<IProps, IState> {
           }
         },
         tags: {
-          value: '',
+          value: [],
           rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        type: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
+            required: true
           }
         },
         priority: {
-          value: '',
+          value: 'Средний',
           rules: {
             required: true,
             minLength: 5,
             maxLength: 10
           }
+        },
+        files: {
+          value: []
+        },
+        hideFiles: {
+          value: false
         }
       }
     }
   }
 
-  handleInputChange = (e) => {
-    const { form } = this.state
-    const { value, name } = e.currentTarget;
+  handleFormChange = (name: string, value: string | Array<string | ChipsInputOption | ReactText>) => {
+    const { form } = this.state;
     const newForm = { ...form };
 
     newForm[name].value = value;
+    newForm[name].error = '';
 
     if(newForm[name].rules) {
+      if (newForm[name].rules.required && (value.length === 0)) {
+        newForm[name].error = 'Это обязательное поле для заполения';
+      }
+
       if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
         newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
       }
@@ -169,23 +192,62 @@ export default class extends React.Component<IProps, IState> {
     });
   }
 
-  handleSelectChange = ({ name, value }) => {
-    const { form } = this.state
+  handleFormChangeWithoutValidation = (name: string, value: string | Array<string> | Array<ChipsInputOption> | boolean) => {
+    const { form } = this.state;
     const newForm = { ...form };
 
     newForm[name].value = value;
-    console.log(name);
-    console.log(value);
+    newForm[name].error = '';
+
     this.setState({
       form: newForm
     });
   }
 
-  handleFormChange = (name: string, value: string) => {
-    const { form } = this.state
+  sendForm = () => {
+    const { form } = this.state;
     const newForm = { ...form };
 
-    newForm[name].value = value;
+    // Все обязательные поля которые нужны в форме
+    const requiredItems = [
+      'product',
+      'platform',
+      'title',
+      'steps',
+      'result',
+      'oresult',
+      'tags',
+      'priority'
+    ];
+
+    // Проверяем нужны ли Версии Android/iOS
+    if (newForm.platform.value.indexOf('Android') !== -1) {
+      requiredItems.push('osnameAndroid')
+    }
+
+    if (newForm.platform.value.indexOf('iOS') !== -1) {
+      requiredItems.push('osnameIOS')
+    }
+
+    // Проверяем все обязательные поля на заполнение
+    let isErrors = false;
+
+    requiredItems.forEach((name) => {
+      if(newForm[name].rules) {
+        if (newForm[name].rules.required && (newForm[name].value.length === 0)) {
+          console.log(name);
+          isErrors = true;
+          newForm[name].error = 'Это обязательное поле для заполения';
+        }
+      }
+    });
+
+    if (!isErrors) {
+      console.log('valid form');
+    } else {
+      // Поднимаем контент вверх, чтобы пользователь проверил форму на ошибки
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     this.setState({
       form: newForm
@@ -197,15 +259,17 @@ export default class extends React.Component<IProps, IState> {
     const {
       product,
       platform,
-      osname,
+      osnameAndroid,
+      osnameIOS,
       title,
       device,
       steps,
       result,
       oresult,
       tags,
-      type,
-      priority
+      priority,
+      files,
+      hideFiles
     } = form;
 
     return (
@@ -214,41 +278,35 @@ export default class extends React.Component<IProps, IState> {
           item={product}
           onValueChange={(value) => this.handleFormChange('product', value)}
         />
+        <TitleItem
+          item={title}
+          onValueChange={(value) => this.handleFormChange('title', value)}
+        />
+        TODO: Реализовать девайсы когда для них будет база, закос на v2
+        {/*<DeviceItem*/}
+        {/*  item={device}*/}
+        {/*  onValueChange={(value) => this.handleFormChange('device', value)}*/}
+        {/*/>*/}
         <PlatformItem
           item={platform}
           onValueChange={(value) => this.handleFormChange('platform', value)}
         />
-        <OsItem
-          item={osname}
-          onValueChange={(value) => this.handleFormChange('osname', value)}
-        />
-        <TitleItem
-        item={title}
-        onValueChange={(value) => this.handleFormChange('title', value)}
-        />
-          <List>
-            <Cell
-                description="Android 10.0 Q"
-                selectable
-            >
-                <div>Samsung Galaxy Note 9</div>
-                <div className="model-device">SM-N960FZKD</div>
-            </Cell>
-            <Cell
-                description="Windows 10"
-                selectable
-            >
-                <div>Lenovo</div>
-                <div className="model-device">Y510P</div>
-            </Cell>
-            <Cell
-                description="IOS 14"
-                selectable
-            >
-                <div>Apple IPhone 6s</div>
-                <div className="model-device">6s</div>
-            </Cell>
-          </List>
+        {/*Проверяем есть ли в платформе iOS*/}
+        {platform.value.indexOf('iOS') !== -1 && (
+          <OsItem
+            type="iOS"
+            item={osnameIOS}
+            onValueChange={(value) => this.handleFormChange('osnameIOS', value)}
+          />
+        )}
+        {/*Проверяем есть ли в платформе Android*/}
+        {platform.value.indexOf('Android') !== -1 && (
+          <OsItem
+            type="Android"
+            item={osnameAndroid}
+            onValueChange={(value) => this.handleFormChange('osnameAndroid', value)}
+          />
+        )}
         <StepsItem
           item={steps}
           onValueChange={(value) => this.handleFormChange('steps', value)}
@@ -261,40 +319,27 @@ export default class extends React.Component<IProps, IState> {
           item={oresult}
           onValueChange={(value) => this.handleFormChange('oresult', value)}
         />
-        {/*<div style={{display: 'flex'}}>*/}
-        {/*    <Button*/}
-        {/*        before={<Icon28Camera />}*/}
-        {/*        size="l"*/}
-        {/*        stretched*/}
-        {/*        mode="secondary"*/}
-        {/*        style={{ marginRight: 8 }}*/}
-        {/*    >*/}
-        {/*        Скриншот*/}
-        {/*    </Button>*/}
-        {/*    <Button*/}
-        {/*        before={<Icon28Document />}*/}
-        {/*        size="l"*/}
-        {/*        stretched*/}
-        {/*        mode="secondary"*/}
-        {/*    >*/}
-        {/*        Документ*/}
-        {/*    </Button>*/}
-        {/*</div>*/}
-        <Checkbox>Скрыть документы из публичного доступа</Checkbox>
+        TODO: Реализовать добавление файлов, включая валидацию на сервере
+        {/*<FilesItem*/}
+        {/*  item={files}*/}
+        {/*  onValueChange={(value) => this.handleFormChange('files', value)}*/}
+        {/*/>*/}
+        {/*<Checkbox*/}
+        {/*  checked={hideFiles.value}*/}
+        {/*  onChange={(e) => this.handleFormChangeWithoutValidation('hideFiles', e.target.checked)}*/}
+        {/*>*/}
+        {/*  Скрыть документы из публичного доступа*/}
+        {/*</Checkbox>*/}
         <TagsItem
           item={tags}
           onValueChange={(value) => this.handleFormChange('tags', value)}
-        />
-        <TypeItem
-          item={type}
-          onValueChange={(value) => this.handleFormChange('type', value)}
         />
         <PriorityItem
           item={priority}
           onValueChange={(value) => this.handleFormChange('priority', value)}
         />
         <FormItem>
-        <Button size="m">Создать отчёт</Button>
+          <Button size="m" onClick={this.sendForm}>Создать отчёт</Button>
         </FormItem>
       </FormLayout>
     );

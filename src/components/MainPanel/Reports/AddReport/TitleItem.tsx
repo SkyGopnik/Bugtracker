@@ -5,12 +5,12 @@ import {
   Input
 } from "@vkontakte/vkui";
 
-import { FormItem as FormItemInterface } from './AddReport';
+import { FormItemText } from './AddReport';
 
 import isset from 'src/functions/isset';
 
 interface IProps {
-  item: FormItemInterface,
+  item: FormItemText,
   onValueChange(value: string)
 }
 

@@ -15,6 +15,7 @@ import rootReducer from '../store/reducers';
 
 // Стили VKUI
 import '@vkontakte/vkui/dist/vkui.css';
+import '@vkontakte/vkui/dist/unstable.css'
 
 // Главный объект стора
 const store = createStore(rootReducer);

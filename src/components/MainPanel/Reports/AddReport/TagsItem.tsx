@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {ReactText} from 'react';
 import {
-  Select,
   FormItem
 } from "@vkontakte/vkui";
 
-import { FormItem as FormItemInterface } from './AddReport';
+import ChipsSelect from "@vkontakte/vkui/dist/es6/components/ChipsSelect/ChipsSelect";
+
+import {FormItemArray} from './AddReport';
 
 import isset from 'src/functions/isset';
 
 interface IProps {
-  item: FormItemInterface,
-  onValueChange(value: string)
+  item: FormItemArray,
+  onValueChange(value: Array<ReactText>)
 }
 
 export default class extends React.Component<IProps> {
@@ -22,16 +23,23 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem top="Теги, к которым имеет отношение баг">
-      <Select
-          value="item.value"
-          onChange={(result) => onValueChange(String(result.value))}
-          placeholder="Выберите теги"
+      <FormItem
+        top="Теги, к которым имеет отношение баг"
+        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+        bottom={item.error ? item.error : ''}
       >
-          {['Дизайн', 'Лента','Стена','Профиль','Фотографии','Видеозаписи'].map((text, index) => (
-            <option key={index} value={text}>{text}</option>
-          ))}
-      </Select>
+        <ChipsSelect
+          value={item.value.map((value) => {
+            return { value: value, label: value };
+          })}
+          options={['Android', 'iOS','Windows','MacOS','Linux','Windows Phone'].map((value) => {
+            return { value: value, label: value }
+          })}
+          placeholder="Выберите темы, к которым имеет отношение баг"
+          onChange={(value) =>  onValueChange(value.map((item) => {
+            return item.value;
+          }))}
+        />
       </FormItem>
     );
   }
