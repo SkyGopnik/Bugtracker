@@ -30,6 +30,7 @@ import PriorityItem from './PriorityItem';
 
 import isset from 'src/functions/isset';
 import FilesItem from "src/components/MainPanel/Reports/AddReport/FilesItem";
+import TroubleType from "src/components/MainPanel/Reports/AddReport/TroubleType";
 
 interface FormItem {
   error?: string,
@@ -68,7 +69,8 @@ interface IState {
     tags: FormItemArray,
     priority: FormItemText,
     files: FormItemArray,
-    hideFiles: FormItemBoolean
+    hideFiles: FormItemBoolean,
+    type: FormItemText
   }
 }
 
@@ -149,11 +151,9 @@ export default class extends React.Component<IProps, IState> {
           }
         },
         priority: {
-          value: 'Средний',
+          value: '',
           rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
+            required: true
           }
         },
         files: {
@@ -161,6 +161,12 @@ export default class extends React.Component<IProps, IState> {
         },
         hideFiles: {
           value: false
+        },
+        type: {
+          value: '',
+          rules: {
+            required: true
+          }
         }
       }
     }
@@ -217,7 +223,8 @@ export default class extends React.Component<IProps, IState> {
       'result',
       'oresult',
       'tags',
-      'priority'
+      'priority',
+      'type'
     ];
 
     // Проверяем нужны ли Версии Android/iOS
@@ -235,7 +242,6 @@ export default class extends React.Component<IProps, IState> {
     requiredItems.forEach((name) => {
       if(newForm[name].rules) {
         if (newForm[name].rules.required && (newForm[name].value.length === 0)) {
-          console.log(name);
           isErrors = true;
           newForm[name].error = 'Это обязательное поле для заполения';
         }
@@ -269,7 +275,8 @@ export default class extends React.Component<IProps, IState> {
       tags,
       priority,
       files,
-      hideFiles
+      hideFiles,
+      type
     } = form;
 
     return (
@@ -282,7 +289,7 @@ export default class extends React.Component<IProps, IState> {
           item={title}
           onValueChange={(value) => this.handleFormChange('title', value)}
         />
-        TODO: Реализовать девайсы когда для них будет база, закос на v2
+        {/*TODO: Реализовать девайсы когда для них будет база, закос на v2*/}
         {/*<DeviceItem*/}
         {/*  item={device}*/}
         {/*  onValueChange={(value) => this.handleFormChange('device', value)}*/}
@@ -319,7 +326,7 @@ export default class extends React.Component<IProps, IState> {
           item={oresult}
           onValueChange={(value) => this.handleFormChange('oresult', value)}
         />
-        TODO: Реализовать добавление файлов, включая валидацию на сервере
+        {/*TODO: Реализовать добавление файлов, включая валидацию на сервере*/}
         {/*<FilesItem*/}
         {/*  item={files}*/}
         {/*  onValueChange={(value) => this.handleFormChange('files', value)}*/}
@@ -333,6 +340,10 @@ export default class extends React.Component<IProps, IState> {
         <TagsItem
           item={tags}
           onValueChange={(value) => this.handleFormChange('tags', value)}
+        />
+        <TroubleType
+          item={type}
+          onValueChange={(value) => this.handleFormChange('type', value)}
         />
         <PriorityItem
           item={priority}
