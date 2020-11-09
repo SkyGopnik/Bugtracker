@@ -23,18 +23,18 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-    <FormItem
-      top="Название"
-      status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
-      bottom={item.error ? item.error : ''}
-    >
-    <Input
-      value={item.value}
-      onChange={(e) => onValueChange(String(e.currentTarget.value))}
-      type="text"
-      placeholder="Коротко опишите суть бага"
-    />
-    </FormItem>
+      <FormItem
+        top="Название"
+        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+        bottom={item.error ? item.error : ''}
+      >
+        <Input
+          value={item.value}
+          onChange={(e) => onValueChange(String(e.currentTarget.value))}
+          type="text"
+          placeholder="Коротко опишите суть бага"
+        />
+      </FormItem>
     );
   }
 }

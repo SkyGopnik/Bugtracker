@@ -8,8 +8,8 @@ import {
 import MenuList from "src/components/MainPanel/Menu/MenuListContainer";
 import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopContent";
 
-import AddReport from "src/components/MainPanel/Reports/AddReport/AddReport";
-import Reports from "src/components/MainPanel/Reports/ReportsList";
+import AddReport from "src/components/MainPanel/Reports/AddReport/AddReportContainer";
+import Reports from "src/components/MainPanel/Reports/ReportListContainer";
 import Products from "src/components/MainPanel/Products/ProductsList";
 import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
@@ -86,7 +86,10 @@ export default class extends React.Component<IProps, IState> {
               </div>
               {activeContent === 'add-report' && (
                 <DesktopContent className={styles.content} title="Добавить отчёт">
-                  <AddReport />
+                  <AddReport
+                    type="component"
+                    changeActive={changeActiveContent}
+                  />
                 </DesktopContent>
               )}
               {activeContent === 'reports' && (

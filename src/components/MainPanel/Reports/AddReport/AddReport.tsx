@@ -1,4 +1,5 @@
 import React, {ReactText} from 'react';
+import axios from 'axios';
 import {
   FormLayout,
   FormLayoutGroup,
@@ -13,6 +14,7 @@ import {
   FormItem,
   Div
 } from "@vkontakte/vkui";
+// TODO: Избавится от this.state.form и оставить все данные в this.state для оптимиизации
 
 import {ChipsInputOption} from "@vkontakte/vkui/dist/components/ChipsInput/ChipsInput";
 import ChipsSelect from "@vkontakte/vkui/dist/es6/components/ChipsSelect/ChipsSelect";
@@ -53,7 +55,15 @@ export interface FormItemBoolean extends FormItem {
   value?: boolean
 }
 
-interface IProps {}
+interface IProps {
+  type: 'component' | 'panel',
+  view: string,
+  panel: string,
+  changeView(view: string),
+  changePanel(panel: string),
+  changeViewAndPanel(view: string, panel: string),
+  changeActive(name: string)
+}
 
 interface IState {
   form: {
@@ -210,9 +220,10 @@ export default class extends React.Component<IProps, IState> {
     });
   }
 
-  sendForm = () => {
+  sendForm = async () => {
     const { form } = this.state;
-    const newForm = { ...form };
+    const { type, changePanel, changeActive } = this.props;
+    let newForm = { ...form };
 
     // Все обязательные поля которые нужны в форме
     const requiredItems = [
@@ -229,11 +240,11 @@ export default class extends React.Component<IProps, IState> {
 
     // Проверяем нужны ли Версии Android/iOS
     if (newForm.platform.value.indexOf('Android') !== -1) {
-      requiredItems.push('osnameAndroid')
+      requiredItems.push('osnameAndroid');
     }
 
     if (newForm.platform.value.indexOf('iOS') !== -1) {
-      requiredItems.push('osnameIOS')
+      requiredItems.push('osnameIOS');
     }
 
     // Проверяем все обязательные поля на заполнение
@@ -249,7 +260,35 @@ export default class extends React.Component<IProps, IState> {
     });
 
     if (!isErrors) {
-      console.log('valid form');
+      try {
+        // Отправляем запрос к API
+        await axios.post('/report', {
+          product: newForm.product.value,
+          platform: newForm.platform.value,
+          osnameAndroid: newForm.platform.value.indexOf('Android') !== -1 ? newForm.osnameAndroid.value : null,
+          osnameIOS: newForm.platform.value.indexOf('iOS') !== -1 ? newForm.osnameIOS.value : null,
+          title: newForm.title.value,
+          steps: newForm.steps.value,
+          result: newForm.result.value,
+          oresult: newForm.oresult.value,
+          tags: newForm.tags.value,
+          priority: newForm.priority.value,
+          type: newForm.type.value
+        });
+
+        if (type === 'component') {
+          // Совершаем переход между контентом
+          changeActive('reports');
+        } else if (type === 'panel') {
+          // Совершаем переход между панелями
+          // changePanel();
+        }
+
+        // Завершаем функцию, чтобы не вызывать ошибок из за unmount
+        return;
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       // Поднимаем контент вверх, чтобы пользователь проверил форму на ошибки
       window.scrollTo({ top: 0, behavior: 'smooth' });

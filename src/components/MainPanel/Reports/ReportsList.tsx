@@ -1,36 +1,69 @@
 import React from 'react';
 import {
   Search,
-  Separator
+  Separator,
+  Spinner,
+  Div,
+  Placeholder
 } from "@vkontakte/vkui";
+
+import Icon56GhostOutline from '@vkontakte/icons/dist/56/ghost_outline';
+
 import ReportItem from './ReportItem/ReportItem';
 
-export default class extends React.Component {
+interface IProps {
+  list: {
+    loading: boolean,
+    error: any | null,
+    data: Array<any> // TODO: Описать объект
+  },
+  getReportList(page?: number)
+}
+
+export default class extends React.Component<IProps> {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    const { getReportList } = this.props;
+
+    getReportList();
+  }
+
   render() {
+    const { list } = this.props;
 
     return (
       <div>
         <Search />
         <Separator />
         <div>
-          <ReportItem
-            name={"Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название. Длинное название."}
-            tags={['Лента', 'Тест', 'Профиль', 'Фотография', 'Дизайн', 'UI', 'Лента', 'Более длинный тег', 'Профиль', 'Фотография', 'Дизайн', 'UI']}
-            author={"Александр Тихонович"}
-            date={"25 сентября 2020"}
-            status={"На рассмотрении"}
-          />
-          <ReportItem
-            name={"Обычное название"}
-            tags={['Лента']}
-            author={"Артём Петрунин"}
-            date={"24 сентября 2020"}
-            status={"В работе"}
-          />
+          {!list.loading ? (
+            list.data.length !== 0 ? (
+              list.data.map((item, index) => (
+                <ReportItem
+                  key={index}
+                  name={item.title}
+                  tags={JSON.parse(item.tags)}
+                  author={"null"}
+                  date={item.createdAt}
+                  status={item.status.text}
+                />
+              ))
+            ) : (
+              <Placeholder
+                icon={<Icon56GhostOutline />}
+                header="Отчёты"
+              >
+                Похоже, тут ничего нет
+              </Placeholder>
+            )
+          ) : (
+            <Div>
+              <Spinner />
+            </Div>
+          )}
         </div>
       </div>
     );
