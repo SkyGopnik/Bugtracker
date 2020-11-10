@@ -9,6 +9,7 @@ import MenuList from "src/components/MainPanel/Menu/MenuListContainer";
 import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopContent";
 
 import AddReport from "src/components/MainPanel/Reports/AddReport/AddReportContainer";
+import AddProduct from "src/components/MainPanel/Products/AddProduct/AddProduct";
 import Reports from "src/components/MainPanel/Reports/ReportListContainer";
 import Products from "src/components/MainPanel/Products/ProductsList";
 import Users from "src/components/MainPanel/Users/UsersList";
@@ -92,6 +93,11 @@ export default class extends React.Component<IProps, IState> {
                   />
                 </DesktopContent>
               )}
+              {activeContent === 'add-product' && (
+                <DesktopContent className={styles.content} title="Добавить продукт">
+                  <AddProduct />
+                </DesktopContent>
+              )}
               {activeContent === 'reports' && (
                 <DesktopContent className={styles.content} title="Все отчёты">
                   <Reports />
@@ -99,7 +105,7 @@ export default class extends React.Component<IProps, IState> {
               )}
               {activeContent === 'products' && (
                 <DesktopContent className={styles.content} title="Продукты">
-                  <Products />
+                  <Products changeActive={changeActiveContent} />
                 </DesktopContent>
               )}
               {activeContent === 'users' && (

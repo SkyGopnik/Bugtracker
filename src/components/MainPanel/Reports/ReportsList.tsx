@@ -46,7 +46,7 @@ export default class extends React.Component<IProps> {
                   key={index}
                   name={item.title}
                   tags={JSON.parse(item.tags)}
-                  author={"null"}
+                  author={`${item.userInfo.first_name} ${item.userInfo.last_name}`}
                   date={item.createdAt}
                   status={item.status.text}
                 />
