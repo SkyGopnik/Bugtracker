@@ -11,7 +11,9 @@ import ProductItem from "./ProductItem/ProductItem";
 
 import Icon28ServicesOutline from '@vkontakte/icons/dist/28/services_outline';
 
-interface IProps {}
+interface IProps {
+  changeActiveContent(name: string)
+}
 
 interface IState {
   activeTab: 'all' | 'own' | 'moderated'
@@ -29,6 +31,7 @@ export default class extends React.Component<IProps, IState> {
 
   render() {
     const { activeTab } = this.state;
+    const {   changeActiveContent } = this.props;
 
     return (
       <div>
@@ -86,7 +89,7 @@ export default class extends React.Component<IProps, IState> {
           <>
           <Placeholder
             icon={<Icon28ServicesOutline width={56} height={56} />}
-            action={<Button size="l">Предложить свой продукт</Button>} //кидаем на форму/лс
+            action={<Button size="l" onClick={() => changeActiveContent('add-product')} >Предложить свой продукт</Button>} //кидаем на форму/лс
           >
             Вы не модерируете никакие продукты.
           </Placeholder>

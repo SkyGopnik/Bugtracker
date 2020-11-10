@@ -74,7 +74,7 @@ export default class extends React.Component<IProps, IState> {
               <div className={styles.menu}>
                 <Button
                   className={styles.addReportBtn}
-                  onClick={() => changeActiveContent('add-report')}
+                  onClick={() => changeActiveContent('add-product')} // Временно решение. `add-report
                 >
                   Добавить отчёт
                 </Button>
