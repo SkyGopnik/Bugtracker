@@ -6,7 +6,7 @@ import {
   Cell,
   Checkbox,
   Input,
-  TextArea
+  Textarea
 } from "@vkontakte/vkui";
 
 import { FormItemText } from './AddProduct';
@@ -32,7 +32,7 @@ export default class extends React.Component<IProps> {
       status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
       bottom={item.error ? item.error : ''}
     >
-      <TextArea
+      <Textarea
         value={item.value}
         onChange={(e) => onValueChange(String(e.currentTarget.value))}
         placeholder="Описание продукта"
