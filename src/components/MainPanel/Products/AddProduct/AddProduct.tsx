@@ -2,26 +2,13 @@ import React, {ReactText} from 'react';
 import axios from 'axios';
 import {
   FormLayout,
-  FormLayoutGroup,
-  Select,
-  Input,
-  List,
-  Cell,
-  Textarea,
-  Button,
-  Checkbox,
-  Chip,
   FormItem,
-  Div
+  Button
 } from "@vkontakte/vkui";
 
 import TitleItem from './TitleItem';
 import DescItem from './DescItem';
 import TypeItem from './TypeItem';
-
-import isset from 'src/functions/isset';
-import FilesItem from "src/components/MainPanel/Reports/AddReport/FilesItem";
-import TroubleType from "src/components/MainPanel/Reports/AddReport/TroubleType";
 
 interface FormItem {
   error?: string,
@@ -126,6 +113,29 @@ export default class extends React.Component<IProps, IState> {
           item={desc}
           onValueChange={(value) => this.handleFormChange('desc', value)}
         />
+        <TypeItem
+          item={type}
+          onValueChange={(value) => this.handleFormChange('type', value)}
+        />
+        <FormItem>
+          <Button
+            size="l" 
+            stretched 
+            mode="secondary" 
+            onClick={() => console.log('Button photo onclick')}
+            >
+              Добавить изображение
+            </Button>
+        </FormItem>
+        <FormItem>
+          <Button 
+            size="l"
+            stretched
+            onClick={() => console.log('Button onclick')}
+            >
+              Создать отчёт
+            </Button>
+        </FormItem>
       </FormLayout>
     );
   }

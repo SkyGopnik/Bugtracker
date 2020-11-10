@@ -2,17 +2,8 @@ import React, {ReactText} from 'react';
 import axios from 'axios';
 import {
   FormLayout,
-  FormLayoutGroup,
-  Select,
-  Input,
-  List,
-  Cell,
-  Textarea,
   Button,
-  Checkbox,
-  Chip,
-  FormItem,
-  Div
+  FormItem
 } from "@vkontakte/vkui";
 // TODO: Избавится от this.state.form и оставить все данные в this.state для оптимиизации
 
@@ -23,15 +14,12 @@ import ProductItem from './ProductItem';
 import PlatformItem from './PlatformItem';
 import OsItem from './OsItem';
 import TitleItem from './TitleItem';
-import DeviceItem from './DeviceItem';
 import StepsItem from './StepsItem';
 import ResultItem from './ResultItem';
 import OresultItem from './OResultItem';
 import TagsItem from './TagsItem';
 import PriorityItem from './PriorityItem';
 
-import isset from 'src/functions/isset';
-import FilesItem from "src/components/MainPanel/Reports/AddReport/FilesItem";
 import TroubleType from "src/components/MainPanel/Reports/AddReport/TroubleType";
 
 interface FormItem {
@@ -222,7 +210,7 @@ export default class extends React.Component<IProps, IState> {
 
   sendForm = async () => {
     const { form } = this.state;
-    const { type, changePanel, changeActive } = this.props;
+    const { type, changeActive } = this.props;
     let newForm = { ...form };
 
     // Все обязательные поля которые нужны в форме
