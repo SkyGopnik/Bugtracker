@@ -95,7 +95,7 @@ export default class extends React.Component<IProps, IState> {
               )}
               {activeContent === 'add-product' && (
                 <DesktopContent className={styles.content} title="Добавить продукт">
-                  <AddProduct />
+                  <AddProduct type="component"/>
                 </DesktopContent>
               )}
               {activeContent === 'reports' && (

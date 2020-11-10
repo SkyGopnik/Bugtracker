@@ -14,7 +14,6 @@ import {
   FormItem,
   Div
 } from "@vkontakte/vkui";
-// TODO: Избавится от this.state.form и оставить все данные в this.state для оптимиизации
 
 import TitleItem from './TitleItem';
 import DescItem from './DescItem';
@@ -37,30 +36,15 @@ export interface FormItemText extends FormItem {
   value: string
 }
 
-export interface FormItemArray extends FormItem {
-  value: Array<string>
-}
-
-export interface FormItemBoolean extends FormItem {
-  value?: boolean
-}
-
 interface IProps {
-  type: 'component' | 'panel',
-  view: string,
-  panel: string,
-  changeView(view: string),
-  changePanel(panel: string),
-  changeViewAndPanel(view: string, panel: string),
-  changeActive(name: string)
+  type: 'component' | 'panel'
 }
 
 interface IState {
   form: {
-    name: FormItemText,
-    version: FormItemArray,
-    desc: FormItemArray,
-    type: FormItemArray
+    title: FormItemText,
+    desc: FormItemText,
+    type: FormItemText
   }
 }
 
@@ -70,46 +54,78 @@ export default class extends React.Component<IProps, IState> {
 
     this.state = {
       form: {
-        name: {
+        title: {
           value: '',
           rules: {
-            required: true
-          }
-        },
-        version: {
-          value: [],
-          rules: {
-            required: true
+            required: true,
+            minLength: 5,
+            maxLength: 10
           }
         },
         desc: {
-          value: [],
+          value: '',
           rules: {
-            required: true
+            required: true,
+            minLength: 5,
+            maxLength: 10
           }
         },
         type: {
-          value: [],
+          value: '',
           rules: {
-            required: true
+            required: true,
+            minLength: 5,
+            maxLength: 10
           }
         }
       }
     }
   }
 
+  handleFormChange = (name: string, value: string ) => { 
+    const { form } = this.state;
+    const newForm = { ...form };
+
+    newForm[name].value = value;
+    newForm[name].error = '';
+
+    if(newForm[name].rules) {
+      if (newForm[name].rules.required && (value.length === 0)) {
+        newForm[name].error = 'Это обязательное поле для заполения';
+      }
+
+      if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
+        newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
+      }
+
+      if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
+        newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
+      }
+    }
+
+    this.setState({
+      form: newForm
+    });
+  }
+
   render() {
     const { form } = this.state;
     const {
-      name,
-      version,
+      title,
       desc,
       type
     } = form;
 
     return (
       <FormLayout>
-        <TitleItem/>
+        <TitleItem
+          item={title}
+          onValueChange={(value) => this.handleFormChange('title', value)}
+        />
+        <DescItem
+          item={desc}
+          onValueChange={(value) => this.handleFormChange('desc', value)}
+        />
       </FormLayout>
     );
   }

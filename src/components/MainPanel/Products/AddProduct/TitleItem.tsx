@@ -1,7 +1,11 @@
 import React from 'react';
 import {
   Select,
-  FormItem, Div, Cell, Checkbox
+  FormItem,
+  Div,
+  Cell,
+  Checkbox,
+  Input
 } from "@vkontakte/vkui";
 
 import { FormItemText } from './AddProduct';
@@ -22,7 +26,18 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-      <FormItem/>
+      <FormItem
+      top="Название"
+      status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+      bottom={item.error ? item.error : ''}
+    >
+      <Input
+        value={item.value}
+        onChange={(e) => onValueChange(String(e.currentTarget.value))}
+        type="text"
+        placeholder="Название продукта"
+      />
+    </FormItem>
     );
   }
 }

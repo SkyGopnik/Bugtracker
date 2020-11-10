@@ -2,10 +2,14 @@ import React from 'react';
 import {
   Select,
   FormItem,
-  Textarea
+  Div,
+  Cell,
+  Checkbox,
+  Input,
+  TextArea
 } from "@vkontakte/vkui";
 
-import { FormItemText } from './AddReport';
+import { FormItemText } from './AddProduct';
 
 import isset from 'src/functions/isset';
 
@@ -23,17 +27,16 @@ export default class extends React.Component<IProps> {
     const { item, onValueChange } = this.props;
 
     return (
-    <FormItem
-      top="Фактический результат"
+      <FormItem
+      top="Описание"
       status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
       bottom={item.error ? item.error : ''}
     >
-    <Textarea
-        name="item"
+      <TextArea
         value={item.value}
         onChange={(e) => onValueChange(String(e.currentTarget.value))}
-        placeholder="Когда я совершаю действие А, происходит Б"
-    />
+        placeholder="Описание продукта"
+      />
     </FormItem>
     );
   }
