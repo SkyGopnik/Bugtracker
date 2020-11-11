@@ -104,7 +104,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 250
         }
       },
       device: {
@@ -120,7 +120,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 1000
         }
       },
       result: {
@@ -128,7 +128,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 1000
         }
       },
       oresult: {
@@ -136,7 +136,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 1000
         }
       },
       tags: {
@@ -306,6 +306,18 @@ export default class extends React.Component<IProps, IState> {
           item={product}
           onValueChange={(value) => this.handleFormChange('product', value)}
         />
+        <TagsItem
+          item={tags}
+          onValueChange={(value) => this.handleFormChange('tags', value)}
+        />
+        <TroubleType
+          item={type}
+          onValueChange={(value) => this.handleFormChange('type', value)}
+        />
+        <PriorityItem
+          item={priority}
+          onValueChange={(value) => this.handleFormChange('priority', value)}
+        />
         <TitleItem
           item={title}
           onValueChange={(value) => this.handleFormChange('title', value)}
@@ -358,18 +370,6 @@ export default class extends React.Component<IProps, IState> {
         {/*>*/}
         {/*  Скрыть документы из публичного доступа*/}
         {/*</Checkbox>*/}
-        <TagsItem
-          item={tags}
-          onValueChange={(value) => this.handleFormChange('tags', value)}
-        />
-        <TroubleType
-          item={type}
-          onValueChange={(value) => this.handleFormChange('type', value)}
-        />
-        <PriorityItem
-          item={priority}
-          onValueChange={(value) => this.handleFormChange('priority', value)}
-        />
         <FormItem>
           <Button size="m" onClick={this.sendForm}>Создать отчёт</Button>
         </FormItem>

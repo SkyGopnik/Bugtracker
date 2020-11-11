@@ -44,7 +44,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 250
         }
       },
       desc: {
@@ -52,7 +52,7 @@ export default class extends React.Component<IProps, IState> {
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 1000
         }
       },
       type: {
