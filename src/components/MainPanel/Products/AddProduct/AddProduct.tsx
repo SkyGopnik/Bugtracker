@@ -1,4 +1,4 @@
-import React, {ReactText} from 'react';
+import React from 'react';
 import axios from 'axios';
 import {
   FormLayout,
@@ -24,15 +24,14 @@ export interface FormItemText extends FormItem {
 }
 
 interface IProps {
-  type: 'component' | 'panel'
+  type: 'component' | 'panel',
+  changeActive(name: string)
 }
 
 interface IState {
-  form: {
-    title: FormItemText,
-    desc: FormItemText,
-    type: FormItemText
-  }
+  title: FormItemText,
+  desc: FormItemText,
+  type: FormItemText
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -40,68 +39,120 @@ export default class extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      form: {
-        title: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        desc: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        type: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
+      title: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      desc: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      type: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
         }
       }
     }
   }
 
-  handleFormChange = (name: string, value: string ) => { 
-    const { form } = this.state;
-    const newForm = { ...form };
+  handleFormChange = (name: string, value: string ) => {
+    const newItem = { ...this.state[name] };
 
-    newForm[name].value = value;
-    newForm[name].error = '';
+    newItem.value = value;
+    newItem.error = '';
 
-    if(newForm[name].rules) {
-      if (newForm[name].rules.required && (value.length === 0)) {
-        newForm[name].error = 'Это обязательное поле для заполения';
+    if(newItem.rules) {
+      if (newItem.rules.required && (value.length === 0)) {
+        newItem.error = 'Это обязательное поле для заполения';
       }
 
-      if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
-        newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
+      if(newItem.rules.minLength && (value.length < newItem.rules.minLength)) {
+        newItem.error = `Минимальная длина ${newItem.rules.minLength} символов`;
       }
 
-      if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
-        newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
+      if(newItem.rules.maxLength && (value.length > newItem.rules.maxLength)) {
+        newItem.error = `Максимальная длина ${newItem.rules.maxLength} символов`;
       }
     }
 
     this.setState({
-      form: newForm
+      ...this.state,
+      [name]: newItem
+    });
+  }
+
+  sendForm = async () => {
+    const { type, changeActive } = this.props;
+    let newForm = { ...this.state };
+
+    // Все обязательные поля которые нужны в форме
+    const requiredItems = [
+      'title',
+      'type',
+      'desc'
+    ];
+
+    // Проверяем все обязательные поля на заполнение
+    let isErrors = false;
+
+    requiredItems.forEach((name) => {
+      if(newForm[name].rules) {
+        if (newForm[name].rules.required && (newForm[name].value.length === 0)) {
+          isErrors = true;
+          newForm[name].error = 'Это обязательное поле для заполения';
+        }
+      }
+    });
+
+    if (!isErrors) {
+      try {
+        // Отправляем запрос к API
+        await axios.post('/product', {
+          title: newForm.title.value,
+          description: newForm.desc.value,
+          type: newForm.type.value
+        });
+
+        if (type === 'component') {
+          // Совершаем переход между контентом
+          changeActive('products');
+        } else if (type === 'panel') {
+          // Совершаем переход между панелями
+          // changePanel();
+        }
+
+        // Завершаем функцию, чтобы не вызывать ошибок из за unmount
+        return;
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      // Поднимаем контент вверх, чтобы пользователь проверил форму на ошибки
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    this.setState({
+      ...newForm
     });
   }
 
   render() {
-    const { form } = this.state;
     const {
       title,
       desc,
       type
-    } = form;
+    } = this.state;
 
     return (
       <FormLayout>
@@ -109,32 +160,32 @@ export default class extends React.Component<IProps, IState> {
           item={title}
           onValueChange={(value) => this.handleFormChange('title', value)}
         />
-        <DescItem
-          item={desc}
-          onValueChange={(value) => this.handleFormChange('desc', value)}
-        />
         <TypeItem
           item={type}
           onValueChange={(value) => this.handleFormChange('type', value)}
         />
+        <DescItem
+          item={desc}
+          onValueChange={(value) => this.handleFormChange('desc', value)}
+        />
+        {/*<FormItem>*/}
+        {/*  <Button*/}
+        {/*    size="l"*/}
+        {/*    stretched*/}
+        {/*    mode="secondary"*/}
+        {/*    onClick={() => console.log('Button photo onclick')}*/}
+        {/*  >*/}
+        {/*    Добавить изображение*/}
+        {/*  </Button>*/}
+        {/*</FormItem>*/}
         <FormItem>
           <Button
-            size="l" 
-            stretched 
-            mode="secondary" 
-            onClick={() => console.log('Button photo onclick')}
-            >
-              Добавить изображение
-            </Button>
-        </FormItem>
-        <FormItem>
-          <Button 
             size="l"
             stretched
-            onClick={() => console.log('Button onclick')}
-            >
-              Создать отчёт
-            </Button>
+            onClick={this.sendForm}
+          >
+            Создать продукт
+          </Button>
         </FormItem>
       </FormLayout>
     );

@@ -54,22 +54,20 @@ interface IProps {
 }
 
 interface IState {
-  form: {
-    product: FormItemText,
-    platform: FormItemArray,
-    osnameAndroid: FormItemArray,
-    osnameIOS: FormItemArray,
-    title: FormItemText,
-    device: FormItemText,
-    steps: FormItemText,
-    result: FormItemText,
-    oresult: FormItemText,
-    tags: FormItemArray,
-    priority: FormItemText,
-    files: FormItemArray,
-    hideFiles: FormItemBoolean,
-    type: FormItemText
-  }
+  product: FormItemText,
+  platform: FormItemArray,
+  osnameAndroid: FormItemArray,
+  osnameIOS: FormItemArray,
+  title: FormItemText,
+  device: FormItemText,
+  steps: FormItemText,
+  result: FormItemText,
+  oresult: FormItemText,
+  tags: FormItemArray,
+  priority: FormItemText,
+  files: FormItemArray,
+  hideFiles: FormItemBoolean,
+  type: FormItemText
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -77,141 +75,138 @@ export default class extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      form: {
-        product: {
-          value: '',
-          rules: {
-            required: true
-          }
-        },
-        platform: {
-          value: [],
-          rules: {
-            required: true
-          }
-        },
-        osnameAndroid: {
-          value: [],
-          rules: {
-            required: true
-          }
-        },
-        osnameIOS: {
-          value: [],
-          rules: {
-            required: true
-          }
-        },
-        title: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        device: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        steps: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        result: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        oresult: {
-          value: '',
-          rules: {
-            required: true,
-            minLength: 5,
-            maxLength: 10
-          }
-        },
-        tags: {
-          value: [],
-          rules: {
-            required: true
-          }
-        },
-        priority: {
-          value: '',
-          rules: {
-            required: true
-          }
-        },
-        files: {
-          value: []
-        },
-        hideFiles: {
-          value: false
-        },
-        type: {
-          value: '',
-          rules: {
-            required: true
-          }
+      product: {
+        value: '',
+        rules: {
+          required: true
+        }
+      },
+      platform: {
+        value: [],
+        rules: {
+          required: true
+        }
+      },
+      osnameAndroid: {
+        value: [],
+        rules: {
+          required: true
+        }
+      },
+      osnameIOS: {
+        value: [],
+        rules: {
+          required: true
+        }
+      },
+      title: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      device: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      steps: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      result: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      oresult: {
+        value: '',
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 10
+        }
+      },
+      tags: {
+        value: [],
+        rules: {
+          required: true
+        }
+      },
+      priority: {
+        value: '',
+        rules: {
+          required: true
+        }
+      },
+      files: {
+        value: []
+      },
+      hideFiles: {
+        value: false
+      },
+      type: {
+        value: '',
+        rules: {
+          required: true
         }
       }
     }
   }
 
   handleFormChange = (name: string, value: string | Array<string | ChipsInputOption | ReactText>) => {
-    const { form } = this.state;
-    const newForm = { ...form };
+    const newItem = { ...this.state[name] };
 
-    newForm[name].value = value;
-    newForm[name].error = '';
+    newItem.value = value;
+    newItem.error = '';
 
-    if(newForm[name].rules) {
-      if (newForm[name].rules.required && (value.length === 0)) {
-        newForm[name].error = 'Это обязательное поле для заполения';
+    if(newItem.rules) {
+      if (newItem.rules.required && (value.length === 0)) {
+        newItem.error = 'Это обязательное поле для заполения';
       }
 
-      if(newForm[name].rules.minLength && (value.length < newForm[name].rules.minLength)) {
-        newForm[name].error = `Минимальная длина ${newForm[name].rules.minLength} символов`;
+      if(newItem.rules.minLength && (value.length < newItem.rules.minLength)) {
+        newItem.error = `Минимальная длина ${newItem.rules.minLength} символов`;
       }
 
-      if(newForm[name].rules.maxLength && (value.length > newForm[name].rules.maxLength)) {
-        newForm[name].error = `Максимальная длина ${newForm[name].rules.maxLength} символов`;
+      if(newItem.rules.maxLength && (value.length > newItem.rules.maxLength)) {
+        newItem.error = `Максимальная длина ${newItem.rules.maxLength} символов`;
       }
     }
 
     this.setState({
-      form: newForm
+      ...this.state,
+      [name]: newItem
     });
   }
 
   handleFormChangeWithoutValidation = (name: string, value: string | Array<string> | Array<ChipsInputOption> | boolean) => {
-    const { form } = this.state;
-    const newForm = { ...form };
+    const newItem = { ...this.state[name] };
 
-    newForm[name].value = value;
-    newForm[name].error = '';
+    newItem.value = value;
+    newItem.error = '';
 
     this.setState({
-      form: newForm
+      ...this.state,
+      [name]: newItem
     });
   }
 
   sendForm = async () => {
-    const { form } = this.state;
     const { type, changeActive } = this.props;
-    let newForm = { ...form };
+    let newForm = { ...this.state };
 
     // Все обязательные поля которые нужны в форме
     const requiredItems = [
@@ -283,12 +278,11 @@ export default class extends React.Component<IProps, IState> {
     }
 
     this.setState({
-      form: newForm
+      ...newForm
     });
   }
 
   render() {
-    const { form } = this.state;
     const {
       product,
       platform,
@@ -304,7 +298,7 @@ export default class extends React.Component<IProps, IState> {
       files,
       hideFiles,
       type
-    } = form;
+    } = this.state;
 
     return (
       <FormLayout>

@@ -11,7 +11,7 @@ import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopConte
 import AddReport from "src/components/MainPanel/Reports/AddReport/AddReportContainer";
 import AddProduct from "src/components/MainPanel/Products/AddProduct/AddProduct";
 import Reports from "src/components/MainPanel/Reports/ReportListContainer";
-import Products from "src/components/MainPanel/Products/ProductsList";
+import Products from "src/components/MainPanel/Products/ProductListContainer";
 import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
@@ -95,7 +95,10 @@ export default class extends React.Component<IProps, IState> {
               )}
               {activeContent === 'add-product' && (
                 <DesktopContent className={styles.content} title="Добавить продукт">
-                  <AddProduct type="component"/>
+                  <AddProduct
+                    type="component"
+                    changeActive={changeActiveContent}
+                  />
                 </DesktopContent>
               )}
               {activeContent === 'reports' && (
@@ -119,68 +122,69 @@ export default class extends React.Component<IProps, IState> {
                 </DesktopContent>
               )}
               {activeContent === 'user' && (
-                <User
-                  groupClassName={styles.content}
-                  title="Участник"
-                  avatar={{
-                    name: 'test',
-                    ratingNumber: 5,
-                    src: '',
-                    reportsCount: 10
-                  }}
-                  activity={{
-                    date: 'test'
-                  }}
-                  reports={{
-                    list: [
-                      {
-                        name: 'Обычное название',
-                        tags: ['Лента'],
-                        author: 'Артём Петрунин',
-                        date: '24 сентября 2020',
-                        status: 'В работе'
-                      },
-                      {
-                        name: 'Обычное название',
-                        tags: ['Лента'],
-                        author: 'Артём Петрунин',
-                        date: '24 сентября 2020',
-                        status: 'В работе'
-                      },
-                      {
-                        name: 'Обычное название',
-                        tags: ['Лента'],
-                        author: 'Артём Петрунин',
-                        date: '24 сентября 2020',
-                        status: 'В работе'
-                      }
-                    ]
-                  }}
-                  products={{
-                    list: [
-                      {
-                        name: 'Отзывы',
-                        report: '600 отчётов',
-                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
-                      },
-                      {
-                        name: 'Отзывы',
-                        report: '600 отчётов',
-                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
-                      },
-                      {
-                        name: 'Отзывы',
-                        report: '600 отчётов',
-                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
-                      },
-                      {
-                        name: 'Отзывы',
-                        report: '600 отчётов',
-                        src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
-                      }
-                    ]
-                  }}
-                />
+                '1'
+                // <User
+                //   groupClassName={styles.content}
+                //   title="Участник"
+                //   avatar={{
+                //     name: 'test',
+                //     ratingNumber: 5,
+                //     src: '',
+                //     reportsCount: 10
+                //   }}
+                //   activity={{
+                //     date: 'test'
+                //   }}
+                //   reports={{
+                //     list: [
+                //       {
+                //         name: 'Обычное название',
+                //         tags: ['Лента'],
+                //         author: 'Артём Петрунин',
+                //         date: '24 сентября 2020',
+                //         status: 'В работе'
+                //       },
+                //       {
+                //         name: 'Обычное название',
+                //         tags: ['Лента'],
+                //         author: 'Артём Петрунин',
+                //         date: '24 сентября 2020',
+                //         status: 'В работе'
+                //       },
+                //       {
+                //         name: 'Обычное название',
+                //         tags: ['Лента'],
+                //         author: 'Артём Петрунин',
+                //         date: '24 сентября 2020',
+                //         status: 'В работе'
+                //       }
+                //     ]
+                //   }}
+                //   products={{
+                //     list: [
+                //       {
+                //         name: 'Отзывы',
+                //         report: '600 отчётов',
+                //         src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                //       },
+                //       {
+                //         name: 'Отзывы',
+                //         report: '600 отчётов',
+                //         src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                //       },
+                //       {
+                //         name: 'Отзывы',
+                //         report: '600 отчётов',
+                //         src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                //       },
+                //       {
+                //         name: 'Отзывы',
+                //         report: '600 отчётов',
+                //         src: 'https://sun9-43.userapi.com/c858128/v858128351/21df17/vl_dTIxR1X4.jpg'
+                //       }
+                //     ]
+                //   }}
+                // />
               )}
             </div>
           ) : (

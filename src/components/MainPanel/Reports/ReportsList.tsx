@@ -15,7 +15,33 @@ interface IProps {
   list: {
     loading: boolean,
     error: any | null,
-    data: Array<any> // TODO: Описать объект
+    data: Array<{
+      id?: string,
+      userId: string,
+      product: string,
+      platform: string,
+      osnameAndroid: string | null,
+      osnameIOS: string | null,
+      title: string,
+      steps: string,
+      result: string,
+      oresult: string,
+      tags: string,
+      priority: string,
+      type: string,
+      status?: {
+        text: string
+      },
+      userInfo?: {
+        uid: string,
+        first_name: string,
+        last_name: string,
+        gender: string,
+        pic_1: string
+      },
+      createdAt?: Date,
+      updatedAt?: Date
+    }>
   },
   getReportList(page?: number)
 }

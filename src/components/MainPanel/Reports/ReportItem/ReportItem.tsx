@@ -11,7 +11,7 @@ export interface IProps {
   name: string,
   tags: Array<string>,
   author: string,
-  date: string,
+  date: Date,
   status: string
 }
 
@@ -20,7 +20,7 @@ export default class extends React.Component<IProps> {
     super(props);
   }
 
-  getDate = (timestamp: string) => {
+  getDate = (timestamp: Date) => {
     const a = new Date(timestamp);
     const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
     const month = months[a.getMonth()];
