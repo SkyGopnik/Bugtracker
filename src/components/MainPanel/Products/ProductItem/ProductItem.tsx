@@ -34,25 +34,24 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
-        <SimpleCell
-          before={<Avatar className={styles.avatar} size={80} src={src} />}
-          onClick={() => changeActive('product')}
-          after={
-            button && (
-              <Button>
-                {button}
-              </Button>
-            )
-          }
-          description={version}
-          //onClick={go}
-          multiline
-        >
-          {name}
-          <div className={styles.statistic}>{statistic}</div>
-        </SimpleCell>
-      </div>
+      <SimpleCell
+        className={styles.productItem}
+        before={<Avatar className={styles.avatar} size={80} src={src} />}
+        onClick={() => changeActive('product')}
+        after={
+          button && (
+            <Button>
+              {button}
+            </Button>
+          )
+        }
+        description={version}
+        //onClick={go}
+        multiline
+      >
+        {name}
+        <div className={styles.statistic}>{statistic}</div>
+      </SimpleCell>
     );
   }
 }
