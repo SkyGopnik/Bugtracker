@@ -88,6 +88,7 @@ export default class extends React.Component<IProps, IState> {
                 <ProductItem
                   key={index}
                   name={item.title}
+                  changeActive={changeActive}
                   statistic={"0 отчётов, 0 пожеланий"}
                   version={`Версия: {1.0.0}`}
                   src="https://sun2.velcom-by-minsk.userapi.com/c853528/v853528146/149624/K8N6X2dCoOA.jpg"
@@ -118,7 +119,7 @@ export default class extends React.Component<IProps, IState> {
         {activeTab === 'moderated' && (
           <Placeholder
             icon={<Icon28ServicesOutline width={56} height={56} />}
-            action={<Button size="l" onClick={() => changeActive('add-product')} >Предложить свой продукт</Button>} //кидаем на форму/лс
+            action={<Button size="l" onClick={() => changeActive('add-product')}>Предложить свой продукт</Button>} //кидаем на форму/лс
           >
             Вы не модерируете никакие продукты.
           </Placeholder>

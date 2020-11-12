@@ -14,7 +14,8 @@ export interface IProps {
   statistic: string,
   version: string,
   src: string,
-  button?: string
+  button?: string,
+  changeActive(name: string)
 }
 
 export default class extends React.Component<IProps> {
@@ -28,13 +29,15 @@ export default class extends React.Component<IProps> {
       statistic,
       version,
       src,
-      button
+      button,
+      changeActive
     } = this.props;
 
     return (
       <Group>
         <SimpleCell
           before={<Avatar className={styles.avatar} size={80} src={src} />}
+          onClick={() => changeActive('product')}
           after={
             button && (
               <Button>

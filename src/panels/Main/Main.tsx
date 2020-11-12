@@ -15,6 +15,7 @@ import Products from "src/components/MainPanel/Products/ProductListContainer";
 import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
+import Product from "src/components/MainPanel/Products/Product";
 
 import styles from './Main.scss';
 
@@ -114,6 +115,11 @@ export default class extends React.Component<IProps, IState> {
               {activeContent === 'users' && (
                 <DesktopContent className={styles.content} title="Участники">
                   <Users changeUser={() => changeActiveContent('user')} />
+                </DesktopContent>
+              )}
+              {activeContent === 'product' && (
+                <DesktopContent className={styles.content} title="Продукты->CooK">
+                  <Product/>
                 </DesktopContent>
               )}
               {activeContent === 'notifications' && (
