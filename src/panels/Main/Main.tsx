@@ -15,7 +15,7 @@ import Products from "src/components/MainPanel/Products/ProductListContainer";
 import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
-import Product from "src/components/MainPanel/Products/Product";
+import Product from "src/components/MainPanel/Products/Product/Product";
 
 import styles from './Main.scss';
 

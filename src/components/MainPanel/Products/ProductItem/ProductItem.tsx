@@ -34,7 +34,7 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <Group>
+      <div>
         <SimpleCell
           before={<Avatar className={styles.avatar} size={80} src={src} />}
           onClick={() => changeActive('product')}
@@ -52,7 +52,7 @@ export default class extends React.Component<IProps> {
           {name}
           <div className={styles.statistic}>{statistic}</div>
         </SimpleCell>
-      </Group>
+      </div>
     );
   }
 }

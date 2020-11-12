@@ -1,0 +1,17 @@
+.version {
+  :global {
+    .Header__content {
+      padding: 0 !important;
+    }
+  }
+}
+
+.icons {
+  color: var(--accent);
+}
+
+.footer {
+  padding: 0 16px !important;
+
+  color: var(--text_subhead);
+}
