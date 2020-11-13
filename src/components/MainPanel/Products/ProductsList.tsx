@@ -19,9 +19,8 @@ interface IProps {
     error: any | null,
     data: Array<{
       id?: string,
-      userId: string,
       title: string,
-      description: string
+      image: string,
       type?: {
         text: string
       },
@@ -90,14 +89,14 @@ export default class extends React.Component<IProps, IState> {
                   name={item.title}
                   statistic={"0 отчётов, 0 пожеланий"}
                   version={`Версия: {1.0.0}`}
-                  src="https://sun2.velcom-by-minsk.userapi.com/c853528/v853528146/149624/K8N6X2dCoOA.jpg"
+                  src={`https://cloudskyreglis.ru/files/${item.image}`}
                   changeActive={changeActive}
                 />
               ))
             ) : (
               <Placeholder
                 icon={<Icon56GhostOutline />}
-                header="Отчёты"
+                header="Продукты"
               >
                 Похоже, тут ничего нет
               </Placeholder>

@@ -5,10 +5,8 @@ import {
   Button,
   FormItem
 } from "@vkontakte/vkui";
-// TODO: Избавится от this.state.form и оставить все данные в this.state для оптимиизации
 
 import {ChipsInputOption} from "@vkontakte/vkui/dist/components/ChipsInput/ChipsInput";
-import ChipsSelect from "@vkontakte/vkui/dist/es6/components/ChipsSelect/ChipsSelect";
 
 import ProductItem from './ProductItem';
 import PlatformItem from './PlatformItem';
@@ -19,8 +17,8 @@ import ResultItem from './ResultItem';
 import OresultItem from './OResultItem';
 import TagsItem from './TagsItem';
 import PriorityItem from './PriorityItem';
+import TroubleTypeItem from "./TroubleTypeItem";
 
-import TroubleType from "src/components/MainPanel/Reports/AddReport/TroubleType";
 
 interface FormItem {
   error?: string,
@@ -234,6 +232,10 @@ export default class extends React.Component<IProps, IState> {
     let isErrors = false;
 
     requiredItems.forEach((name) => {
+      if (newForm[name].error !== '') {
+        isErrors = true;
+      }
+
       if(newForm[name].rules) {
         if (newForm[name].rules.required && (newForm[name].value.length === 0)) {
           isErrors = true;
@@ -310,7 +312,7 @@ export default class extends React.Component<IProps, IState> {
           item={tags}
           onValueChange={(value) => this.handleFormChange('tags', value)}
         />
-        <TroubleType
+        <TroubleTypeItem
           item={type}
           onValueChange={(value) => this.handleFormChange('type', value)}
         />

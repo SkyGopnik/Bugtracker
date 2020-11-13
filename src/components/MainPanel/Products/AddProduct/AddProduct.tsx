@@ -9,6 +9,9 @@ import {
 import TitleItem from './TitleItem';
 import DescItem from './DescItem';
 import TypeItem from './TypeItem';
+import HrefItem from './HrefItem';
+
+import FileItem from "src/components/FileItem/FileItem";
 
 interface FormItem {
   error?: string,
@@ -23,6 +26,10 @@ export interface FormItemText extends FormItem {
   value: string
 }
 
+export interface FormItemFile extends FormItem {
+  value: Array<string | ArrayBuffer>
+}
+
 interface IProps {
   type: 'component' | 'panel',
   changeActive(name: string)
@@ -31,7 +38,9 @@ interface IProps {
 interface IState {
   title: FormItemText,
   desc: FormItemText,
-  type: FormItemText
+  type: FormItemText,
+  href: FormItemText,
+  file: FormItemFile
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -58,15 +67,29 @@ export default class extends React.Component<IProps, IState> {
       type: {
         value: '',
         rules: {
+          required: true
+        }
+      },
+      href: {
+        value: '',
+        rules: {
           required: true,
           minLength: 5,
-          maxLength: 10
+          maxLength: 100
+        }
+      },
+      file: {
+        value: [],
+        rules: {
+          required: true,
+          minLength: 5,
+          maxLength: 100
         }
       }
     }
   }
 
-  handleFormChange = (name: string, value: string ) => {
+  handleFormChange = (name: string, value: string) => {
     const newItem = { ...this.state[name] };
 
     newItem.value = value;
@@ -92,6 +115,13 @@ export default class extends React.Component<IProps, IState> {
     });
   }
 
+  handleItemChange = (name: string, value: FormItemFile) => {
+    this.setState({
+      ...this.state,
+      [name]: value
+    });
+  }
+
   sendForm = async () => {
     const { type, changeActive } = this.props;
     let newForm = { ...this.state };
@@ -100,13 +130,19 @@ export default class extends React.Component<IProps, IState> {
     const requiredItems = [
       'title',
       'type',
-      'desc'
+      'desc',
+      'href',
+      'file'
     ];
 
     // Проверяем все обязательные поля на заполнение
     let isErrors = false;
 
     requiredItems.forEach((name) => {
+      if (newForm[name].error !== '' && name !== 'file') {
+        isErrors = true;
+      }
+
       if(newForm[name].rules) {
         if (newForm[name].rules.required && (newForm[name].value.length === 0)) {
           isErrors = true;
@@ -117,11 +153,25 @@ export default class extends React.Component<IProps, IState> {
 
     if (!isErrors) {
       try {
+        // Сохраняем изображение
+        const imagesData = {};
+
+        newForm.file.value.forEach((item, index) => {
+          console.log(item);
+          imagesData[`file_${index}`] = item;
+        });
+
+        const images = await axios.post('/save', imagesData, {
+          baseURL: 'https://server.cloudskyreglis.ru'
+        });
+
         // Отправляем запрос к API
         await axios.post('/product', {
           title: newForm.title.value,
           description: newForm.desc.value,
-          type: newForm.type.value
+          type: newForm.type.value,
+          href: newForm.href.value,
+          image: images.data[0]
         });
 
         if (type === 'component') {
@@ -151,7 +201,9 @@ export default class extends React.Component<IProps, IState> {
     const {
       title,
       desc,
-      type
+      type,
+      href,
+      file
     } = this.state;
 
     return (
@@ -164,20 +216,19 @@ export default class extends React.Component<IProps, IState> {
           item={type}
           onValueChange={(value) => this.handleFormChange('type', value)}
         />
+        <HrefItem
+          item={href}
+          onValueChange={(value) => this.handleFormChange('href', value)}
+        />
         <DescItem
           item={desc}
           onValueChange={(value) => this.handleFormChange('desc', value)}
         />
-        {/*<FormItem>*/}
-        {/*  <Button*/}
-        {/*    size="l"*/}
-        {/*    stretched*/}
-        {/*    mode="secondary"*/}
-        {/*    onClick={() => console.log('Button photo onclick')}*/}
-        {/*  >*/}
-        {/*    Добавить изображение*/}
-        {/*  </Button>*/}
-        {/*</FormItem>*/}
+        <FileItem
+          item={file}
+          limit={1}
+          onValueChange={(value) => this.handleItemChange('file', value)}
+        />
         <FormItem>
           <Button
             size="l"

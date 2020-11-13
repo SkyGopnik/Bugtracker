@@ -23,17 +23,17 @@ export default class extends React.Component<IProps> {
 
     return (
       <FormItem
-      top="Название"
-      status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
-      bottom={item.error ? item.error : ''}
-    >
-      <Input
-        value={item.value}
-        onChange={(e) => onValueChange(String(e.currentTarget.value))}
-        type="text"
-        placeholder="Название продукта"
-      />
-    </FormItem>
+        top="Ссылка"
+        status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
+        bottom={item.error ? item.error : ''}
+      >
+        <Input
+          value={item.value}
+          onChange={(e) => onValueChange(String(e.currentTarget.value))}
+          type="text"
+          placeholder="Ссылка на тестируемый продукт"
+        />
+      </FormItem>
     );
   }
 }
