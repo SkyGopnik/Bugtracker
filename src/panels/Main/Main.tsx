@@ -105,11 +105,7 @@ export default class extends React.Component<IProps, IState> {
               )}
               {activeContent === 'reports' && (
                 <DesktopContent className={styles.content} title="Все отчёты">
-<<<<<<< HEAD
-                  <Reports changeActive={changeActiveContent}/>
-=======
                   <Reports changeActive={changeActiveContent} />
->>>>>>> 8e15f62e578caa8d6cbc27c45d19dd80b826573b
                 </DesktopContent>
               )}
               {activeContent === 'report' && (
