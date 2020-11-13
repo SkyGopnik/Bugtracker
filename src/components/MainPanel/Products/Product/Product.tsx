@@ -62,7 +62,6 @@ export default class extends React.Component<IProps, IState> {
               </div>
             }
             indicator
-            style={{ padding: '0 !important' }}
           >
             9.9.9.9.9 <Link><Icon24PenOutline height={16} width={16}/> Изменить</Link>
           </Header>
