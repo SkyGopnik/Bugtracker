@@ -9,13 +9,13 @@
 .icons {
   display: flex;
 
-  color: var(--accent);
+  color: var(--text_subhead);
 
   .icon {
     display: flex;
 
     &:not(:first-child) {
-      margin-left: 10px;
+      margin-left: 10pxs;
     }
   }
 }

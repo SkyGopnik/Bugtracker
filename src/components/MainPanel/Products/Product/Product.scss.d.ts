@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'footer': string;
+  'icon': string;
   'icons': string;
   'version': string;
 }

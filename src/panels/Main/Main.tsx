@@ -16,6 +16,7 @@ import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
 import Product from "src/components/MainPanel/Products/Product/Product";
+import Report from "src/components/MainPanel/Reports/Report/Report";
 
 import styles from './Main.scss';
 
@@ -105,6 +106,11 @@ export default class extends React.Component<IProps, IState> {
               {activeContent === 'reports' && (
                 <DesktopContent className={styles.content} title="Все отчёты">
                   <Reports />
+                </DesktopContent>
+              )}
+              {activeContent === 'report' && (
+                <DesktopContent className={styles.content} title="Заголовок">
+                  <Report/>
                 </DesktopContent>
               )}
               {activeContent === 'products' && (
