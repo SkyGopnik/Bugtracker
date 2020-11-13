@@ -15,8 +15,8 @@ import {
 import Icon16MoreVertical from '@vkontakte/icons/dist/16/more_vertical';
 import Icon24PenOutline from '@vkontakte/icons/dist/24/pen_outline';
 import Icon20ArticleBoxOutline from '@vkontakte/icons/dist/20/article_box_outline';
-// import Icon20CheckCircleOutline from '@vkontakte/icons/dist/20/check_circle_outline'; Почему то не может импортировать
-// import Icon20ErrorCircleOutline from '@vkontakte/icons/dist/20/error_circle_outline';
+import Icon20CheckCircleOutline from '@vkontakte/icons/dist/20/check_circle_outline';
+import Icon20ErrorCircleOutline from '@vkontakte/icons/dist/20/error_circle_outline';
 
 import styles from './Product.scss';
 
@@ -58,7 +58,15 @@ export default class extends React.Component<IProps, IState> {
             className={styles.version}
             aside={
               <div className={styles.icons}>
-                иконки
+                <div className={styles.icon}>
+                  <Icon20ArticleBoxOutline/> 1
+                </div>
+                <div className={styles.icon}>
+                  <Icon20CheckCircleOutline/> 1
+                </div>
+                <div className={styles.icon}>
+                  <Icon20ErrorCircleOutline/> 1
+                </div>
               </div>
             }
             indicator

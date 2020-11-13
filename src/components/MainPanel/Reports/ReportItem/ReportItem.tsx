@@ -12,7 +12,8 @@ export interface IProps {
   tags: Array<string>,
   author: string,
   date: Date,
-  status: string
+  status: string,
+  changeActive(name: string)
 }
 
 export default class extends React.Component<IProps> {
@@ -42,12 +43,13 @@ export default class extends React.Component<IProps> {
       tags,
       author,
       date,
-      status
+      status,
+      changeActive
     } = this.props;
 
     return (
       <div className={styles.reportItem}>
-        <Cell>
+        <Cell onClick={() => changeActive('report')}>
           <div className={styles.title}>
             {name}
           </div>

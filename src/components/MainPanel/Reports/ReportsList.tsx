@@ -43,7 +43,8 @@ interface IProps {
       updatedAt?: Date
     }>
   },
-  getReportList(page?: number)
+  getReportList(page?: number),
+  changeActive(name: string)
 }
 
 export default class extends React.Component<IProps> {
@@ -58,7 +59,7 @@ export default class extends React.Component<IProps> {
   }
 
   render() {
-    const { list } = this.props;
+    const { list, changeActive } = this.props;
 
     return (
       <div>
@@ -75,6 +76,7 @@ export default class extends React.Component<IProps> {
                   author={`${item.userInfo.first_name} ${item.userInfo.last_name}`}
                   date={item.createdAt}
                   status={item.status.text}
+                  changeActive={changeActive}
                 />
               ))
             ) : (
