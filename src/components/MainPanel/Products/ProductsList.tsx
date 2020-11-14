@@ -13,27 +13,14 @@ import Icon28ServicesOutline from '@vkontakte/icons/dist/28/services_outline';
 import ReportItem from "src/components/MainPanel/Reports/ReportItem/ReportItem";
 import Icon56GhostOutline from "@vkontakte/icons/dist/56/ghost_outline";
 
-interface IProps {
-  list: {
-    loading: boolean,
-    error: any | null,
-    data: Array<{
-      id?: string,
-      title: string,
-      image: string,
-      type?: {
-        text: string
-      },
-      createdAt?: Date,
-      updatedAt?: Date
-    }>
-  },
-  getProductList(page?: number),
-  changeActive(name: string)
-}
+import {ProductReducerIterface} from "src/store/productList/reducers";
+import {AppReducerIterface} from "src/store/app/reducers";
+import {changePanel} from "src/store/app/actions";
+
+interface IProps extends ProductReducerIterface, AppReducerIterface {}
 
 interface IState {
-  activeTab: 'all' | 'own' | 'moderated'
+  activeTab: 'all' | 'own' | 'moderated',
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -53,7 +40,7 @@ export default class extends React.Component<IProps, IState> {
 
   render() {
     const { activeTab } = this.state;
-    const { list, changeActive } = this.props;
+    const { list, changePanel } = this.props;
 
     return (
       <div>
@@ -90,7 +77,7 @@ export default class extends React.Component<IProps, IState> {
                   statistic={"0 отчётов, 0 пожеланий"}
                   version={`Версия: {1.0.0}`}
                   src={`https://cloudskyreglis.ru/files/${item.image}`}
-                  changeActive={changeActive}
+                  onClick={() => changePanel('product', item.id)}
                 />
               ))
             ) : (
@@ -118,7 +105,7 @@ export default class extends React.Component<IProps, IState> {
         {activeTab === 'moderated' && (
           <Placeholder
             icon={<Icon28ServicesOutline width={56} height={56} />}
-            action={<Button size="l" onClick={() => changeActive('add-product')}>Предложить свой продукт</Button>} //кидаем на форму/лс
+            action={<Button size="l" onClick={() => changePanel('add-product')}>Предложить свой продукт</Button>} //кидаем на форму/лс
           >
             Вы не модерируете никакие продукты.
           </Placeholder>

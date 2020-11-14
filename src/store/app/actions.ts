@@ -5,23 +5,29 @@ export const APP_CHANGE_VIEW_AND_PANEL = 'APP_CHANGE_VIEW_AND_PANEL';
 export const changeView = (view: string) => {
   return {
     type: APP_CHANGE_VIEW,
-    payload: view
+    payload: {
+      view
+    }
   };
 };
 
-export const changePanel = (panel: string) => {
+export const changePanel = (panel: string, panelData: Object = null) => {
   return {
     type: APP_CHANGE_PANEL,
-    payload: panel
+    payload: {
+      panel,
+      panelData
+    }
   };
 };
 
-export const changeViewAndPanel = (view: string, panel: string) => {
+export const changeViewAndPanel = (view: string, panel: string, panelData: Object = null) => {
   return {
     type: APP_CHANGE_VIEW_AND_PANEL,
     payload: {
       view,
-      panel
+      panel,
+      panelData
     }
   };
 };

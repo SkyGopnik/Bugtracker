@@ -1,5 +1,9 @@
 .version {
   :global {
+    .Header__in {
+      align-items: center;
+    }
+
     .Header__content {
       padding: 0 !important;
     }
@@ -15,7 +19,7 @@
     display: flex;
 
     &:not(:first-child) {
-      margin-left: 10pxs;
+      margin-left: 10px;
     }
   }
 }

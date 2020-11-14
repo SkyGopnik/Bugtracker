@@ -4,9 +4,19 @@ import {
   APP_CHANGE_VIEW_AND_PANEL
 } from './actions';
 
+export interface AppReducerIterface {
+  view: string,
+  panel: string,
+  panelData: any,
+  changeView(view: string),
+  changePanel(panel: string, panelData?: Object),
+  changeViewAndPanel(view: string, panel: string, panelData?: Object)
+}
+
 const defaultState = {
   view: 'main',
-  panel: 'main'
+  panel: 'main',
+  panelData: null
 };
 
 export const appReducer = (state = defaultState, action) => {
@@ -14,22 +24,22 @@ export const appReducer = (state = defaultState, action) => {
   case APP_CHANGE_VIEW:
     return {
       ...state,
-      view: action.payload
+      view: action.payload.view
     };
 
   case APP_CHANGE_PANEL:
     return {
       ...state,
-      panel: action.payload
+      panel: action.payload.panel,
+      panelData: action.payload.panelData
     };
 
   case APP_CHANGE_VIEW_AND_PANEL:
-    const { view, panel } = action.payload;
-
     return {
       ...state,
-      view,
-      panel
+      view: action.payload.view,
+      panel: action.payload.panel,
+      panelData: action.payload.panelData
     };
 
   default:

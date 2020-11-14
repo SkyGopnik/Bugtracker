@@ -15,12 +15,11 @@ import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 
 import MenuItem from './MenuItem/MenuItem';
 
-interface IProps {
+import { AppReducerIterface } from "src/store/app/reducers";
+
+interface IProps extends AppReducerIterface {
   className?: string,
-  activeItem: string,
-  isMobile?: boolean,
-  changeActive(name: string),
-  changePanel?(panel: string)
+  isMobile?: boolean
 }
 
 export default class extends React.Component<IProps> {
@@ -31,39 +30,38 @@ export default class extends React.Component<IProps> {
   render() {
     const {
       className,
-      activeItem,
       isMobile,
-      changeActive,
+      panel,
       changePanel
     } = this.props;
 
     return (
-      <Group className={className && className}>
+      <Group className={className ? className : ''}>
         {!isMobile ? (
           <>
             <MenuItem
               name="Отчёты"
               icon={<Icon28ArticleOutline />}
-              onClick={() => changeActive('reports')}
-              active={activeItem === 'reports'}
+              onClick={() => changePanel('main')}
+              active={panel === 'main'}
             />
             <MenuItem
               name="Продукты"
               icon={<Icon28ServicesOutline />}
-              onClick={() => changeActive('products')}
-              active={activeItem === 'products'}
+              onClick={() => changePanel('products')}
+              active={panel === 'products'}
             />
             <MenuItem
               name="Участники"
               icon={<Icon28UsersOutline />}
-              onClick={() => changeActive('users')}
-              active={activeItem === 'users'}
+              onClick={() => changePanel('users')}
+              active={panel === 'users'}
             />
             <MenuItem
               name="Обновления"
               icon={<Icon28Notifications />}
-              onClick={() => changeActive('notifications')}
-              active={activeItem === 'notifications'}
+              onClick={() => changePanel('notifications')}
+              active={panel === 'notifications'}
             />
             <MenuItem
               name="Магазин"

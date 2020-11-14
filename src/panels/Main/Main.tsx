@@ -15,54 +15,38 @@ import Products from "src/components/MainPanel/Products/ProductListContainer";
 import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
-import Product from "src/components/MainPanel/Products/Product/Product";
+import Product from "src/components/MainPanel/Products/Product/ProductContainer";
 import Report from "src/components/MainPanel/Reports/Report/Report";
+
+import queryGet from '../../functions/query_get';
 
 import styles from './Main.scss';
 
 interface IProps {
   id: string,
-  activeContent: string,
-  changeActiveContent(name: string)
+  view: string,
+  panel: string,
+  changeView(view: string),
+  changePanel(panel: string),
+  changeViewAndPanel(view: string, panel: string)
 }
 
-interface IState {
-  width: null | number,
-  isDesktop: boolean
-}
+interface IState {}
 
 export default class extends React.Component<IProps, IState> {
-  private mainBlock: React.RefObject<HTMLInputElement>;
-
   constructor(props: IProps) {
     super(props);
 
-    this.state = {
-      width: null,
-      isDesktop: true
-    };
-
-    console.log('test');
-
-    this.mainBlock = React.createRef();
-  }
-
-  componentDidMount() {
-    const { clientWidth } = this.mainBlock.current;
-
-    this.setState({
-      width: clientWidth,
-      isDesktop: clientWidth > 700
-    });
+    this.state = {};
   }
 
   render() {
     const {
       id,
-      activeContent,
-      changeActiveContent
+      panel,
+      changePanel
     } = this.props;
-    const { width, isDesktop } = this.state;
+    const isDesktop = queryGet('type') === 'desktop';
 
     return (
       <Panel id={id} className={isDesktop ? 'desktop-panel' : 'mobile-panel'}>
@@ -71,69 +55,65 @@ export default class extends React.Component<IProps, IState> {
             Баг-трекер
           </PanelHeader>
         )}
-        <div ref={this.mainBlock} className={isDesktop ? styles.desktop : ''}>
-          {width && width > 700 ? (
+        <div className={isDesktop ? styles.desktop : ''}>
+          {isDesktop ? (
             <div className={styles.contentWrapper}>
               <div className={styles.menu}>
                 <Button
                   className={styles.addReportBtn}
-                  onClick={() => changeActiveContent('add-report')}
+                  onClick={() => changePanel('add-report')}
                 >
                   Добавить отчёт
                 </Button>
-                <MenuList
-                  className={styles.menuGroup}
-                  activeItem={activeContent}
-                  changeActive={changeActiveContent}
-                />
+                <MenuList className={styles.menuGroup} />
               </div>
-              {activeContent === 'add-report' && (
+              {panel === 'add-report' && (
                 <DesktopContent className={styles.content} title="Добавить отчёт">
                   <AddReport
                     type="component"
-                    changeActive={changeActiveContent}
+                    changeActive={changePanel}
                   />
                 </DesktopContent>
               )}
-              {activeContent === 'add-product' && (
+              {panel === 'add-product' && (
                 <DesktopContent className={styles.content} title="Добавить продукт">
                   <AddProduct
                     type="component"
-                    changeActive={changeActiveContent}
+                    changeActive={changePanel}
                   />
                 </DesktopContent>
               )}
-              {activeContent === 'reports' && (
+              {panel === 'main' && (
                 <DesktopContent className={styles.content} title="Все отчёты">
-                  <Reports changeActive={changeActiveContent} />
+                  <Reports />
                 </DesktopContent>
               )}
-              {activeContent === 'report' && (
+              {panel === 'report' && (
                 <DesktopContent className={styles.content} title="Заголовок">
-                  <Report/>
+                  <Report />
                 </DesktopContent>
               )}
-              {activeContent === 'products' && (
+              {panel === 'products' && (
                 <DesktopContent className={styles.content} title="Продукты">
-                  <Products changeActive={changeActiveContent} />
+                  <Products />
                 </DesktopContent>
               )}
-              {activeContent === 'users' && (
+              {panel === 'users' && (
                 <DesktopContent className={styles.content} title="Участники">
-                  <Users changeUser={() => changeActiveContent('user')} />
+                  <Users />
                 </DesktopContent>
               )}
-              {activeContent === 'product' && (
+              {panel === 'product' && (
                 <DesktopContent className={styles.content} title="Продукты->CooK">
-                  <Product/>
+                  <Product />
                 </DesktopContent>
               )}
-              {activeContent === 'notifications' && (
+              {panel === 'notifications' && (
                 <DesktopContent className={styles.content} title="Обновления">
                   <Notifications />
                 </DesktopContent>
               )}
-              {activeContent === 'user' && (
+              {panel === 'user' && (
                 '1'
                 // <User
                 //   groupClassName={styles.content}
@@ -201,8 +181,6 @@ export default class extends React.Component<IProps, IState> {
             </div>
           ) : (
             <MenuList
-              activeItem={activeContent}
-              changeActive={changeActiveContent}
               isMobile
             />
           )}

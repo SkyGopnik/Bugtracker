@@ -6,14 +6,14 @@ import {
   changePanel,
   changeViewAndPanel
 } from 'src/store/app/actions';
-import AddReport from './AddReport';
+import Main from './Main';
 
-const AddReportContainer = (props) => <AddReport {...props} />;
+const MainContainer = (props) => <Main {...props} />;
 
 const mapStateToProps = (state) => {
   const props = {
     view: state.app.view,
-    panel: state.app.panel
+    panel: state.app.panel,
   };
 
   return props;
@@ -25,4 +25,4 @@ const mapDispatchToProps = {
   changeViewAndPanel
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddReportContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

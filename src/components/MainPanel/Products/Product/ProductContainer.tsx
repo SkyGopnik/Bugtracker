@@ -2,20 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  getProductList
+  getProductList,
+  getProduct
 } from 'src/store/productList/actions';
 import {
   changeView,
   changePanel,
   changeViewAndPanel
 } from 'src/store/app/actions';
-import ProductsList from './ProductsList';
+import Product from './Product';
 
-const ProductsListContainer = (props) => <ProductsList {...props} />;
+const ProductContainer = (props) => <Product {...props} />;
 
 const mapStateToProps = (state) => {
   const props = {
-    list: state.productList.list
+    list: state.productList.list,
+    single: state.productList.single,
+    panelData: state.app.panelData
   };
 
   return props;
@@ -23,9 +26,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getProductList,
+  getProduct,
   changeView,
   changePanel,
   changeViewAndPanel
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductContainer);

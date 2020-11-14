@@ -10,9 +10,7 @@ import UserItem from './UserItem/UserItem';
 
 import styles from './UserItem/UserItem.scss';
 
-interface IProps {
-  changeUser: Function
-}
+interface IProps {}
 
 export default class extends React.Component<IProps> {
   constructor(props) {
@@ -20,8 +18,6 @@ export default class extends React.Component<IProps> {
   }
 
   render() {
-    const { changeUser } = this.props;
-
     return (
       <div>
         <Search />
@@ -43,7 +39,6 @@ export default class extends React.Component<IProps> {
             report="100"
             rating="284"
             src="https://sun9-7.userapi.com/9Q1jTOy6p-oTAPkNQIosGOYt4jP95eLueJwgCg/zlQ_yVUn2G8.jpg"
-            onClick={changeUser}
           />
           <UserItem
             name="Артем Петрунин"
@@ -51,7 +46,6 @@ export default class extends React.Component<IProps> {
             report="98"
             rating="274"
             src="https://sun9-68.userapi.com/hT7OVKhVJBuNCaURI2x-q-ESoQKoUCES7iKwIw/EvSXxluvOCs.jpg"
-            onClick={changeUser}
           />
         </Div>
       </div>

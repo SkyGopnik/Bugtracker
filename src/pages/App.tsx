@@ -15,19 +15,16 @@ import MainView from '../views/Main';
   Функции
 */
 import unixTime from '../functions/unixtime';
+import queryGet from '../functions/query_get';
+
+import { AppReducerIterface } from "src/store/app/reducers";
 
 import '../styles/all.scss';
 
 let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
 
-interface IProps {
-  view: string,
-  panel: string,
-  changeView(view: string),
-  changePanel(panel: string),
-  changeViewAndPanel(view: string, panel: string)
-}
+interface IProps extends AppReducerIterface {}
 
 interface IState {
   scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light'
@@ -118,7 +115,7 @@ export default class extends React.Component<IProps, IState> {
         <Root activeView={view}>
           <MainView
             id="main"
-            activePanel={panel}
+            activePanel={queryGet('type') !== 'desktop' ? panel : 'main'}
           />
         </Root>
       </ConfigProvider>

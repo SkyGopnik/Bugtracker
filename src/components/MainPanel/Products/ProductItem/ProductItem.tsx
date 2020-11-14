@@ -15,7 +15,7 @@ export interface IProps {
   version: string,
   src: string,
   button?: string,
-  changeActive(name: string)
+  onClick?: Function
 }
 
 export default class extends React.Component<IProps> {
@@ -30,14 +30,13 @@ export default class extends React.Component<IProps> {
       version,
       src,
       button,
-      changeActive
+      onClick
     } = this.props;
 
     return (
       <SimpleCell
         className={styles.productItem}
         before={<Avatar className={styles.avatar} size={80} src={src} />}
-        onClick={() => changeActive('product')}
         after={
           button && (
             <Button>
@@ -46,7 +45,7 @@ export default class extends React.Component<IProps> {
           )
         }
         description={version}
-        //onClick={go}
+        onClick={() => onClick && onClick()}
         multiline
       >
         {name}

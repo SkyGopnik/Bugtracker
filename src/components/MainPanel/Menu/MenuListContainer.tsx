@@ -11,8 +11,13 @@ import MenuList from './MenuList';
 
 const MenuListContainer = (props) => <MenuList {...props} />;
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  const props = {
+    view: state.app.view,
+    panel: state.app.panel,
+  };
+
+  return props;
 };
 
 const mapDispatchToProps = {

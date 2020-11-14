@@ -3,7 +3,7 @@ import React from 'react';
 /*
   Панели
 */
-import MainPanel from '../panels/Main/Main';
+import MainPanel from '../panels/Main/MainContainer';
 import ReportsPanel from "../panels/Reports";
 
 // Компоненты
@@ -51,11 +51,7 @@ export default class extends React.Component<IProps, IState> {
         panelList={[
           {
             id: 'main',
-            component: MainPanel,
-            props: {
-              activeContent,
-              changeActiveContent: this.changeActiveContent
-            }
+            component: MainPanel
           },
           {
             id: 'reports',
