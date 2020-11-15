@@ -4,12 +4,12 @@ import {
   Input
 } from "@vkontakte/vkui";
 
-import { FormItemText } from './AddReport';
+import { FormItem as FormItemInterface } from './AddVersion';
 
 import isset from 'src/functions/isset';
 
 interface IProps {
-  item: FormItemText,
+  item: FormItemInterface,
   onValueChange(value: string)
 }
 
@@ -23,7 +23,7 @@ export default class extends React.Component<IProps> {
 
     return (
       <FormItem
-        top="Название"
+        top="Название версии"
         status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
         bottom={item.error ? item.error : ''}
       >
@@ -31,7 +31,7 @@ export default class extends React.Component<IProps> {
           value={item.value}
           onChange={(e) => onValueChange(String(e.currentTarget.value))}
           type="text"
-          placeholder="Коротко опишите суть бага"
+          placeholder="1.0.0"
         />
       </FormItem>
     );

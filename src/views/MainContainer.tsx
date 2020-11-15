@@ -7,9 +7,9 @@ import {
   changeViewAndPanel,
   changeModal
 } from '../store/app/actions';
-import App from './App';
+import Main from './Main';
 
-const AppContainer = (props) => <App {...props} />;
+const MainContainer = (props) => <Main {...props} />;
 
 const mapStateToProps = (state) => {
   const props = {
@@ -28,4 +28,4 @@ const mapDispatchToProps = {
   changeModal
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

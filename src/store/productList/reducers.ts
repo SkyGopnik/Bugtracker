@@ -4,7 +4,10 @@ import {
   GET_PRODUCT_LIST_FAILURE,
   GET_PRODUCT_STARTED,
   GET_PRODUCT_SUCCESS,
-  GET_PRODUCT_FAILURE, getProduct
+  GET_PRODUCT_FAILURE,
+  GET_PRODUCT_VERSIONS_STARTED,
+  GET_PRODUCT_VERSIONS_SUCCESS,
+  GET_PRODUCT_VERSIONS_FAILURE
 } from './actions';
 
 interface Product {
@@ -16,6 +19,15 @@ interface Product {
   type?: {
     text: string
   },
+  versions?: Array<Versions>
+  createdAt?: Date,
+  updatedAt?: Date
+}
+
+interface Versions {
+  id?: string,
+  title?: string,
+  description?: string,
   createdAt?: Date,
   updatedAt?: Date
 }
@@ -31,8 +43,14 @@ export interface ProductReducerIterface {
     data: Product,
     error: any
   },
+  versions: {
+    loading: false,
+    data: Array<Versions>,
+    error: null
+  },
   getProductList(page?: number),
-  getProduct(id: string)
+  getProduct(id: string),
+  getProductVersions(id: string, page?: number)
 }
 
 const defaultState = {
@@ -44,6 +62,11 @@ const defaultState = {
   single: {
     loading: false,
     data: {},
+    error: null
+  },
+  versions: {
+    loading: false,
+    data: [],
     error: null
   }
 };
@@ -82,6 +105,11 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
       single: {
         ...state.single,
         loading: true
+      },
+      versions: {
+        loading: false,
+        error: null,
+        data: []
       }
     };
   case GET_PRODUCT_SUCCESS:
@@ -91,6 +119,11 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
         loading: false,
         error: null,
         data: payload
+      },
+      versions: {
+        loading: false,
+        error: null,
+        data: []
       }
     };
   case GET_PRODUCT_FAILURE:
@@ -98,6 +131,37 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
       ...state,
       single: {
         ...state.single,
+        loading: false,
+        error: payload.error
+      },
+      versions: {
+        loading: false,
+        error: null,
+        data: []
+      }
+    };
+  case GET_PRODUCT_VERSIONS_STARTED:
+    return {
+      ...state,
+      versions: {
+        ...state.versions,
+        loading: true
+      }
+    };
+  case GET_PRODUCT_VERSIONS_SUCCESS:
+    return {
+      ...state,
+      versions: {
+        loading: false,
+        error: null,
+        data: payload
+      }
+    };
+  case GET_PRODUCT_VERSIONS_FAILURE:
+    return {
+      ...state,
+      versions: {
+        ...state.versions,
         loading: false,
         error: payload.error
       }

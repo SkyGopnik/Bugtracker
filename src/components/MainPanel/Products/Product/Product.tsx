@@ -1,16 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import {
   Group,
   Header,
-  SimpleCell,
+  RichCell,
   Avatar,
-  IconButton,
   Div,
   Button,
-  HorizontalScroll,
-  Title,
-  Link, Placeholder, Spinner
+  Link,
+  Spinner,
+  Separator, Placeholder
 } from "@vkontakte/vkui";
 
 import Icon16MoreVertical from '@vkontakte/icons/dist/16/more_vertical';
@@ -18,14 +16,16 @@ import Icon24PenOutline from '@vkontakte/icons/dist/24/pen_outline';
 import Icon20ArticleBoxOutline from '@vkontakte/icons/dist/20/article_box_outline';
 import Icon20CheckCircleOutline from '@vkontakte/icons/dist/20/check_circle_outline';
 import Icon20ErrorCircleOutline from '@vkontakte/icons/dist/20/error_circle_outline';
+import Icon24Play from '@vkontakte/icons/dist/24/play';
+import Icon56GhostOutline from "@vkontakte/icons/dist/56/ghost_outline";
 
 import {ProductReducerIterface} from "src/store/productList/reducers";
 import {AppReducerIterface} from "src/store/app/reducers";
 
+import getDate from "src/functions/getDate";
+
 import styles from './Product.scss';
-import {getProduct} from "src/store/productList/actions";
-import ProductItem from "src/components/MainPanel/Products/ProductItem/ProductItem";
-import Icon56GhostOutline from "@vkontakte/icons/dist/56/ghost_outline";
+
 
 interface IProps extends ProductReducerIterface, AppReducerIterface {}
 
@@ -41,7 +41,7 @@ export default class extends React.Component<IProps> {
   }
 
   render() {
-    const { single } = this.props;
+    const { single, versions, changeModal } = this.props;
     const {
       id,
       title,
@@ -52,26 +52,33 @@ export default class extends React.Component<IProps> {
     } = single.data;
 
     return (
-      !single.loading ? (
+      Object.keys(single.data).length !== 0
+      && !single.loading ? (
         <div>
           <Group>
-            <SimpleCell
+            <RichCell
               before={
                 <Avatar
                   size={72}
                   src={`https://cloudskyreglis.ru/files/${image}`}
                 />
               }
+              actions={
+                <>
+                  <Button size="s">
+                    Присоединиться
+                  </Button>
+                  <Button size="s" href={href}>
+                    Запустить
+                  </Button>
+                </>
+              }
               // after={<IconButton icon={<Icon16MoreVertical />} />}
-              description="Версия 9.9.9.9.9"
+              caption={versions.data[0] ? `Версия ${versions.data[0].title}` : ''}
               disabled
             >
               {title}
-            </SimpleCell>
-            <Div style={{display: 'flex'}}>
-              <Button size="m" stretched style={{ marginRight: 8 }}>Добавить отчет</Button>
-              <Button size="m" href={href} stretched>Запустить</Button>
-            </Div>
+            </RichCell>
           </Group>
 
           <Group header={<Header>Описание</Header>}>
@@ -79,37 +86,63 @@ export default class extends React.Component<IProps> {
           </Group>
 
           <Group
+            className={styles.versionList}
             header={
-              <Header aside={<Link>Показать все</Link>}>
+              <Header aside={<Link onClick={() => changeModal('add-version', id)}>Добавить</Link>}>
                 Версии
               </Header>
             }
           >
-            <Header
-              className={styles.version}
-              aside={
-                <div className={styles.icons}>
-                  <div className={styles.icon}>
-                    <Icon20ArticleBoxOutline/> 1
+            {!versions.loading ? (
+              versions.data.length !== 0 ? (
+                versions.data.map((item, index) => (
+                  <div key={index}>
+                    <div className={styles.version}>
+                      <Header
+                        className={styles.header}
+                        // aside={
+                        //   <div className={styles.icons}>
+                        //     <div className={styles.icon}>
+                        //       <Icon20ArticleBoxOutline/>
+                        //       <span>1</span>
+                        //     </div>
+                        //     <div className={styles.icon}>
+                        //       <Icon20CheckCircleOutline/>
+                        //       <span>1</span>
+                        //     </div>
+                        //     <div className={styles.icon}>
+                        //       <Icon20ErrorCircleOutline/>
+                        //       <span>1</span>
+                        //     </div>
+                        //   </div>
+                        // }
+                        indicator
+                      >
+                        {item.title} <Link><Icon24PenOutline height={16} width={16}/> Изменить</Link>
+                      </Header>
+                      <Div>
+                        {item.description}
+                      </Div>
+                      <Div className={styles.footer}>
+                        {getDate(item.createdAt)}
+                      </Div>
+                    </div>
+                    {(versions.data.length - 1) !== index && <Separator />}
                   </div>
-                  <div className={styles.icon}>
-                    <Icon20CheckCircleOutline/> 1
-                  </div>
-                  <div className={styles.icon}>
-                    <Icon20ErrorCircleOutline/> 1
-                  </div>
-                </div>
-              }
-              indicator
-            >
-              9.9.9.9.9 <Link><Icon24PenOutline height={16} width={16}/> Изменить</Link>
-            </Header>
-            <Div>
-              -текст<br/>-текст<br/>-текст<br/>-текст-текст<br/>-текст-текст<br/>-текст
-            </Div>
-            <Div className={styles.footer}>
-              17 сентября 2020 в 20:35
-            </Div>
+                ))
+              ) : (
+                <Placeholder
+                  icon={<Icon56GhostOutline />}
+                  header="Версии"
+                >
+                  Похоже, тут ничего нет
+                </Placeholder>
+              )
+            ) : (
+              <Div>
+                <Spinner />
+              </Div>
+            )}
           </Group>
         </div>
       ) : (

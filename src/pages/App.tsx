@@ -2,14 +2,13 @@ import React from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import {
   ConfigProvider,
-  Epic,
   Root
 } from '@vkontakte/vkui';
 
 /*
   View
 */
-import MainView from '../views/Main';
+import MainView from '../views/MainContainer';
 
 /*
   Функции
@@ -33,8 +32,6 @@ interface IState {
 export default class extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    console.log(props);
 
     this.state = {
       scheme: 'bright_light'
@@ -107,16 +104,17 @@ export default class extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { view, panel } = this.props;
+    const { view } = this.props;
     const { scheme } = this.state;
 
     return (
-      <ConfigProvider scheme={scheme}>
+      <ConfigProvider
+        scheme={scheme}
+        // @ts-ignore
+        platform="vkcom"
+      >
         <Root activeView={view}>
-          <MainView
-            id="main"
-            activePanel={queryGet('type') !== 'desktop' ? panel : 'main'}
-          />
+          <MainView id="main" />
         </Root>
       </ConfigProvider>
     );

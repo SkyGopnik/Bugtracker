@@ -1,31 +1,41 @@
-.version {
+.versionList {
   :global {
-    .Header__in {
-      align-items: center;
-    }
-
-    .Header__content {
-      padding: 0 !important;
+    .Separator {
+      margin: 10px 0;
     }
   }
-}
 
-.icons {
-  display: flex;
+  .version {
+    .header {
+      :global {
+        .Header__in {
+          align-items: center;
+        }
 
-  color: var(--text_subhead);
+        .Header__content {
+          padding: 0 !important;
+        }
+      }
+    }
 
-  .icon {
-    display: flex;
+    .icons {
+      display: flex;
 
-    &:not(:first-child) {
-      margin-left: 10px;
+      color: var(--text_subhead);
+
+      .icon {
+        display: flex;
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .footer {
+      padding: 0 16px !important;
+
+      color: var(--text_subhead);
     }
   }
-}
-
-.footer {
-  padding: 0 16px !important;
-
-  color: var(--text_subhead);
 }

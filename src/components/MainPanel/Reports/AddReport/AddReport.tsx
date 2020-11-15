@@ -18,6 +18,7 @@ import OresultItem from './OResultItem';
 import TagsItem from './TagsItem';
 import PriorityItem from './PriorityItem';
 import TroubleTypeItem from "./TroubleTypeItem";
+import {AppReducerIterface} from "src/store/app/reducers";
 
 
 interface FormItem {
@@ -41,15 +42,7 @@ export interface FormItemBoolean extends FormItem {
   value?: boolean
 }
 
-interface IProps {
-  type: 'component' | 'panel',
-  view: string,
-  panel: string,
-  changeView(view: string),
-  changePanel(panel: string),
-  changeViewAndPanel(view: string, panel: string),
-  changeActive(name: string)
-}
+interface IProps extends AppReducerIterface {}
 
 interface IState {
   product: FormItemText,
@@ -203,7 +196,7 @@ export default class extends React.Component<IProps, IState> {
   }
 
   sendForm = async () => {
-    const { type, changeActive } = this.props;
+    const { changePanel } = this.props;
     let newForm = { ...this.state };
 
     // Все обязательные поля которые нужны в форме
@@ -261,13 +254,7 @@ export default class extends React.Component<IProps, IState> {
           type: newForm.type.value
         });
 
-        if (type === 'component') {
-          // Совершаем переход между контентом
-          changeActive('reports');
-        } else if (type === 'panel') {
-          // Совершаем переход между панелями
-          // changePanel();
-        }
+        changePanel('main');
 
         // Завершаем функцию, чтобы не вызывать ошибок из за unmount
         return;

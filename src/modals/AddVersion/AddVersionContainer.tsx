@@ -6,16 +6,19 @@ import {
   changePanel,
   changeViewAndPanel,
   changeModal
-} from '../store/app/actions';
-import App from './App';
+} from 'src/store/app/actions';
+import {
+  getProductVersions
+} from 'src/store/productList/actions';
+import AddVersion from './AddVersion';
 
-const AppContainer = (props) => <App {...props} />;
+const AddVersionContainer = (props) => <AddVersion {...props} />;
 
 const mapStateToProps = (state) => {
   const props = {
     view: state.app.view,
     panel: state.app.panel,
-    modal: state.app.modal
+    modalData: state.app.modalData
   };
 
   return props;
@@ -25,7 +28,8 @@ const mapDispatchToProps = {
   changeView,
   changePanel,
   changeViewAndPanel,
-  changeModal
+  changeModal,
+  getProductVersions
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AddVersionContainer);

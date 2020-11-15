@@ -12,6 +12,7 @@ import TypeItem from './TypeItem';
 import HrefItem from './HrefItem';
 
 import FileItem from "src/components/FileItem/FileItem";
+import {AppReducerIterface} from "src/store/app/reducers";
 
 interface FormItem {
   error?: string,
@@ -30,10 +31,7 @@ export interface FormItemFile extends FormItem {
   value: Array<string | ArrayBuffer>
 }
 
-interface IProps {
-  type: 'component' | 'panel',
-  changeActive(name: string)
-}
+interface IProps extends AppReducerIterface {}
 
 interface IState {
   title: FormItemText,
@@ -123,7 +121,7 @@ export default class extends React.Component<IProps, IState> {
   }
 
   sendForm = async () => {
-    const { type, changeActive } = this.props;
+    const { changePanel } = this.props;
     let newForm = { ...this.state };
 
     // Все обязательные поля которые нужны в форме
@@ -157,7 +155,6 @@ export default class extends React.Component<IProps, IState> {
         const imagesData = {};
 
         newForm.file.value.forEach((item, index) => {
-          console.log(item);
           imagesData[`file_${index}`] = item;
         });
 
@@ -174,13 +171,7 @@ export default class extends React.Component<IProps, IState> {
           image: images.data[0]
         });
 
-        if (type === 'component') {
-          // Совершаем переход между контентом
-          changeActive('products');
-        } else if (type === 'panel') {
-          // Совершаем переход между панелями
-          // changePanel();
-        }
+        changePanel('products');
 
         // Завершаем функцию, чтобы не вызывать ошибок из за unmount
         return;

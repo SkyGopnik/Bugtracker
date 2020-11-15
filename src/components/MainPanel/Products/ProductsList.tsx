@@ -10,12 +10,12 @@ import {
 import ProductItem from "./ProductItem/ProductItem";
 
 import Icon28ServicesOutline from '@vkontakte/icons/dist/28/services_outline';
-import ReportItem from "src/components/MainPanel/Reports/ReportItem/ReportItem";
 import Icon56GhostOutline from "@vkontakte/icons/dist/56/ghost_outline";
 
 import {ProductReducerIterface} from "src/store/productList/reducers";
 import {AppReducerIterface} from "src/store/app/reducers";
-import {changePanel} from "src/store/app/actions";
+
+import getDate from "src/functions/getDate";
 
 interface IProps extends ProductReducerIterface, AppReducerIterface {}
 
@@ -75,7 +75,7 @@ export default class extends React.Component<IProps, IState> {
                   key={index}
                   name={item.title}
                   statistic={"0 отчётов, 0 пожеланий"}
-                  version={`Версия: {1.0.0}`}
+                  version={`Обновлён ${getDate(item.versions[0].createdAt)} до версии ${item.versions[0].title}`}
                   src={`https://cloudskyreglis.ru/files/${item.image}`}
                   onClick={() => changePanel('product', item.id)}
                 />

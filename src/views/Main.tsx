@@ -1,10 +1,12 @@
 import React from 'react';
+import {ModalRoot} from "@vkontakte/vkui";
 
-/*
-  Панели
-*/
+// Панели
 import MainPanel from '../panels/Main/MainContainer';
 import ReportsPanel from "../panels/Reports";
+
+// Модалки
+import AddVersion from "src/modals/AddVersion/AddVersionContainer";
 
 // Компоненты
 import ViewLight from '../components/ViewLight';
@@ -12,16 +14,17 @@ import ProductsPanel from 'src/panels/Products';
 import UsersPanel from 'src/panels/Users';
 import NotificationsPanel from "src/panels/Notifications";
 import UserPanel from "src/panels/User";
+import queryGet from "src/functions/query_get";
 
-interface IProps {
-  id: string,
-  activePanel: string
+import {AppReducerIterface} from "src/store/app/reducers";
+
+interface IProps extends AppReducerIterface {
+  id: string
 }
 
 interface IState {
   activeContent: string
 }
-
 
 export default class extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -41,13 +44,27 @@ export default class extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { id, activePanel } = this.props;
-    const { activeContent } = this.state;
+    const {
+      id,
+      panel,
+      modal,
+      changeModal
+    } = this.props;
+
+    const modalRoot = (
+      <ModalRoot
+        activeModal={modal}
+        onClose={() => changeModal(null)}
+      >
+        <AddVersion id="add-version" />
+      </ModalRoot>
+    );
 
     return (
       <ViewLight
         id={id}
-        activePanel={activePanel}
+        activePanel={queryGet('type') !== 'desktop' ? panel : 'main'}
+        modal={modalRoot}
         panelList={[
           {
             id: 'main',

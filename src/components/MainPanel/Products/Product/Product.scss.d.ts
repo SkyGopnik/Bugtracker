@@ -2,9 +2,11 @@
 // Please do not change this file!
 interface CssExports {
   'footer': string;
+  'header': string;
   'icon': string;
   'icons': string;
   'version': string;
+  'versionList': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 
 import {
   getProductList,
-  getProduct
+  getProduct,
+  getProductVersions
 } from 'src/store/productList/actions';
 import {
   changeView,
   changePanel,
-  changeViewAndPanel
+  changeViewAndPanel,
+  changeModal
 } from 'src/store/app/actions';
 import Product from './Product';
 
@@ -18,6 +20,7 @@ const mapStateToProps = (state) => {
   const props = {
     list: state.productList.list,
     single: state.productList.single,
+    versions: state.productList.versions,
     panelData: state.app.panelData
   };
 
@@ -27,9 +30,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getProductList,
   getProduct,
+  getProductVersions,
   changeView,
   changePanel,
-  changeViewAndPanel
+  changeViewAndPanel,
+  changeModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductContainer);
