@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   Group,
   Header,
@@ -40,20 +41,37 @@ export default class extends React.Component<IProps> {
     getProduct(panelData);
   }
 
+  manageUserProduct = async (productId: string, type: 'enter' | 'leave') => {
+    const { panelData, getProduct } = this.props;
+
+    const { data } = await axios.put(`/product/${type}Product`, {
+      productId
+    });
+
+    getProduct(panelData);
+
+    console.log(data);
+  }
+
   render() {
-    const { single, versions, changeModal } = this.props;
+    const {
+      single,
+      versions,
+      panelData,
+      changeModal
+    } = this.props;
     const {
       id,
       title,
       description,
       image,
       href,
-      type
+      type,
+      users
     } = single.data;
 
     return (
-      Object.keys(single.data).length !== 0
-      && !single.loading ? (
+      Object.keys(single.data).length !== 0 && panelData === id ? (
         <div>
           <Group>
             <RichCell
@@ -65,16 +83,34 @@ export default class extends React.Component<IProps> {
               }
               actions={
                 <>
-                  <Button size="s">
-                    Присоединиться
-                  </Button>
-                  <Button size="s" href={href}>
-                    Запустить
-                  </Button>
+                  {users.length === 0 && (
+                    <Button size="s" onClick={() => this.manageUserProduct(id, 'enter')}>
+                      Присоединиться
+                    </Button>
+                  )}
+                  {users[0] && (
+                    <>
+                      {(users[0].type === 'consideration' || users[0].type === 'accepted') && (
+                        <Button size="s" onClick={() => this.manageUserProduct(id, 'leave')}>
+                          {users[0].type === 'consideration' ? 'Отменить заявку' : 'Покинуть продукт'}
+                        </Button>
+                      )}
+                      {(users[0].type === 'rejected') && (
+                        <Button size="s" disabled>
+                          Отказано
+                        </Button>
+                      )}
+                      {(users[0].type === 'accepted') && (
+                        <Button size="s" href={href}>
+                          Запустить
+                        </Button>
+                      )}
+                    </>
+                  )}
                 </>
               }
               // after={<IconButton icon={<Icon16MoreVertical />} />}
-              caption={versions.data[0] ? `Версия ${versions.data[0].title}` : ''}
+              caption={(versions.data && versions.data[0]) ? `Версия ${versions.data[0].title}` : ''}
               disabled
             >
               {title}
@@ -85,16 +121,16 @@ export default class extends React.Component<IProps> {
             <Div>{description}</Div>
           </Group>
 
-          <Group
-            className={styles.versionList}
-            header={
-              <Header aside={<Link onClick={() => changeModal('add-version', id)}>Добавить</Link>}>
-                Версии
-              </Header>
-            }
-          >
-            {!versions.loading ? (
-              versions.data.length !== 0 ? (
+          {versions.data && (
+            <Group
+              className={styles.versionList}
+              header={
+                <Header aside={<Link onClick={() => changeModal('add-version', id)}>Добавить</Link>}>
+                  Версии
+                </Header>
+              }
+            >
+              {versions.data.length !== 0 ? (
                 versions.data.map((item, index) => (
                   <div key={index}>
                     <div className={styles.version}>
@@ -137,13 +173,9 @@ export default class extends React.Component<IProps> {
                 >
                   Похоже, тут ничего нет
                 </Placeholder>
-              )
-            ) : (
-              <Div>
-                <Spinner />
-              </Div>
-            )}
-          </Group>
+              )}
+            </Group>
+          )}
         </div>
       ) : (
         <Div>

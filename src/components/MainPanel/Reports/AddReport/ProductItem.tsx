@@ -6,10 +6,11 @@ import {
 
 import { FormItemText } from './AddReport';
 
-import isset from 'src/functions/isset';
-import axios from "axios";
+import {ProductReducerIterface} from "src/store/productList/reducers";
 
-interface IProps {
+import isset from 'src/functions/isset';
+
+interface IProps extends ProductReducerIterface {
   item: FormItemText,
   onValueChange(value: string)
 }
@@ -35,17 +36,8 @@ export default class extends React.Component<IProps, IState> {
     };
   }
 
-  async componentDidMount() {
-    const { data } = await  axios.get('/product/list?page=1&limit=20');
-
-    this.setState({
-      list: data
-    });
-  }
-
   render() {
-    const { item, onValueChange } = this.props;
-    const { list } = this.state;
+    const { item, userProducts, onValueChange } = this.props;
 
     return (
       <FormItem
@@ -58,7 +50,7 @@ export default class extends React.Component<IProps, IState> {
           onChange={(result) => onValueChange(String(result.value))}
           placeholder="Выберите продукт"
         >
-          {list.map((item, index) => (
+          {userProducts.map((item, index) => (
             <option key={index} value={item.id}>{item.title}</option>
           ))}
         </Select>

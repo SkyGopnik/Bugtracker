@@ -9,13 +9,15 @@ export const GET_PRODUCT_FAILURE = 'GET_PRODUCT_FAILURE';
 export const GET_PRODUCT_VERSIONS_STARTED = 'GET_PRODUCT_VERSIONS_STARTED';
 export const GET_PRODUCT_VERSIONS_SUCCESS = 'GET_PRODUCT_VERSIONS_SUCCESS';
 export const GET_PRODUCT_VERSIONS_FAILURE = 'GET_PRODUCT_VERSIONS_FAILURE';
+export const GET_USER_PRODUCT_LIST_SUCCESS = 'GET_USER_PRODUCT_LIST_SUCCESS';
 
-export const getProductList = (page: number = 1) => {
+export const getProductList = (type: string = 'all', page: number = 1) => {
   return dispatch => {
     dispatch(getProductListStarted());
 
-    axios.get(`/product/list?page=${page}&limit=20`).then((res) => {
+    axios.get(`/product/list?type=${type}&page=${page}&limit=20`).then((res) => {
       dispatch(getProductListSuccess({ list: res.data, isFirst: page === 1 }));
+      dispatch(getUserProductList());
     })
     .catch((err) => {
       dispatch(getProductListFailure(err.message));
@@ -30,6 +32,7 @@ export const getProduct = (id: string) => {
     axios.get(`/product/single?id=${id}`).then((res) => {
       dispatch(getProductSuccess(res.data));
       dispatch(getProductVersions(id));
+      dispatch(getUserProductList());
     })
     .catch((err) => {
       dispatch(getProductFailure(err.message));
@@ -46,6 +49,14 @@ export const getProductVersions = (id: string, page: number = 1) => {
     })
     .catch((err) => {
       dispatch(getProductVersionsFailure(err.message));
+    });
+  }
+};
+
+export const getUserProductList = () => {
+  return dispatch => {
+    axios.get('/product/userList').then((res) => {
+      dispatch(getUserProductListSuccess(res.data));
     });
   }
 };
@@ -96,4 +107,9 @@ const getProductVersionsFailure = error => ({
   payload: {
     error
   }
+});
+
+const getUserProductListSuccess = (data) => ({
+  type: GET_USER_PRODUCT_LIST_SUCCESS,
+  payload: data
 });

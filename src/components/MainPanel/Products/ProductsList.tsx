@@ -38,6 +38,16 @@ export default class extends React.Component<IProps, IState> {
     getProductList();
   }
 
+  chageTab = (type: 'all' | 'own' | 'moderated') => {
+    const { getProductList } = this.props;
+
+    getProductList(type);
+
+    this.setState({
+      activeTab: type
+    });
+  }
+
   render() {
     const { activeTab } = this.state;
     const { list, changePanel } = this.props;
@@ -46,19 +56,19 @@ export default class extends React.Component<IProps, IState> {
       <div>
         <Tabs>
           <TabsItem
-            onClick={() => this.setState({ activeTab: 'all' })}
+            onClick={() => this.chageTab('all')}
             selected={activeTab === 'all'}
           >
             Все
           </TabsItem>
           <TabsItem
-            onClick={() => this.setState({ activeTab: 'own' })}
+            onClick={() => this.chageTab('own')}
             selected={activeTab === 'own'}
           >
             Мои
           </TabsItem>
           <TabsItem
-            onClick={() => this.setState({ activeTab: 'moderated' })}
+            onClick={() => this.chageTab('moderated')}
             selected={activeTab === 'moderated'}
           >
             Модерируемые
@@ -67,7 +77,7 @@ export default class extends React.Component<IProps, IState> {
 
         <Separator />
 
-        {activeTab === 'all' && (
+        {(activeTab === 'all' || activeTab === 'own') && (
           !list.loading ? (
             list.data.length !== 0 ? (
               list.data.map((item, index) => (
@@ -75,7 +85,7 @@ export default class extends React.Component<IProps, IState> {
                   key={index}
                   name={item.title}
                   statistic={"0 отчётов, 0 пожеланий"}
-                  version={`Обновлён ${getDate(item.versions[0].createdAt)} до версии ${item.versions[0].title}`}
+                  version={item.versions[0] ? `Обновлён ${getDate(item.versions[0].createdAt)} до версии ${item.versions[0].title}` : ''}
                   src={`https://cloudskyreglis.ru/files/${item.image}`}
                   onClick={() => changePanel('product', item.id)}
                 />
@@ -93,14 +103,6 @@ export default class extends React.Component<IProps, IState> {
               <Spinner />
             </Div>
           )
-        )}
-        {activeTab === 'own' && (
-          <Placeholder
-            icon={<Icon28ServicesOutline width={56} height={56} />}
-            action={<Button size="l">Выбрать продукт</Button>} //кидаем на все
-          >
-            Вы не учавствуете в тестировании никаких продуктов.
-          </Placeholder>
         )}
         {activeTab === 'moderated' && (
           <Placeholder

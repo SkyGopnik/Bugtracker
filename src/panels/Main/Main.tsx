@@ -18,17 +18,15 @@ import User from "src/components/UserPanel/UserPanel";
 import Product from "src/components/MainPanel/Products/Product/ProductContainer";
 import Report from "src/components/MainPanel/Reports/Report/Report";
 
+import {AppReducerIterface} from "src/store/app/reducers";
+import {ProductReducerIterface} from "src/store/productList/reducers";
+
 import queryGet from '../../functions/query_get';
 
 import styles from './Main.scss';
 
-interface IProps {
-  id: string,
-  view: string,
-  panel: string,
-  changeView(view: string),
-  changePanel(panel: string),
-  changeViewAndPanel(view: string, panel: string)
+interface IProps extends AppReducerIterface, ProductReducerIterface {
+  id: string
 }
 
 interface IState {}
@@ -44,6 +42,8 @@ export default class extends React.Component<IProps, IState> {
     const {
       id,
       panel,
+      single,
+      userProducts,
       changePanel
     } = this.props;
     const isDesktop = queryGet('type') === 'desktop';
@@ -59,12 +59,14 @@ export default class extends React.Component<IProps, IState> {
           {isDesktop ? (
             <div className={styles.contentWrapper}>
               <div className={styles.menu}>
-                <Button
-                  className={styles.addReportBtn}
-                  onClick={() => changePanel('add-report')}
-                >
-                  Добавить отчёт
-                </Button>
+                {userProducts.length !== 0 && (
+                  <Button
+                    className={styles.addReportBtn}
+                    onClick={() => changePanel('add-report', panel === 'product' ? single.data.id : '')}
+                  >
+                    Добавить отчёт
+                  </Button>
+                )}
                 <MenuList className={styles.menuGroup} />
               </div>
               {panel === 'main' && (

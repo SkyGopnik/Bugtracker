@@ -7,7 +7,8 @@ import {
   GET_PRODUCT_FAILURE,
   GET_PRODUCT_VERSIONS_STARTED,
   GET_PRODUCT_VERSIONS_SUCCESS,
-  GET_PRODUCT_VERSIONS_FAILURE
+  GET_PRODUCT_VERSIONS_FAILURE,
+  GET_USER_PRODUCT_LIST_SUCCESS
 } from './actions';
 
 interface Product {
@@ -20,6 +21,9 @@ interface Product {
     text: string
   },
   versions?: Array<Versions>
+  users?: Array<{
+    type: 'consideration'| 'accepted' | 'rejected'
+  }>
   createdAt?: Date,
   updatedAt?: Date
 }
@@ -45,12 +49,17 @@ export interface ProductReducerIterface {
   },
   versions: {
     loading: false,
-    data: Array<Versions>,
+    data: Array<Versions> | null,
     error: null
   },
-  getProductList(page?: number),
+  userProducts: Array<{
+    id: string,
+    title: string
+  }>,
+  getProductList(type?: 'all' | 'own' | 'moderated', page?: number),
   getProduct(id: string),
-  getProductVersions(id: string, page?: number)
+  getProductVersions(id: string, page?: number),
+  getUserProductList()
 }
 
 const defaultState = {
@@ -66,9 +75,10 @@ const defaultState = {
   },
   versions: {
     loading: false,
-    data: [],
+    data: null,
     error: null
-  }
+  },
+  userProducts: []
 };
 
 export const productListReducer = (state = defaultState, { type, payload }) => {
@@ -109,7 +119,7 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
       versions: {
         loading: false,
         error: null,
-        data: []
+        data: null
       }
     };
   case GET_PRODUCT_SUCCESS:
@@ -123,7 +133,7 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
       versions: {
         loading: false,
         error: null,
-        data: []
+        data: null
       }
     };
   case GET_PRODUCT_FAILURE:
@@ -137,7 +147,7 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
       versions: {
         loading: false,
         error: null,
-        data: []
+        data: null
       }
     };
   case GET_PRODUCT_VERSIONS_STARTED:
@@ -165,6 +175,11 @@ export const productListReducer = (state = defaultState, { type, payload }) => {
         loading: false,
         error: payload.error
       }
+    };
+  case GET_USER_PRODUCT_LIST_SUCCESS:
+    return {
+      ...state,
+      userProducts: payload
     };
 
   default:

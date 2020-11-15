@@ -8,7 +8,7 @@ import {
 
 import {ChipsInputOption} from "@vkontakte/vkui/dist/components/ChipsInput/ChipsInput";
 
-import ProductItem from './ProductItem';
+import ProductItem from './ProductItemContainer';
 import PlatformItem from './PlatformItem';
 import OsItem from './OsItem';
 import TitleItem from './TitleItem';
@@ -157,6 +157,21 @@ export default class extends React.Component<IProps, IState> {
     }
   }
 
+  componentDidMount() {
+    const { panelData } = this.props;
+    const { product } = this.state;
+
+    if (panelData) {
+      this.setState({
+        product: {
+          ...product.rules,
+          error: '',
+          value: panelData
+        }
+      });
+    }
+  }
+
   handleFormChange = (name: string, value: string | Array<string | ChipsInputOption | ReactText>) => {
     const newItem = { ...this.state[name] };
 
@@ -241,7 +256,7 @@ export default class extends React.Component<IProps, IState> {
       try {
         // Отправляем запрос к API
         await axios.post('/report', {
-          product: newForm.product.value,
+          productId: newForm.product.value,
           platform: newForm.platform.value,
           osnameAndroid: newForm.platform.value.indexOf('Android') !== -1 ? newForm.osnameAndroid.value : null,
           osnameIOS: newForm.platform.value.indexOf('iOS') !== -1 ? newForm.osnameIOS.value : null,

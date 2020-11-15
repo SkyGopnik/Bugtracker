@@ -10,20 +10,20 @@ import {
 */
 import MainView from '../views/MainContainer';
 
+import { AppReducerIterface } from "src/store/app/reducers";
+import { ProductReducerIterface } from "src/store/productList/reducers";
+
 /*
   Функции
 */
 import unixTime from '../functions/unixtime';
-import queryGet from '../functions/query_get';
-
-import { AppReducerIterface } from "src/store/app/reducers";
 
 import '../styles/all.scss';
 
 let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
 
-interface IProps extends AppReducerIterface {}
+interface IProps extends AppReducerIterface, ProductReducerIterface {}
 
 interface IState {
   scheme: 'client_light' | 'client_dark' | 'space_gray' | 'bright_light'
@@ -41,7 +41,10 @@ export default class extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    const { view, panel } = this.props;
+    const { view, panel, getUserProductList } = this.props;
+
+    // Получаем список продуктов пользователя для селекта и скрытия кнопки
+    getUserProductList();
 
     // Навешиваем обработчик кнопку вперёд/назад
     window.addEventListener('popstate', (e) => {

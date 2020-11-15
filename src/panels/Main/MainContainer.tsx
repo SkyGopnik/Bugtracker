@@ -14,6 +14,8 @@ const mapStateToProps = (state) => {
   const props = {
     view: state.app.view,
     panel: state.app.panel,
+    single: state.productList.single,
+    userProducts: state.productList.userProducts
   };
 
   return props;

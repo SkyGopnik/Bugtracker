@@ -13,7 +13,9 @@ const AddReportContainer = (props) => <AddReport {...props} />;
 const mapStateToProps = (state) => {
   const props = {
     view: state.app.view,
-    panel: state.app.panel
+    panel: state.app.panel,
+    panelData: state.app.panelData,
+    userProducts: state.app.userProducts
   };
 
   return props;

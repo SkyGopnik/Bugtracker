@@ -7,6 +7,9 @@ import {
   changeViewAndPanel,
   changeModal
 } from '../store/app/actions';
+import {
+  getUserProductList
+} from '../store/productList/actions';
 import App from './App';
 
 const AppContainer = (props) => <App {...props} />;
@@ -25,7 +28,8 @@ const mapDispatchToProps = {
   changeView,
   changePanel,
   changeViewAndPanel,
-  changeModal
+  changeModal,
+  getUserProductList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
