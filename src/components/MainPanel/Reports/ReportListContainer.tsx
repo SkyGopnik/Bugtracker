@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
+  changePanel
+} from 'src/store/app/actions';
+import {
   getReportList
 } from 'src/store/reportList/actions';
 import ReportList from './ReportsList';
@@ -17,7 +20,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getReportList
+  getReportList,
+  changePanel
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportListContainer);

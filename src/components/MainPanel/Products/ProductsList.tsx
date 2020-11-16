@@ -107,7 +107,7 @@ export default class extends React.Component<IProps, IState> {
         {activeTab === 'moderated' && (
           <Placeholder
             icon={<Icon28ServicesOutline width={56} height={56} />}
-            action={<Button size="l" onClick={() => changePanel('add-product')}>Предложить свой продукт</Button>} //кидаем на форму/лс
+            action={<Button size="l" onClick={() => changePanel('add-product')}>Предложить свой продукт</Button>}
           >
             Вы не модерируете никакие продукты.
           </Placeholder>

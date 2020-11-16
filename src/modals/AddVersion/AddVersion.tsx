@@ -43,7 +43,7 @@ export default class extends React.Component<IProps, IState> {
         value: '',
         rules: {
           required: true,
-          minLength: 5,
+          minLength: 1,
           maxLength: 250
         }
       },

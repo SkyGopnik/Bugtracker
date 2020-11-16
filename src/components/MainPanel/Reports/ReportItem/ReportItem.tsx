@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Cell,
-  Group
-} from "@vkontakte/vkui";
+import {Cell} from "@vkontakte/vkui";
 
 import getDate from "src/functions/getDate";
 
@@ -14,7 +11,7 @@ export interface IProps {
   author: string,
   date: Date,
   status: string,
-  changeActive(name: string)
+  onClick?: Function
 }
 
 export default class extends React.Component<IProps> {
@@ -29,12 +26,12 @@ export default class extends React.Component<IProps> {
       author,
       date,
       status,
-      changeActive
+      onClick
     } = this.props;
 
     return (
       <div className={styles.reportItem}>
-        <Cell onClick={() => changeActive('report')}>
+        <Cell onClick={() => onClick && onClick()}>
           <div className={styles.title}>
             {name}
           </div>

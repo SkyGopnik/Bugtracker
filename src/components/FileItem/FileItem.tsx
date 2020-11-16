@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormItem } from "@vkontakte/vkui";
+import { FormItem, usePlatform, getClassName, Button } from "@vkontakte/vkui";
 
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 import Icon24DismissDark from '@vkontakte/icons/dist/24/dismiss_dark';
@@ -126,7 +126,7 @@ export default class extends React.Component<IProps, IState> {
     });
   }
 
-  removeFile(id) {
+  removeFile = (id) => {
     const { item, onValueChange } = this.props;
     const newItem = { ...item };
 
@@ -146,12 +146,13 @@ export default class extends React.Component<IProps, IState> {
         bottom={item.error ? item.error : ''}
       >
         <div className={styles.loadImg}>
-          <div className={styles.content}>
-            <div className="icon">
-              <Icon24Camera />
-            </div>
-            <div>Добавить фотографии</div>
-          </div>
+          <Button
+            before={<Icon24Camera />}
+            size="l"
+            stretched
+          >
+            Добавить фотографии
+          </Button>
           <input
             type="file"
             ref={this.fileInput}

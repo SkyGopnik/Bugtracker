@@ -10,8 +10,10 @@ import {
 import Icon56GhostOutline from '@vkontakte/icons/dist/56/ghost_outline';
 
 import ReportItem from './ReportItem/ReportItem';
+import {AppReducerIterface} from "src/store/app/reducers";
+import {changePanel} from "src/store/app/actions";
 
-interface IProps {
+interface IProps extends AppReducerIterface {
   list: {
     loading: boolean,
     error: any | null,
@@ -43,8 +45,7 @@ interface IProps {
       updatedAt?: Date
     }>
   },
-  getReportList(page?: number),
-  changeActive(name: string)
+  getReportList(page?: number)
 }
 
 export default class extends React.Component<IProps> {
@@ -59,7 +60,7 @@ export default class extends React.Component<IProps> {
   }
 
   render() {
-    const { list, changeActive } = this.props;
+    const { list, changePanel } = this.props;
 
     return (
       <div>
@@ -76,7 +77,7 @@ export default class extends React.Component<IProps> {
                   author={`${item.userInfo.first_name} ${item.userInfo.last_name}`}
                   date={item.createdAt}
                   status={item.status.text}
-                  changeActive={changeActive}
+                  onClick={() => changePanel('report', item.id)}
                 />
               ))
             ) : (

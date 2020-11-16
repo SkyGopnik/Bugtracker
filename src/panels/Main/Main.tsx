@@ -85,7 +85,7 @@ export default class extends React.Component<IProps, IState> {
                 </DesktopContent>
               )}
               {panel === 'report' && (
-                <DesktopContent className={styles.content} title="Заголовок">
+                <DesktopContent className={styles.content} title="Отчёт">
                   <Report />
                 </DesktopContent>
               )}
