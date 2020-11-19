@@ -10,6 +10,8 @@ import {
   MiniInfoCell, Spinner
 } from "@vkontakte/vkui";
 
+import ReportComment from './ReportComment';
+
 import Icon20ServicesOutline from '@vkontakte/icons/dist/20/services_outline';
 import Icon20FollowersOutline from '@vkontakte/icons/dist/20/followers_outline';
 import Icon20CubeBoxOutline from '@vkontakte/icons/dist/20/cube_box_outline';
@@ -167,6 +169,9 @@ export default class extends React.Component<IProps> {
             >
               {createdAt === updatedAt ? 'Создано' : 'Обновлено'} {getDate(createdAt)}
             </MiniInfoCell>
+          </Group>
+          <Group header={<Header>Комментарии</Header>}>
+          <ReportComment/>
           </Group>
         </div>
       ) : (
