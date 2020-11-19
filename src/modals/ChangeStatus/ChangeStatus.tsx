@@ -7,13 +7,13 @@ import {
   FormItem
 } from '@vkontakte/vkui';
 
-import TitleItem from './TitleItem';
-import DescriptionItem from "./DescriptionItem";
+import StatusItem from "./StatusItem";
+import CommentItem from "./CommentItem";
 
 import {AppReducerIterface} from "src/store/app/reducers";
-import {ProductReducerIterface} from "src/store/productList/reducers";
+import {ReportReducerIterface} from "src/store/reportList/reducers";
 
-import styles from './AddVersion.scss';
+import styles from './ChangeStatus.scss';
 
 export interface FormItem {
   value: string,
@@ -25,13 +25,13 @@ export interface FormItem {
   }
 }
 
-interface IProps extends AppReducerIterface, ProductReducerIterface {
+interface IProps extends AppReducerIterface, ReportReducerIterface {
   id: string
 }
 
 interface IState {
-  title: FormItem,
-  description: FormItem
+  status: FormItem,
+  comment: FormItem
 }
 
 export default class extends React.Component<IProps, IState> {
@@ -39,20 +39,18 @@ export default class extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      title: {
+      status: {
         value: '',
         rules: {
-          required: true,
-          minLength: 1,
-          maxLength: 250
+          required: true
         }
       },
-      description: {
+      comment: {
         value: '',
         rules: {
           required: true,
           minLength: 5,
-          maxLength: 1000
+          maxLength: 250
         }
       }
     };
@@ -86,16 +84,16 @@ export default class extends React.Component<IProps, IState> {
 
   sendForm = async () => {
     const {
-      modalData,
+      panelData,
       changeModal,
-      getProductVersions
+      getReport
     } = this.props;
     let newForm = { ...this.state };
 
     // Все обязательные поля которые нужны в форме
     const requiredItems = [
-      'title',
-      'description'
+      'status',
+      'comment'
     ];
 
     // Проверяем все обязательные поля на заполнение
@@ -117,14 +115,14 @@ export default class extends React.Component<IProps, IState> {
     if (!isErrors) {
       try {
         // Отправляем запрос к API
-        await axios.post('/product/version', {
-          productId: modalData,
-          title: newForm.title.value,
-          description: newForm.description.value
+        await axios.post('/report/status', {
+          reportId: panelData,
+          status: newForm.status.value,
+          comment: newForm.comment.value
         });
 
         changeModal(null);
-        getProductVersions(modalData);
+        getReport(panelData);
 
         // Завершаем функцию, чтобы не вызывать ошибок из за unmount
         return;
@@ -139,31 +137,31 @@ export default class extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { title, description } = this.state;
+    const { status, comment } = this.state;
 
     return (
       <ModalCard
-        className={styles.addVersion}
-        header="Добавление версии"
-        subheader="Не забудьте сначала выпустить версию в продакшен, а только потом в Баг-трекер"
+        className={styles.changeStatus}
+        header="Изменение статуса"
+        subheader="Не забудьте, что статусы лучше выставлять после выпуска новой версии"
         actions={
           <Button
             size="l"
             mode="primary"
             onClick={this.sendForm}
           >
-            Добавить
+            Изменить
           </Button>
         }
       >
         <FormLayout>
-          <TitleItem
-            item={title}
-            onValueChange={(value) => this.handleFormChange('title', value)}
+          <StatusItem
+            item={status}
+            onValueChange={(value) => this.handleFormChange('status', value)}
           />
-          <DescriptionItem
-            item={description}
-            onValueChange={(value) => this.handleFormChange('description', value)}
+          <CommentItem
+            item={comment}
+            onValueChange={(value) => this.handleFormChange('comment', value)}
           />
         </FormLayout>
       </ModalCard>

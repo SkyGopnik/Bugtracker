@@ -7,7 +7,7 @@ import {
   Header,
   SimpleCell,
   InfoRow,
-  MiniInfoCell
+  MiniInfoCell, Spinner
 } from "@vkontakte/vkui";
 
 import Icon20ServicesOutline from '@vkontakte/icons/dist/20/services_outline';
@@ -21,111 +21,159 @@ import Icon24ViewOutline from '@vkontakte/icons/dist/24/view_outline';
 
 import Icon28HistoryForwardOutline from '@vkontakte/icons/dist/28/history_forward_outline';
 
+import getDate from "src/functions/getDate";
+
+import {AppReducerIterface} from "src/store/app/reducers";
+import {ReportReducerIterface} from "src/store/reportList/reducers";
+
 import styles from './Report.scss';
 
-interface IProps {}
+interface IProps extends AppReducerIterface, ReportReducerIterface {}
 
 export default class extends React.Component<IProps> {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    const {
+      panelData,
+      getReport,
+      changeReportStatus
+    } = this.props;
+
+    getReport(panelData);
+    changeReportStatus(true);
+  }
+
+  componentWillUnmount() {
+    const { changeReportStatus } = this.props;
+
+    changeReportStatus(false);
+  }
+
+  wrap = (text: string) => {
+    return <span style={{whiteSpace: 'pre-line'}}>{text}</span>;
+  }
+
+  joinArray = (json: string): string => {
+    return JSON.parse(json).join(', ');
+  }
+
   render() {
+    const { panelData, single } = this.props;
+    const {
+      id,
+      userId,
+      platform,
+      title,
+      steps,
+      result,
+      oresult,
+      tags,
+      priority,
+      type,
+      product,
+      status,
+      osnameAndroid,
+      osnameIOS,
+      createdAt,
+      updatedAt
+    } = single.data;
 
     return (
-      <div>
-        <Div className={styles.title}>
-          <Title level="2" weight="regular">Тут название</Title>
+      Object.keys(single.data).length !== 0 && panelData === id ? (
+        <div>
+          <Div className={styles.title}>
+            <Title level="2" weight="regular">{title}</Title>
+          </Div>
+          <Group>
+            <SimpleCell disabled>
+              <InfoRow header="Шаги воспроизведения">
+                {this.wrap(steps)}
+              </InfoRow>
+            </SimpleCell>
+            <SimpleCell disabled>
+              <InfoRow header="Фактический результат">
+                {this.wrap(result)}
+              </InfoRow>
+            </SimpleCell>
+            <SimpleCell disabled>
+              <InfoRow header="Ожидаемый результат">
+                {this.wrap(oresult)}
+              </InfoRow>
+            </SimpleCell>
+          </Group>
+          <Group>
+            <MiniInfoCell
+              before={<Icon20ServicesOutline />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {product.title}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon20FollowersOutline />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              1.0.0
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon20CubeBoxOutline />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {JSON.parse(platform).map((name, index) => (
+                <span key={index}>
+                  {name === 'Android' && <div className={styles.version}>Android ({this.joinArray(osnameAndroid)})</div>}
+                  {name === 'iOS' && <div className={styles.version}>iOS ({this.joinArray(osnameIOS)})</div>}
+                  {name === 'Windows' && <div className={styles.version}>Windows</div>}
+                </span>
+              ))}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon24Linked width={20} height={20} />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {JSON.parse(tags).join('')}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon24PenOutline width={20} height={20} />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {status && status.text}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon24ErrorCircleOutline width={20} height={20} />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {type}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon24ViewOutline width={20} height={20} />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {priority}
+            </MiniInfoCell>
+            <MiniInfoCell
+              before={<Icon28HistoryForwardOutline width={20} height={20} />}
+              textWrap="full"
+              textLevel="primary"
+            >
+              {createdAt === updatedAt ? 'Создано' : 'Обновлено'} {getDate(createdAt)}
+            </MiniInfoCell>
+          </Group>
+        </div>
+      ) : (
+        <Div>
+          <Spinner />
         </Div>
-        <Group>
-          <SimpleCell disabled>
-            <InfoRow header="Шаги воспроизведения">
-              1. Запустите приложение. <br />
-              2. Перейдите в любую категорию. <br />
-              3. Пролистайте немного вниз и нажмите на любое блюдо. <br />
-              4. Нажмите 2 раза системную кнопку "Назад". <br />
-              5. Повторите шаги "3" и "4".
-            </InfoRow>
-          </SimpleCell>
-          <SimpleCell disabled>
-            <InfoRow header="Фактический результат">
-              1. Запустите приложение. <br />
-              2. Перейдите в любую категорию. <br />
-              3. Пролистайте немного вниз и нажмите на любое блюдо. <br />
-              4. Нажмите 2 раза системную кнопку "Назад". <br />
-              5. Повторите шаги "3" и "4".
-            </InfoRow>
-          </SimpleCell>
-          <SimpleCell disabled>
-            <InfoRow header="Ожидаемый результат">
-              1. Запустите приложение. <br />
-              2. Перейдите в любую категорию. <br />
-              3. Пролистайте немного вниз и нажмите на любое блюдо. <br />
-              4. Нажмите 2 раза системную кнопку "Назад". <br />
-              5. Повторите шаги "3" и "4".            </InfoRow>
-          </SimpleCell>
-        </Group>
-        <Group>
-          <MiniInfoCell
-            before={<Icon20ServicesOutline />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            CooK кулинарный сервис
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon20FollowersOutline />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            1.0.0
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon20CubeBoxOutline />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            <div className={styles.version}>Android (1.5.2)</div>
-            <div className={styles.version}>iOS (14.0.1)</div>
-            <div className={styles.version}>Web (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320 (Edition Yx))</div>
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon24Linked width={20} height={20} />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            Тег1, Тег2, Тег3
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon24PenOutline width={20} height={20} />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            Исправлен
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon24ErrorCircleOutline width={20} height={20} />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            Падение приложения
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon24ViewOutline width={20} height={20} />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            Низкий
-          </MiniInfoCell>
-          <MiniInfoCell
-            before={<Icon28HistoryForwardOutline width={20} height={20} />}
-            textWrap="full"
-            textLevel="primary"
-          >
-            Обновлено 16 ноября в 20:50
-          </MiniInfoCell>
-        </Group>
-      </div>
+      )
     );
   }
 }

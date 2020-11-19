@@ -2,7 +2,8 @@ import {
   APP_CHANGE_VIEW,
   APP_CHANGE_PANEL,
   APP_CHANGE_VIEW_AND_PANEL,
-  APP_CHANGE_MODAL
+  APP_CHANGE_MODAL,
+  updateHistory
 } from './actions';
 
 export interface AppReducerIterface {
@@ -14,7 +15,8 @@ export interface AppReducerIterface {
   changeView(view: string),
   changePanel(panel: string, panelData?: any),
   changeViewAndPanel(view: string, panel: string, panelData?: any),
-  changeModal(modal: null | string, modalData?: any)
+  changeModal(modal: null | string, modalData?: any),
+  updateHistory(view: string, panel: string, history?: any)
 }
 
 const defaultState = {
@@ -25,6 +27,9 @@ const defaultState = {
   modalData: null
 };
 
+// Обновляем историю переходов (Ставим начальную страницу)
+updateHistory(defaultState.view, defaultState.panel);
+
 export const appReducer = (state = defaultState, action) => {
   switch (action.type) {
   case APP_CHANGE_VIEW:
@@ -34,6 +39,8 @@ export const appReducer = (state = defaultState, action) => {
     };
 
   case APP_CHANGE_PANEL:
+    updateHistory(state.view, action.payload.panel, action.payload.panelData);
+
     return {
       ...state,
       panel: action.payload.panel,

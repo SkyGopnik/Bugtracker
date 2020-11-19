@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Select,
   FormItem,
   Textarea
 } from "@vkontakte/vkui";

@@ -7,6 +7,7 @@ import ReportsPanel from "../panels/Reports";
 
 // Модалки
 import AddVersion from "src/modals/AddVersion/AddVersionContainer";
+import ChangeStatus from "src/modals/ChangeStatus/ChangeStatusContainer";
 
 // Компоненты
 import ViewLight from '../components/ViewLight';
@@ -14,9 +15,10 @@ import ProductsPanel from 'src/panels/Products';
 import UsersPanel from 'src/panels/Users';
 import NotificationsPanel from "src/panels/Notifications";
 import UserPanel from "src/panels/User";
-import queryGet from "src/functions/query_get";
 
 import {AppReducerIterface} from "src/store/app/reducers";
+
+import queryGet from "src/functions/query_get";
 
 interface IProps extends AppReducerIterface {
   id: string
@@ -57,6 +59,7 @@ export default class extends React.Component<IProps, IState> {
         onClose={() => changeModal(null)}
       >
         <AddVersion id="add-version" />
+        <ChangeStatus id="change-status" />
       </ModalRoot>
     );
 

@@ -179,16 +179,16 @@ export default class extends React.Component<IProps, IState> {
     newItem.error = '';
 
     if(newItem.rules) {
-      if (newItem.rules.required && (value.length === 0)) {
-        newItem.error = 'Это обязательное поле для заполения';
-      }
-
       if(newItem.rules.minLength && (value.length < newItem.rules.minLength)) {
         newItem.error = `Минимальная длина ${newItem.rules.minLength} символов`;
       }
 
       if(newItem.rules.maxLength && (value.length > newItem.rules.maxLength)) {
         newItem.error = `Максимальная длина ${newItem.rules.maxLength} символов`;
+      }
+
+      if (newItem.rules.required && (value.length === 0)) {
+        newItem.error = 'Это обязательное поле для заполения';
       }
     }
 

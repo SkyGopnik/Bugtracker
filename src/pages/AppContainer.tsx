@@ -5,7 +5,8 @@ import {
   changeView,
   changePanel,
   changeViewAndPanel,
-  changeModal
+  changeModal,
+  updateHistory
 } from '../store/app/actions';
 import {
   getUserProductList
@@ -29,7 +30,8 @@ const mapDispatchToProps = {
   changePanel,
   changeViewAndPanel,
   changeModal,
-  getUserProductList
+  getUserProductList,
+  updateHistory
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

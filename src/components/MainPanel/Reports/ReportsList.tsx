@@ -65,7 +65,6 @@ export default class extends React.Component<IProps> {
     return (
       <div>
         <Search />
-        <Separator />
         <div>
           {!list.loading ? (
             list.data.length !== 0 ? (

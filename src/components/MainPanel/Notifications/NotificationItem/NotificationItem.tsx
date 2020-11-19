@@ -51,8 +51,8 @@ export default class extends React.Component<IProps> {
           </div>
           {(status || priority) && (
             <div className={styles.status}>
-            {status && (<div>Новый статус отчета — <b>{status}</b></div>)}
-            {priority && (<div>Приоритет отчета — <b>{priority}</b></div>)}
+              {status && (<div>Новый статус отчета — <b>{status}</b></div>)}
+              {priority && (<div>Приоритет отчета — <b>{priority}</b></div>)}
             </div>
           )}
           <div className={styles.comment}>

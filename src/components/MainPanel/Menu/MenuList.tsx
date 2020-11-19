@@ -36,7 +36,10 @@ export default class extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <Group className={className ? className : ''}>
+      <Group
+        className={className ? className : ''}
+        separator="hide"
+      >
         {!isMobile ? (
           <>
             <MenuItem

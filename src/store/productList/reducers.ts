@@ -11,7 +11,7 @@ import {
   GET_USER_PRODUCT_LIST_SUCCESS
 } from './actions';
 
-interface Product {
+export interface Product {
   id?: string,
   title?: string,
   description?: string,

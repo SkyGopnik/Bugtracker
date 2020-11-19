@@ -42,3 +42,7 @@ export const changeModal = (modal: null | string, modalData: Object = null) => {
     }
   };
 };
+
+export const updateHistory = (view: string, panel: string, history?: any) => {
+  window.history.pushState({ view, panel, history: history ? JSON.stringify(history) : null }, `${view}/${panel}`);
+}

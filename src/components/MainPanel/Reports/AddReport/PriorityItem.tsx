@@ -29,7 +29,7 @@ export default class extends React.Component<IProps> {
     >
       <Select
         value={item.value}
-        onChange={(result) => onValueChange(String(result.value))}
+        onChange={(e) => onValueChange(String(e.currentTarget.value))}
         placeholder="Выберите приоритет"
       >
         {['Низкий', 'Средний','Высокий','Критический','Уязвимость'].map((text, index) => (

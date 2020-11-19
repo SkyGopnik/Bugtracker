@@ -20,7 +20,6 @@ import unixTime from '../functions/unixtime';
 
 import '../styles/all.scss';
 
-let isExit = false;
 let historyDelay = Number(new Date().getTime() / 1000);
 
 interface IProps extends AppReducerIterface, ProductReducerIterface {}
@@ -41,7 +40,7 @@ export default class extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    const { view, panel, getUserProductList } = this.props;
+    const { getUserProductList } = this.props;
 
     // Получаем список продуктов пользователя для селекта и скрытия кнопки
     getUserProductList();
@@ -53,9 +52,6 @@ export default class extends React.Component<IProps, IState> {
       // Выполняем наш переход внутри приложения
       this.menu(e);
     });
-
-    // Обновляем историю переходов (Ставим начальную страницу)
-    this.updateHistory(view, panel);
 
     const vars = [
       '--button_secondary_foreground',
@@ -70,12 +66,7 @@ export default class extends React.Component<IProps, IState> {
     vars.forEach((name) => document.documentElement.style.setProperty(name, color));
   }
 
-  updateHistory(view: string, panel: string) {
-    // Записываем новое значение истории переходов
-    window.history.pushState({ view: view, panel: panel }, `${view}/${panel}`);
-  }
-
-  menu(e) {
+  menu = (e) => {
     const { changeViewAndPanel } = this.props;
     // Если история переходов существует
     if (e.state) {
@@ -95,14 +86,6 @@ export default class extends React.Component<IProps, IState> {
       }
     } else {
       changeViewAndPanel('main', 'main');
-
-      if (!isExit) {
-        isExit = true;
-        bridge.sendPromise('VKWebAppClose', {
-          'status': 'success',
-          'payload': 'Ждём Вас снова! :3'
-        });
-      }
     }
   }
 

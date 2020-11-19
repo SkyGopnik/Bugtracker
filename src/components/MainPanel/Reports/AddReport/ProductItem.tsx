@@ -47,7 +47,7 @@ export default class extends React.Component<IProps, IState> {
       >
         <Select
           value={item.value}
-          onChange={(result) => onValueChange(String(result.value))}
+          onChange={(e) => onValueChange(String(e.currentTarget.value))}
           placeholder="Выберите продукт"
         >
           {userProducts.map((item, index) => (

@@ -7,17 +7,20 @@ import {
   changeViewAndPanel,
   changeModal
 } from 'src/store/app/actions';
-import Main from './Main';
+import {
+  getReport
+} from 'src/store/reportList/actions';
 
-const MainContainer = (props) => <Main {...props} />;
+import ChangeStatus from './ChangeStatus';
+
+const ChangeStatusContainer = (props) => <ChangeStatus {...props} />;
 
 const mapStateToProps = (state) => {
   const props = {
     view: state.app.view,
     panel: state.app.panel,
-    singleProduct: state.productList.single,
-    singleReport: state.reportList.single,
-    userProducts: state.productList.userProducts
+    panelData: state.app.panelData,
+    modalData: state.app.modalData
   };
 
   return props;
@@ -27,7 +30,8 @@ const mapDispatchToProps = {
   changeView,
   changePanel,
   changeViewAndPanel,
-  changeModal
+  changeModal,
+  getReport
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeStatusContainer);

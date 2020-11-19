@@ -31,7 +31,7 @@ export default class extends React.Component<IProps> {
     >
       <Select
         value={item.value}
-        onChange={(result) => onValueChange(String(result.value))}
+        onChange={(e) => onValueChange(String(e.currentTarget.value))}
         placeholder="Выберите тип"
       >
         {['Открытый', 'Закрытый','По заявкам'].map((text, index) => (

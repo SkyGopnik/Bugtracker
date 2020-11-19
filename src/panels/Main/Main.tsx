@@ -2,11 +2,16 @@ import React from 'react';
 import {
   Panel,
   Button,
-  PanelHeader
+  PanelHeader,
+  Cell,
+  Group
 } from '@vkontakte/vkui';
+
+import Icon28EditOutline from '@vkontakte/icons/dist/28/edit_outline';
 
 import MenuList from "src/components/MainPanel/Menu/MenuListContainer";
 import DesktopContent from "src/components/MainPanel/DesktopContent/DesktopContent";
+import MenuItem from "src/components/MainPanel/Menu/MenuItem/MenuItem";
 
 import AddReport from "src/components/MainPanel/Reports/AddReport/AddReportContainer";
 import AddProduct from "src/components/MainPanel/Products/AddProduct/AddProductContainer";
@@ -16,17 +21,33 @@ import Users from "src/components/MainPanel/Users/UsersList";
 import Notifications from "src/components/MainPanel/Notifications/NotificationsList";
 import User from "src/components/UserPanel/UserPanel";
 import Product from "src/components/MainPanel/Products/Product/ProductContainer";
-import Report from "src/components/MainPanel/Reports/Report/Report";
+import Report from "src/components/MainPanel/Reports/Report/ReportContainer";
 
 import {AppReducerIterface} from "src/store/app/reducers";
-import {ProductReducerIterface} from "src/store/productList/reducers";
+import {Product as ProductI} from "src/store/productList/reducers";
+import {Report as ReportI} from "src/store/reportList/reducers";
 
 import queryGet from '../../functions/query_get';
 
 import styles from './Main.scss';
 
-interface IProps extends AppReducerIterface, ProductReducerIterface {
-  id: string
+interface IProps extends AppReducerIterface {
+  id: string,
+  singleProduct: {
+    loading: boolean,
+    data: ProductI,
+    error: any
+  },
+  singleReport: {
+    loading: boolean,
+    data: ReportI,
+    error: any,
+    isBtnShown: boolean
+  },
+  userProducts: Array<{
+    id: string,
+    title: string
+  }>
 }
 
 interface IState {}
@@ -42,9 +63,11 @@ export default class extends React.Component<IProps, IState> {
     const {
       id,
       panel,
-      single,
+      singleProduct,
+      singleReport,
       userProducts,
-      changePanel
+      changePanel,
+      changeModal
     } = this.props;
     const isDesktop = queryGet('type') === 'desktop';
 
@@ -62,12 +85,21 @@ export default class extends React.Component<IProps, IState> {
                 {userProducts.length !== 0 && (
                   <Button
                     className={styles.addReportBtn}
-                    onClick={() => changePanel('add-report', panel === 'product' ? single.data.id : '')}
+                    onClick={() => changePanel('add-report', panel === 'product' ? singleProduct.data.id : '')}
                   >
                     Добавить отчёт
                   </Button>
                 )}
                 <MenuList className={styles.menuGroup} />
+                {singleReport.isBtnShown && (
+                  <Group className={styles.menuGroup}>
+                    <MenuItem
+                      name="Изменить статус"
+                      icon={<Icon28EditOutline />}
+                      onClick={() => changeModal('change-status')}
+                    />
+                  </Group>
+                )}
               </div>
               {panel === 'main' && (
                 <DesktopContent className={styles.content} title="Все отчёты">

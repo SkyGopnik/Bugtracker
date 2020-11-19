@@ -4,12 +4,12 @@ import {
   FormItem
 } from "@vkontakte/vkui";
 
-import { FormItemText } from './AddReport';
+import { FormItem as FormItemI } from './ChangeStatus';
 
 import isset from 'src/functions/isset';
 
 interface IProps {
-  item: FormItemText,
+  item: FormItemI,
   onValueChange(value: string)
 }
 
@@ -23,24 +23,26 @@ export default class extends React.Component<IProps> {
 
     return (
       <FormItem
-        top="Тип проблемы"
         status={isset(item.error) ? (item.error ? 'error' : 'valid') : 'default'}
         bottom={item.error ? item.error : ''}
       >
         <Select
           value={item.value}
           onChange={(e) => onValueChange(String(e.currentTarget.value))}
-          placeholder="Укажите тип проблемы"
+          placeholder="Статус"
         >
           {[
-            'Падение приложения',
-            'Зависание приложения',
-            'Неработающая функциональность',
-            'Потеря данных',
-            'Производительность',
-            'Кометическое несоответствие',
-            'Ошибка в тексте',
-            'Пожелание'
+            'Открыт',
+            'На рассмотрении',
+            'В работе',
+            'Исправлен',
+            'Переоткрыт',
+            'Закрыт',
+            'Отложен',
+            'Заблокирован',
+            'Отклонён',
+            'Не воспроизводится',
+            'Требует корректировки'
           ].map((text, index) => (
             <option key={index} value={text}>{text}</option>
           ))}
