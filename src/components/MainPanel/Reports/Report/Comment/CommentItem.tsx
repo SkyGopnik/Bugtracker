@@ -3,14 +3,10 @@ import {
   List,
   SimpleCell,
   Avatar,
-  Input,
-  FormLayoutGroup,
-  FormLayout,
-  FormItem,
-  Button
+  Separator
 } from "@vkontakte/vkui";
 
-import styles from './ReportComment.scss';
+import styles from './Comment.scss';
 
 interface IProps{}
 
@@ -45,12 +41,7 @@ export default class extends React.Component<IProps> {
           </div>
         </SimpleCell>
         </List>
-        <FormItem>
-          <Input placeholder="Введите комментарий"/>
-        </FormItem>
-        <FormItem>
-          <Button size="m">Отправить</Button>
-        </FormItem>
+        <Separator wide/>
         </>
     );
   }

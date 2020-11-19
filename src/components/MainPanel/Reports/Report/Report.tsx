@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Div,
   Title,
-  Separator,
   Group,
   Header,
   SimpleCell,
@@ -10,7 +9,7 @@ import {
   MiniInfoCell, Spinner
 } from "@vkontakte/vkui";
 
-import ReportComment from './ReportComment';
+import ReportComment from './Comment/Comment';
 
 import Icon20ServicesOutline from '@vkontakte/icons/dist/20/services_outline';
 import Icon20FollowersOutline from '@vkontakte/icons/dist/20/followers_outline';
