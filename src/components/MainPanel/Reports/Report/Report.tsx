@@ -129,6 +129,7 @@ export default class extends React.Component<IProps> {
                   {name === 'Android' && <div className={styles.version}>Android ({this.joinArray(osnameAndroid)})</div>}
                   {name === 'iOS' && <div className={styles.version}>iOS ({this.joinArray(osnameIOS)})</div>}
                   {name === 'Windows' && <div className={styles.version}>Windows</div>}
+                  {(name !== 'Android' && name !== 'iOS' && name !== 'Windows') && <div className={styles.version}>{name}</div>}
                 </span>
               ))}
             </MiniInfoCell>
@@ -137,7 +138,7 @@ export default class extends React.Component<IProps> {
               textWrap="full"
               textLevel="primary"
             >
-              {JSON.parse(tags).join('')}
+              {this.joinArray(tags)}
             </MiniInfoCell>
             <MiniInfoCell
               before={<Icon24PenOutline width={20} height={20} />}

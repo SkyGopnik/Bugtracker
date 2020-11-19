@@ -4,7 +4,7 @@ import {
   PanelHeader
 } from '@vkontakte/vkui';
 
-import Reports from "src/components/MainPanel/Reports/ReportListContainer";
+import Report from "src/components/MainPanel/Reports/Report/ReportContainer";
 import HistoryBackBtn from "src/components/HistoryBackBtn";
 
 interface IProps {
@@ -24,9 +24,9 @@ export default class extends React.Component<IProps> {
     return (
       <Panel id={id}>
         <PanelHeader left={<HistoryBackBtn />}>
-          Все отчёты
+          Отчёт
         </PanelHeader>
-        <Reports />
+        <Report />
       </Panel>
     );
   }

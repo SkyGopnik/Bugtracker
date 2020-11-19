@@ -57,13 +57,13 @@ export default class extends React.Component<IProps> {
             <MenuItem
               name="Участники"
               icon={<Icon28UsersOutline />}
-              onClick={() => changePanel('users')}
+              // onClick={() => changePanel('users')}
               active={panel === 'users'}
             />
             <MenuItem
               name="Обновления"
               icon={<Icon28Notifications />}
-              onClick={() => changePanel('notifications')}
+              // onClick={() => changePanel('notifications')}
               active={panel === 'notifications'}
             />
             <MenuItem
@@ -91,7 +91,7 @@ export default class extends React.Component<IProps> {
             <MenuItem
               name="Моя карточка"
               icon={<Icon28UserCircleOutline />}
-              onClick={() => changePanel('user')}
+              // onClick={() => changePanel('user')}
               expandable
             />
             <MenuItem
@@ -120,13 +120,13 @@ export default class extends React.Component<IProps> {
             <MenuItem
               name="Участники"
               icon={<Icon28UsersOutline />}
-              onClick={() => changePanel('users')}
+              // onClick={() => changePanel('users')}
               expandable
             />
             <MenuItem
               name="Обновления"
               icon={<Icon28Notifications />}
-              onClick={() => changePanel('notifications')}
+              // onClick={() => changePanel('notifications')}
               expandable
             />
             <MenuItem

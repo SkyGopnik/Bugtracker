@@ -4,6 +4,7 @@ import {ModalRoot} from "@vkontakte/vkui";
 // Панели
 import MainPanel from '../panels/Main/MainContainer';
 import ReportsPanel from "../panels/Reports";
+import ReportPanel from "../panels/Report";
 
 // Модалки
 import AddVersion from "src/modals/AddVersion/AddVersionContainer";
@@ -11,6 +12,7 @@ import ChangeStatus from "src/modals/ChangeStatus/ChangeStatusContainer";
 
 // Компоненты
 import ViewLight from '../components/ViewLight';
+
 import ProductsPanel from 'src/panels/Products';
 import UsersPanel from 'src/panels/Users';
 import NotificationsPanel from "src/panels/Notifications";
@@ -82,16 +84,8 @@ export default class extends React.Component<IProps, IState> {
             component: ProductsPanel
           },
           {
-            id: 'users',
-            component: UsersPanel
-          },
-          {
-            id: 'notifications',
-            component: NotificationsPanel
-          },
-          {
-            id: 'user',
-            component: UserPanel
+            id: 'report',
+            component: ReportPanel
           }
         ]}
       />
