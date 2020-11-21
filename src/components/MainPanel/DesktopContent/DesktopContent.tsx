@@ -9,7 +9,8 @@ import styles from './DesktopContent.scss';
 interface IProps {
   className?: string,
   title?: string,
-  children: ReactChild
+  children: ReactChild,
+  aside?: string
 }
 
 export default class extends React.Component<IProps> {
